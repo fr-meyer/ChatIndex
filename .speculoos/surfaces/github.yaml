@@ -1,0 +1,24 @@
+schema_version: 0.1
+surface: github
+repository: fr-meyer/ChatIndex
+status: blocked
+blocked_by:
+  - fork-not-visible
+  - gh-unauthenticated-in-openclaw-container
+issue:
+  enabled: true
+  number: null
+  url: null
+project:
+  enabled: true
+  project_id: null
+  item_id: null
+  url: null
+pull_request:
+  enabled: true
+  number: null
+  url: null
+required_before_sync:
+  - Verify or create fr-meyer/ChatIndex.
+  - Authenticate GitHub CLI or equivalent publishing route.
+  - Create fork dev branch from upstream main.

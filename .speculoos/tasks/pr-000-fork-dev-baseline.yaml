@@ -1,0 +1,51 @@
+schema_version: 0.1
+id: pr-000-fork-dev-baseline
+title: Fork dev baseline and Speculoos v0 workflow contract
+branch: chore/fork-dev-baseline
+base_branch: dev
+status: in-progress
+pret_a_coder: blocked
+blocked_by:
+  - fork-or-auth-unavailable
+  - vibe-sidecar-not-started
+objective: >
+  Establish the first ChatIndex fork baseline with Spec Kit artifacts,
+  Speculoos workflow state, additive task surface mappings, and explicit
+  executor authority boundaries.
+acceptance_criteria:
+  - Spec Kit files are initialized and reviewable.
+  - .speculoos manifest, task, surface, and lane files exist.
+  - Baseline validation runs without real provider keys.
+  - GitHub and Vibe surface states are explicit even if blocked.
+  - Commit, push, and PR remain gated by explicit approval.
+write_scope:
+  allowed:
+    - .gitignore
+    - AGENTS.md
+    - .specify/**
+    - specs/000-fork-dev-baseline/**
+    - .speculoos/**
+    - tests/**
+  forbidden:
+    - .env
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - private OpenClaw logs or sessions
+executor_lanes:
+  codex_review:
+    status: pending
+  cursor_worker:
+    status: gated
+    reason: no code implementation task until baseline tests and publish gates are clear
+surface_sync:
+  manifest: done
+  github_issue: blocked
+  github_project: blocked
+  vibe_kanban: pending
+review:
+  tests: passed
+  test_command: . .venv/bin/activate && python -m unittest discover -v
+  test_result: 2 passed, 0 failed
+  private_data_check: pending
+  approval_to_publish: pending

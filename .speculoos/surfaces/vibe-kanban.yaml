@@ -1,0 +1,19 @@
+schema_version: 0.1
+surface: vibe-kanban
+status: pending
+mcp:
+  command: npx
+  args:
+    - -y
+    - vibe-kanban@latest
+    - mcp
+organization_id: null
+project_id: null
+issue_id: null
+workspace_id: null
+session_id: null
+required_before_sync:
+  - Start Vibe Kanban as a sidecar or local service.
+  - Connect OpenClaw to the Vibe Kanban MCP server.
+  - Register the ChatIndex repository/workspace.
+  - Mirror pr-000-fork-dev-baseline into Vibe Kanban.
