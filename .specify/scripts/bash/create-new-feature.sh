@@ -47,6 +47,10 @@ while [ $i -le $# ]; do
                 echo 'Error: --number requires a value' >&2
                 exit 1
             fi
+            if ! [[ "$next_arg" =~ ^[0-9]+$ ]]; then
+                echo 'Error: --number requires a numeric value' >&2
+                exit 1
+            fi
             BRANCH_NUMBER="$next_arg"
             ;;
         --timestamp)
@@ -293,6 +297,11 @@ else
             HIGHEST=$(get_highest_from_specs "$SPECS_DIR")
             BRANCH_NUMBER=$((HIGHEST + 1))
         fi
+    fi
+
+    if ! [[ "$BRANCH_NUMBER" =~ ^[0-9]+$ ]]; then
+        echo 'Error: branch number must be numeric' >&2
+        exit 1
     fi
 
     # Force base-10 interpretation to prevent octal conversion (e.g., 010 → 8 in octal, but should be 10 in decimal)

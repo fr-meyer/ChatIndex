@@ -36,6 +36,9 @@ class BaselineStructureTests(unittest.TestCase):
         self.assertEqual(serialized["message_index"], 3)
         self.assertEqual(len(serialized["user"]), 200)
         self.assertEqual(len(serialized["assistant"]), 200)
+        self.assertNotIn("provider", serialized)
+        self.assertNotIn("user_message", serialized)
+        self.assertNotIn("assistant_message", serialized)
 
 
 if __name__ == "__main__":

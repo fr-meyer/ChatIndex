@@ -5,8 +5,10 @@ mcp:
   command: npx
   args:
     - -y
-    - vibe-kanban@latest
+    - vibe-kanban@0.1.44
     - mcp
+  package: vibe-kanban
+  version: 0.1.44
 organization_id: null
 project_id: null
 issue_id: null

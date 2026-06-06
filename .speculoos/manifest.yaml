@@ -5,7 +5,8 @@ canonical_task: pr-000-fork-dev-baseline
 repository:
   upstream: VectifyAI/ChatIndex
   fork: fr-meyer/ChatIndex
-  local_path: /home/node/.openclaw/repos/ChatIndex
+  local_path: "${OPENCLAW_REPO_PATH}"
+  local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
   working_branch: chore/fork-dev-baseline
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
@@ -22,7 +23,7 @@ status:
 validation:
   no_secret_tests:
     status: passed
-    command: . .venv/bin/activate && python -m unittest discover -v
+    command: python -m unittest discover -v
     result: 2 passed, 0 failed
 surfaces:
   manifest:

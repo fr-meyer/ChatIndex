@@ -30,10 +30,21 @@ write_scope:
     - tests/**
   forbidden:
     - .env
+    - .env.*
     - .venv/**
     - .agents/**
     - .speculoos/runs/**
-    - private OpenClaw logs or sessions
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
 executor_lanes:
   codex_review:
     status: pending
@@ -48,7 +59,7 @@ surface_sync:
   vibe_kanban: pending
 review:
   tests: passed
-  test_command: . .venv/bin/activate && python -m unittest discover -v
+  test_command: python -m unittest discover -v
   test_result: 2 passed, 0 failed
   private_data_check: pending
   approval_to_publish: done

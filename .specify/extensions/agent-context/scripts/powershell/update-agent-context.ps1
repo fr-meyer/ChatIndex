@@ -217,12 +217,9 @@ if (Test-Path -LiteralPath $CtxPath) {
         if ($endOfMarker -lt $content.Length -and $content[$endOfMarker] -eq "`n") { $endOfMarker++ }
         $newContent = $content.Substring(0, $s) + $Section + $content.Substring($endOfMarker)
     } elseif ($s -ge 0) {
-        $newContent = $content.Substring(0, $s) + $Section
+        $newContent = $content.Substring(0, $s) + $Section + $content.Substring($s + $MarkerStart.Length)
     } elseif ($e -ge 0) {
-        $endOfMarker = $e + $MarkerEnd.Length
-        if ($endOfMarker -lt $content.Length -and $content[$endOfMarker] -eq "`r") { $endOfMarker++ }
-        if ($endOfMarker -lt $content.Length -and $content[$endOfMarker] -eq "`n") { $endOfMarker++ }
-        $newContent = $Section + $content.Substring($endOfMarker)
+        $newContent = $content.Substring(0, $e) + $Section + $content.Substring($e + $MarkerEnd.Length)
     } else {
         if ($content -and -not $content.EndsWith("`n")) { $content += "`n" }
         if ($content) { $newContent = $content + "`n" + $Section } else { $newContent = $Section }

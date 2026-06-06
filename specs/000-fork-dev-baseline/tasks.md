@@ -45,4 +45,4 @@
 - T009-T011 depend on T001-T008.
 - T012-T016 require GitHub/Vibe availability.
 - T017 depends on baseline validation and required external gates.
-- T018-T021 depend on T17.
+- T018-T021 depend on T017.

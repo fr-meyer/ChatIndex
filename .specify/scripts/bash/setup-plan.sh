@@ -4,7 +4,6 @@ set -e
 
 # Parse command line arguments
 JSON_MODE=false
-ARGS=()
 
 for arg in "$@"; do
     case "$arg" in
@@ -18,7 +17,8 @@ for arg in "$@"; do
             exit 0
             ;;
         *)
-            ARGS+=("$arg")
+            echo "ERROR: Unknown option '$arg'" >&2
+            exit 1
             ;;
     esac
 done
@@ -57,13 +57,9 @@ else
             echo "Copied plan template to $IMPL_PLAN"
         fi
     else
-        if $JSON_MODE; then
-            echo "Warning: Plan template not found" >&2
-        else
-            echo "Warning: Plan template not found"
-        fi
-        # Create a basic plan file if template doesn't exist
-        touch "$IMPL_PLAN"
+        echo "ERROR: Could not resolve required plan-template for $REPO_ROOT" >&2
+        echo "Template 'plan-template' was not found in any supported location." >&2
+        exit 1
     fi
 fi
 

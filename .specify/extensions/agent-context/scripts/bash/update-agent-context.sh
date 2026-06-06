@@ -177,14 +177,9 @@ if os.path.exists(ctx_path):
             end_of_marker += 1
         new_content = content[:s] + section + content[end_of_marker:]
     elif s != -1:
-        new_content = content[:s] + section
+        new_content = content[:s] + section + content[s + len(start):]
     elif e != -1:
-        end_of_marker = e + len(end)
-        if end_of_marker < len(content) and content[end_of_marker] == "\r":
-            end_of_marker += 1
-        if end_of_marker < len(content) and content[end_of_marker] == "\n":
-            end_of_marker += 1
-        new_content = section + content[end_of_marker:]
+        new_content = content[:e] + section + content[e + len(end):]
     else:
         if content and not content.endswith("\n"):
             content += "\n"
