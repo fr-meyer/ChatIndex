@@ -3,10 +3,11 @@ id: pr-000-fork-dev-baseline
 title: Fork dev baseline and Speculoos v0 workflow contract
 branch: chore/fork-dev-baseline
 base_branch: dev
-status: in-progress
-pret_a_coder: blocked
+status: pr-open-for-review
+pret_a_coder: satisfied
 blocked_by:
-  - fork-or-auth-unavailable
+  - review-comments-open
+  - github-issue-project-surface-not-created
   - vibe-sidecar-not-started
 objective: >
   Establish the first ChatIndex fork baseline with Spec Kit artifacts,
@@ -16,8 +17,9 @@ acceptance_criteria:
   - Spec Kit files are initialized and reviewable.
   - .speculoos manifest, task, surface, and lane files exist.
   - Baseline validation runs without real provider keys.
-  - GitHub and Vibe surface states are explicit even if blocked.
-  - Commit, push, and PR remain gated by explicit approval.
+  - GitHub PR targets fork dev, not main.
+  - GitHub and Vibe surface states are explicit even if pending.
+  - Merge to main remains gated behind a later dev-to-main promotion PR.
 write_scope:
   allowed:
     - .gitignore
@@ -40,12 +42,14 @@ executor_lanes:
     reason: no code implementation task until baseline tests and publish gates are clear
 surface_sync:
   manifest: done
-  github_issue: blocked
-  github_project: blocked
+  github_pr: done
+  github_issue: pending
+  github_project: pending
   vibe_kanban: pending
 review:
   tests: passed
   test_command: . .venv/bin/activate && python -m unittest discover -v
   test_result: 2 passed, 0 failed
   private_data_check: pending
-  approval_to_publish: pending
+  approval_to_publish: done
+  approval_to_merge: pending

@@ -10,11 +10,13 @@ repository:
   working_branch: chore/fork-dev-baseline
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: repo-local-contract
-  pret_a_coder: blocked
+  phase: pr-open-for-review
+  pret_a_coder: satisfied
   blocker_summary:
-    - fr-meyer/ChatIndex is not visible from current GitHub access.
-    - gh is installed in the OpenClaw container but unauthenticated.
+    - GitHub PR #1 is open against fork dev and awaiting review/iteration.
+    - GitHub Issues/Projects have not yet been created or synced.
+    - Vibe Kanban sidecar has not yet been started.
+    - gh is installed in the OpenClaw container but unauthenticated; use the GitHub connector or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container for sidecar control.
     - tmux is not installed in the OpenClaw container.
 validation:
@@ -28,14 +30,21 @@ surfaces:
     authority: canonical-v0
   github_issue:
     enabled: true
-    status: blocked
-    blocked_by: fork-or-auth-unavailable
+    status: pending
+    blocked_by: not-yet-created
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
-    status: blocked
-    blocked_by: fork-or-auth-unavailable
+    status: pending
+    blocked_by: not-yet-created
     file: .speculoos/surfaces/github.yaml
+  github_pull_request:
+    enabled: true
+    status: synced
+    number: 1
+    url: https://github.com/fr-meyer/ChatIndex/pull/1
+    base_branch: dev
+    head_branch: chore/fork-dev-baseline
   vibe_kanban:
     enabled: true
     status: pending
