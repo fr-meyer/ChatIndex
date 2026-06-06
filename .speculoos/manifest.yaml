@@ -25,6 +25,10 @@ validation:
     status: passed
     command: python -m unittest discover -v
     result: 2 passed, 0 failed
+  powershell_parser:
+    status: passed
+    command: pwsh -NoProfile -Command "[System.Management.Automation.Language.Parser]::ParseFile(...)"
+    environment: PowerShell 7.6.2 portable linux-x64 runtime
 surfaces:
   manifest:
     enabled: true

@@ -61,6 +61,7 @@ review:
   tests: passed
   test_command: python -m unittest discover -v
   test_result: 2 passed, 0 failed
+  powershell_parser: passed with PowerShell 7.6.2 portable linux-x64 runtime
   private_data_check: pending
   approval_to_publish: done
   approval_to_merge: pending
