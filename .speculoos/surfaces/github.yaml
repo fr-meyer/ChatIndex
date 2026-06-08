@@ -6,15 +6,15 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: dev
-  dev_sha: 561b4ddb2f0166abe6029df6e39f40b2adfb2db9
+  head: feat/offline-tree-path-reorg
+  dev_sha: e7a02ecdc39642d27e0fd405a18b8354009e8f8f
 issue:
   enabled: true
   status: synced
-  number: 5
-  url: https://github.com/fr-meyer/ChatIndex/issues/5
-  title: "PR001: Add retrieval provider selection"
-  linked_task: pr-001-multi-llm-support
+  number: 7
+  url: https://github.com/fr-meyer/ChatIndex/issues/7
+  title: "PR002: Offline tree optimization"
+  linked_task: pr-002-offline-tree-optimization
 project:
   enabled: true
   status: synced
@@ -50,26 +50,40 @@ project:
       url: https://github.com/fr-meyer/ChatIndex/pull/4
     - kind: pull_request
       number: 6
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCusc
       url: https://github.com/fr-meyer/ChatIndex/pull/6
       purpose: surface-metadata-sync
+    - kind: issue
+      number: 7
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDRWc
+      url: https://github.com/fr-meyer/ChatIndex/issues/7
+      linked_task: pr-002-offline-tree-optimization
+    - kind: pull_request
+      number: 8
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDkYA
+      url: https://github.com/fr-meyer/ChatIndex/pull/8
+      linked_task: pr-002-offline-tree-optimization
 pull_request:
   enabled: true
-  status: merged
-  number: 4
-  url: https://github.com/fr-meyer/ChatIndex/pull/4
+  status: open
+  number: 8
+  url: https://github.com/fr-meyer/ChatIndex/pull/8
   base_branch: dev
-  head_branch: feat/multi-llm-support
-  merge_commit: 561b4ddb2f0166abe6029df6e39f40b2adfb2db9
-  merged_at: 2026-06-08T07:14:28Z
+  head_branch: feat/offline-tree-path-reorg
+  merge_commit: null
+  merged_at: null
 surface_sync_pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 6
   url: https://github.com/fr-meyer/ChatIndex/pull/6
   base_branch: dev
   head_branch: chore/speculoos-project-surface-sync
+  merge_commit: e7a02ecdc39642d27e0fd405a18b8354009e8f8f
+  merged_at: 2026-06-08T12:05:08Z
 setup_pull_request:
   enabled: true
   status: merged

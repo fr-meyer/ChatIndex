@@ -197,8 +197,9 @@ class CTree:
         current = node if include_self else node.parent
         
         while current is not None:
-            ancestors.insert(0, current)  # Insert at beginning to maintain order
+            ancestors.append(current)
             current = current.parent
+        ancestors.reverse()
         
         # Filter out root if requested
         if exclude_root:
@@ -345,7 +346,7 @@ class CTree:
         self.current_node = target_topic
         
         # Check if any nodes need reorganization due to too many children
-        self._check_and_reorganize_nodes()
+        self._check_and_reorganize_nodes(start_node=target_topic)
         
         # Generate summaries for frozen nodes (nodes that won't change anymore)
         # self._generate_summaries_for_frozen_nodes()
@@ -929,7 +930,23 @@ Directly output ONLY the JSON, do not include any other text."""
                 }
             ]
     
-    def _check_and_reorganize_nodes(self) -> None:
+    def _get_reorganization_action(self, node: TopicNode) -> Optional[str]:
+        """Return the reorganization action needed for one topic node."""
+        if len(node.children) <= self.max_children:
+            return None
+
+        if self._has_topic_children(node):
+            topic_children_count = sum(1 for child in node.children if isinstance(child, TopicNode))
+            if topic_children_count > self.max_children:
+                return "split"
+            return None
+
+        message_children_count = sum(1 for child in node.children if isinstance(child, MessageNode))
+        if message_children_count > self.max_children:
+            return "expand"
+        return None
+
+    def _check_and_reorganize_nodes(self, start_node: Optional[TopicNode] = None) -> None:
         """
         Check all nodes in the tree to see if any have too many direct children.
         
@@ -937,25 +954,30 @@ Directly output ONLY the JSON, do not include any other text."""
         - If node has > max_children message children → expand into subtopics (vertical)
         - If node has > max_children topic children → split into siblings (horizontal)
         """
+        if start_node is not None:
+            current: Optional[TopicNode] = start_node
+            while current is not None:
+                parent_before_action = current.parent
+                action = self._get_reorganization_action(current)
+                if action == "expand":
+                    self._expand_node(current)
+                elif action == "split":
+                    self._split_node(current)
+                current = parent_before_action
+            return
+
         # Collect nodes that need reorganization (can't modify tree during traversal)
         nodes_to_expand = []   # Nodes with too many message children
         nodes_to_split = []    # Nodes with too many topic children
         
         def check_node(node: Node) -> None:
             """Recursively check nodes for reorganization."""
-            if isinstance(node, TopicNode) and len(node.children) > self.max_children:
-                # Determine type of children
-                has_topic_children = self._has_topic_children(node)
-                
-                if has_topic_children:
-                    # Has topic children → need to split horizontally
-                    topic_children_count = len([c for c in node.children if isinstance(c, TopicNode)])
-                    if topic_children_count > self.max_children:
-                        nodes_to_split.append(node)
-                else:
-                    message_children_count = len([c for c in node.children if isinstance(c, MessageNode)])
-                    if message_children_count > self.max_children:
-                        nodes_to_expand.append(node)
+            if isinstance(node, TopicNode):
+                action = self._get_reorganization_action(node)
+                if action == "expand":
+                    nodes_to_expand.append(node)
+                elif action == "split":
+                    nodes_to_split.append(node)
             
             # Recursively check children
             for child in node.children:
@@ -1086,15 +1108,47 @@ Directly output ONLY the JSON, do not include any other text."""
         split_point = self._llm_find_split_point(topic_children, node)
         
         
-        # Create two new nodes
         first_half_topics = topic_children[:split_point]
         second_half_topics = topic_children[split_point:]
+        message_children = [child for child in node.children if isinstance(child, MessageNode)]
+        second_start_boundary = second_half_topics[0].start_index
+        first_half_messages = [
+            message for message in message_children
+            if message.message_index < second_start_boundary
+        ]
+        second_half_messages = [
+            message for message in message_children
+            if message.message_index >= second_start_boundary
+        ]
+
+        def child_start(child: Node) -> int:
+            if isinstance(child, TopicNode):
+                return child.start_index
+            if isinstance(child, MessageNode):
+                return child.message_index
+            return 0
+
+        def child_end(child: Node) -> int:
+            if isinstance(child, TopicNode):
+                return child.end_index
+            if isinstance(child, MessageNode):
+                return child.message_index + 1
+            return 0
+
+        first_half_children = sorted(
+            [*first_half_topics, *first_half_messages],
+            key=child_start,
+        )
+        second_half_children = sorted(
+            [*second_half_topics, *second_half_messages],
+            key=child_start,
+        )
         
         # Determine index ranges
-        first_start = first_half_topics[0].start_index
-        first_end = first_half_topics[-1].end_index
-        second_start = second_half_topics[0].start_index
-        second_end = second_half_topics[-1].end_index
+        first_start = min(child_start(child) for child in first_half_children)
+        first_end = max(child_end(child) for child in first_half_children)
+        second_start = min(child_start(child) for child in second_half_children)
+        second_end = max(child_end(child) for child in second_half_children)
         
         # Get messages for each half (for summary generation)
         first_messages = self.conversation[first_start:first_end]
@@ -1122,14 +1176,14 @@ Directly output ONLY the JSON, do not include any other text."""
             parent=parent
         )
         
-        # Move topic children to new nodes
-        for topic in first_half_topics:
-            topic.parent = first_node
-            first_node.children.append(topic)
+        # Move children to new nodes.
+        for child in first_half_children:
+            child.parent = first_node
+            first_node.children.append(child)
         
-        for topic in second_half_topics:
-            topic.parent = second_node
-            second_node.children.append(topic)
+        for child in second_half_children:
+            child.parent = second_node
+            second_node.children.append(child)
         
         # Remove old node from parent and add new nodes
         parent.children.remove(node)
@@ -1590,6 +1644,3 @@ Respond ONLY with valid JSON, no other text."""
             # For message nodes, only if show_messages is True
             if isinstance(child, TopicNode) or (isinstance(child, MessageNode) and show_messages):
                 self.print_tree(child, indent + 1, show_messages)
-
-
-
