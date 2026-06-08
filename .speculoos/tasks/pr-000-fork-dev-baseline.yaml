@@ -6,7 +6,6 @@ base_branch: dev
 status: merged
 pret_a_coder: satisfied
 blocked_by:
-  - github-issue-project-surface-not-created
   - vibe-sidecar-not-started
 merged:
   pull_request: 1
@@ -57,8 +56,11 @@ executor_lanes:
 surface_sync:
   manifest: done
   github_pr: merged
-  github_issue: pending
-  github_project: pending
+  github_issue: not_applicable
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: Done
   vibe_kanban: pending
 review:
   tests: passed
