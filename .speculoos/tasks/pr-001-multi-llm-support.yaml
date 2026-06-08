@@ -57,7 +57,9 @@ surface_sync:
   manifest: done
   github_issue: blocked
   github_project: pending
-  github_pr: setup-merged
+  github_pr: open
+  github_pr_number: 4
+  github_pr_url: https://github.com/fr-meyer/ChatIndex/pull/4
   vibe_kanban: mcp-present-service-missing
 review:
   tests: passing
