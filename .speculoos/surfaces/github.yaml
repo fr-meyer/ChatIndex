@@ -48,6 +48,12 @@ project:
       status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCn-Q
       url: https://github.com/fr-meyer/ChatIndex/pull/4
+    - kind: pull_request
+      number: 6
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCusc
+      url: https://github.com/fr-meyer/ChatIndex/pull/6
+      purpose: surface-metadata-sync
 pull_request:
   enabled: true
   status: merged
@@ -57,6 +63,13 @@ pull_request:
   head_branch: feat/multi-llm-support
   merge_commit: 561b4ddb2f0166abe6029df6e39f40b2adfb2db9
   merged_at: 2026-06-08T07:14:28Z
+surface_sync_pull_request:
+  enabled: true
+  status: open
+  number: 6
+  url: https://github.com/fr-meyer/ChatIndex/pull/6
+  base_branch: dev
+  head_branch: chore/speculoos-project-surface-sync
 setup_pull_request:
   enabled: true
   status: merged

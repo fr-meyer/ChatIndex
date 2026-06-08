@@ -19,6 +19,7 @@ status:
     - PR #4 implemented PR001 and was merged into fork dev at 561b4ddb2f0166abe6029df6e39f40b2adfb2db9.
     - GitHub Issues are enabled on the fork; PR001 is tracked as issue #5.
     - GitHub Project #1 "Speculoos / ChatIndex" exists and contains issue #5 plus PRs #1-#4 with Status Done.
+    - Surface sync PR #6 is open and tracked in Project #1 with Status In Progress.
     - Vibe Kanban MCP command is available through npx, but no persistent sidecar/project/workspace IDs are synced yet.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container for sidecar control.
@@ -61,6 +62,13 @@ surfaces:
     head_branch: feat/multi-llm-support
     merge_commit: 561b4ddb2f0166abe6029df6e39f40b2adfb2db9
     merged_at: 2026-06-08T07:14:28Z
+  github_surface_sync_pull_request:
+    enabled: true
+    status: open
+    number: 6
+    url: https://github.com/fr-meyer/ChatIndex/pull/6
+    base_branch: dev
+    head_branch: chore/speculoos-project-surface-sync
   vibe_kanban:
     enabled: true
     status: command-verified
