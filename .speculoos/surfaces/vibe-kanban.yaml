@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: pending
+status: mcp-present-service-missing
 mcp:
   command: npx
   args:
@@ -14,8 +14,13 @@ project_id: null
 issue_id: null
 workspace_id: null
 session_id: null
+last_probe:
+  status: mcp-start-blocked
+  help_command: npx -y vibe-kanban@0.1.44 mcp --help
+  initialize_probe: npx -y vibe-kanban@0.1.44 mcp
+  result: MCP command is available, but stdio initialize failed because the main Vibe Kanban app is not running and /tmp/vibe-kanban/vibe-kanban.port does not exist.
 required_before_sync:
-  - Start Vibe Kanban as a sidecar or local service.
+  - Start Vibe Kanban as a sidecar or local service with `npx -y vibe-kanban@0.1.44`.
   - Connect OpenClaw to the Vibe Kanban MCP server.
   - Register the ChatIndex repository/workspace.
-  - Mirror pr-000-fork-dev-baseline into Vibe Kanban.
+  - Mirror pr-001-multi-llm-support into Vibe Kanban.
