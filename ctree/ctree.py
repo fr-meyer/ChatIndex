@@ -1108,15 +1108,47 @@ Directly output ONLY the JSON, do not include any other text."""
         split_point = self._llm_find_split_point(topic_children, node)
         
         
-        # Create two new nodes
         first_half_topics = topic_children[:split_point]
         second_half_topics = topic_children[split_point:]
+        message_children = [child for child in node.children if isinstance(child, MessageNode)]
+        second_start_boundary = second_half_topics[0].start_index
+        first_half_messages = [
+            message for message in message_children
+            if message.message_index < second_start_boundary
+        ]
+        second_half_messages = [
+            message for message in message_children
+            if message.message_index >= second_start_boundary
+        ]
+
+        def child_start(child: Node) -> int:
+            if isinstance(child, TopicNode):
+                return child.start_index
+            if isinstance(child, MessageNode):
+                return child.message_index
+            return 0
+
+        def child_end(child: Node) -> int:
+            if isinstance(child, TopicNode):
+                return child.end_index
+            if isinstance(child, MessageNode):
+                return child.message_index + 1
+            return 0
+
+        first_half_children = sorted(
+            [*first_half_topics, *first_half_messages],
+            key=child_start,
+        )
+        second_half_children = sorted(
+            [*second_half_topics, *second_half_messages],
+            key=child_start,
+        )
         
         # Determine index ranges
-        first_start = first_half_topics[0].start_index
-        first_end = first_half_topics[-1].end_index
-        second_start = second_half_topics[0].start_index
-        second_end = second_half_topics[-1].end_index
+        first_start = min(child_start(child) for child in first_half_children)
+        first_end = max(child_end(child) for child in first_half_children)
+        second_start = min(child_start(child) for child in second_half_children)
+        second_end = max(child_end(child) for child in second_half_children)
         
         # Get messages for each half (for summary generation)
         first_messages = self.conversation[first_start:first_end]
@@ -1144,14 +1176,14 @@ Directly output ONLY the JSON, do not include any other text."""
             parent=parent
         )
         
-        # Move topic children to new nodes
-        for topic in first_half_topics:
-            topic.parent = first_node
-            first_node.children.append(topic)
+        # Move children to new nodes.
+        for child in first_half_children:
+            child.parent = first_node
+            first_node.children.append(child)
         
-        for topic in second_half_topics:
-            topic.parent = second_node
-            second_node.children.append(topic)
+        for child in second_half_children:
+            child.parent = second_node
+            second_node.children.append(child)
         
         # Remove old node from parent and add new nodes
         parent.children.remove(node)
@@ -1612,5 +1644,3 @@ Respond ONLY with valid JSON, no other text."""
             # For message nodes, only if show_messages is True
             if isinstance(child, TopicNode) or (isinstance(child, MessageNode) and show_messages):
                 self.print_tree(child, indent + 1, show_messages)
-
-

@@ -67,4 +67,4 @@ review:
   speculoos_preflight: passed
   private_data_check: passed
   approval_to_publish: received
-  coderabbit_review: manually-triggered-pending
+  coderabbit_review: mixed-child-split-finding-addressed

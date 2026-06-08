@@ -29,3 +29,4 @@
 - [x] T014 Run `git diff --check`.
 - [x] T015 Run Speculoos preflight.
 - [x] T016 Open PR against fork `dev`.
+- [x] T017 Address CodeRabbit mixed-child split finding.

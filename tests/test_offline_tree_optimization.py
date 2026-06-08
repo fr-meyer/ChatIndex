@@ -80,6 +80,36 @@ class OfflineTreeOptimizationTests(unittest.TestCase):
 
         self.assertEqual(split_order, ["Child", "Parent"])
 
+    def test_split_node_preserves_direct_message_children(self):
+        tree = self.make_tree(max_children=2)
+        parent = TopicNode(topic_name="Parent", parent=tree.root)
+        node = TopicNode(topic_name="Mixed", parent=parent)
+        topic_a = TopicNode(topic_name="A", start_index=0, end_index=1, parent=node)
+        topic_b = TopicNode(topic_name="B", start_index=1, end_index=2, parent=node)
+        topic_c = TopicNode(topic_name="C", start_index=3, end_index=4, parent=node)
+        message_between = MessageNode(message_index=2, parent=node)
+        message_after = MessageNode(message_index=4, parent=node)
+        node.children.extend([topic_a, topic_b, message_between, topic_c, message_after])
+        parent.children.append(node)
+        tree.root.children.append(parent)
+
+        tree._llm_find_split_point = lambda topic_children, parent_node: 2
+        tree._llm_generate_topic_from_children = (
+            lambda topic_children, parent_node: " / ".join(
+                topic.topic_name for topic in topic_children
+            )
+        )
+
+        tree._split_node(node)
+
+        first_node, second_node = parent.children
+        self.assertIn(message_between, first_node.children)
+        self.assertIn(message_after, second_node.children)
+        self.assertIs(message_between.parent, first_node)
+        self.assertIs(message_after.parent, second_node)
+        self.assertEqual((first_node.start_index, first_node.end_index), (0, 3))
+        self.assertEqual((second_node.start_index, second_node.end_index), (3, 5))
+
 
 if __name__ == "__main__":
     unittest.main()

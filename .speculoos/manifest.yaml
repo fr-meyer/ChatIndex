@@ -29,7 +29,7 @@ validation:
   no_secret_tests:
     status: passed
     command: .venv/bin/python -m unittest discover -v
-    result: 9 passed, 0 failed
+    result: 10 passed, 0 failed
   private_data_check:
     status: passed
     reviewed_range: origin/dev...feat/offline-tree-path-reorg
