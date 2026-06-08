@@ -8,16 +8,17 @@ repository:
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: feat/multi-llm-support
+  working_branch: dev
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: pr001-implementation
+  phase: pr001-merged-surface-synced
   pret_a_coder: satisfied
   blocker_summary:
     - Baseline PR #1 was merged into fork dev at c41e236466270625476148dca4f0b1f438593586; PR #2 recorded the completed review state at 1e566a1129ccef6d8421de23dfb5597fc0165555.
     - PR #3 recorded PR001 scope/surface setup and was merged into fork dev at 4c11bbe1b37b57bca021dfa4cc15d45271a54c70.
-    - GitHub Issues are disabled on the fork, so Issue creation for PR001 is blocked until repository settings change.
-    - GitHub Project sync has not yet been created.
+    - PR #4 implemented PR001 and was merged into fork dev at 561b4ddb2f0166abe6029df6e39f40b2adfb2db9.
+    - GitHub Issues are enabled on the fork; PR001 is tracked as issue #5.
+    - GitHub Project #1 "Speculoos / ChatIndex" exists and contains issue #5 plus PRs #1-#4 with Status Done.
     - Vibe Kanban MCP command is available through npx, but no persistent sidecar/project/workspace IDs are synced yet.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container for sidecar control.
@@ -29,8 +30,8 @@ validation:
     result: 6 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: 7df2c9208db6f113f85a6c09295bec7f0f2114e7...c41e236466270625476148dca4f0b1f438593586
-    notes: No committed secret, private-log, session, tmp, .openclaw, or key/pem artifacts found.
+    reviewed_range: origin/dev...chore/speculoos-project-surface-sync
+    notes: Metadata-only surface sync; no committed secret, private-log, session, tmp, .openclaw, or key/pem artifacts expected.
   powershell_parser:
     status: passed
     command: pwsh -NoProfile -Command "[System.Management.Automation.Language.Parser]::ParseFile(...)"
@@ -41,21 +42,25 @@ surfaces:
     authority: canonical-v0
   github_issue:
     enabled: true
-    status: blocked
-    blocked_by: issues-disabled-on-repository
+    status: synced
+    number: 5
+    url: https://github.com/fr-meyer/ChatIndex/issues/5
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
-    status: pending
-    blocked_by: not-yet-created
+    status: synced
+    number: 1
+    url: https://github.com/users/fr-meyer/projects/1
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: open
+    status: merged
     number: 4
     url: https://github.com/fr-meyer/ChatIndex/pull/4
     base_branch: dev
     head_branch: feat/multi-llm-support
+    merge_commit: 561b4ddb2f0166abe6029df6e39f40b2adfb2db9
+    merged_at: 2026-06-08T07:14:28Z
   vibe_kanban:
     enabled: true
     status: command-verified

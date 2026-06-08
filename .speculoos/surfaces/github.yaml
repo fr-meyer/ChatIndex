@@ -1,35 +1,62 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: partial
+status: synced
 blocked_by:
-  - github-issues-disabled-on-repository
-  - github-project-not-yet-created
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: feat/multi-llm-support
-  dev_sha: 4c11bbe1b37b57bca021dfa4cc15d45271a54c70
+  head: dev
+  dev_sha: 561b4ddb2f0166abe6029df6e39f40b2adfb2db9
 issue:
   enabled: true
-  status: blocked
-  url: null
-  blocked_by: issues-disabled-on-repository
-  attempted_title: "Speculoos PR001: Multi-LLM support"
+  status: synced
+  number: 5
+  url: https://github.com/fr-meyer/ChatIndex/issues/5
+  title: "PR001: Add retrieval provider selection"
+  linked_task: pr-001-multi-llm-support
 project:
   enabled: true
-  status: pending
-  project_id: null
-  item_id: null
-  url: null
-  blocked_by: no-issue-or-project-target-yet
+  status: synced
+  number: 1
+  title: "Speculoos / ChatIndex"
+  project_id: PVT_kwHOAZY4Cs4BaDA4
+  url: https://github.com/users/fr-meyer/projects/1
+  items:
+    - kind: issue
+      number: 5
+      status: Done
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvE
+      url: https://github.com/fr-meyer/ChatIndex/issues/5
+    - kind: pull_request
+      number: 1
+      status: Done
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvk
+      url: https://github.com/fr-meyer/ChatIndex/pull/1
+    - kind: pull_request
+      number: 2
+      status: Done
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvY
+      url: https://github.com/fr-meyer/ChatIndex/pull/2
+    - kind: pull_request
+      number: 3
+      status: Done
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvc
+      url: https://github.com/fr-meyer/ChatIndex/pull/3
+    - kind: pull_request
+      number: 4
+      status: Done
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCn-Q
+      url: https://github.com/fr-meyer/ChatIndex/pull/4
 pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 4
   url: https://github.com/fr-meyer/ChatIndex/pull/4
   base_branch: dev
   head_branch: feat/multi-llm-support
+  merge_commit: 561b4ddb2f0166abe6029df6e39f40b2adfb2db9
+  merged_at: 2026-06-08T07:14:28Z
 setup_pull_request:
   enabled: true
   status: merged
@@ -39,6 +66,5 @@ setup_pull_request:
   head_branch: chore/speculoos-pr001-setup
   merge_commit: 4c11bbe1b37b57bca021dfa4cc15d45271a54c70
 required_before_sync:
-  - Enable GitHub Issues on fr-meyer/ChatIndex or accept PR-only tracking for v0.
-  - Add the PR to the chosen GitHub Project if desired.
   - Keep GitHub PRs targeting fork dev; promote dev to main only with a separate PR.
+  - Use the host-side GitHub broker for Project operations; the OpenClaw container remains unauthenticated to gh.
