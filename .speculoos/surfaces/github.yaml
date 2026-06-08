@@ -8,8 +8,8 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: chore/speculoos-pr001-setup
-  dev_sha: 1e566a1129ccef6d8421de23dfb5597fc0165555
+  head: feat/multi-llm-support
+  dev_sha: 4c11bbe1b37b57bca021dfa4cc15d45271a54c70
 issue:
   enabled: true
   status: blocked
@@ -26,10 +26,18 @@ project:
 pull_request:
   enabled: true
   status: open
+  number: 4
+  url: https://github.com/fr-meyer/ChatIndex/pull/4
+  base_branch: dev
+  head_branch: feat/multi-llm-support
+setup_pull_request:
+  enabled: true
+  status: merged
   number: 3
   url: https://github.com/fr-meyer/ChatIndex/pull/3
   base_branch: dev
   head_branch: chore/speculoos-pr001-setup
+  merge_commit: 4c11bbe1b37b57bca021dfa4cc15d45271a54c70
 required_before_sync:
   - Enable GitHub Issues on fr-meyer/ChatIndex or accept PR-only tracking for v0.
   - Add the PR to the chosen GitHub Project if desired.

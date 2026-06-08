@@ -8,13 +8,14 @@ repository:
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: chore/speculoos-pr001-setup
+  working_branch: feat/multi-llm-support
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: pr001-spec-surface-setup
-  pret_a_coder: not-yet
+  phase: pr001-implementation
+  pret_a_coder: satisfied
   blocker_summary:
     - Baseline PR #1 was merged into fork dev at c41e236466270625476148dca4f0b1f438593586; PR #2 recorded the completed review state at 1e566a1129ccef6d8421de23dfb5597fc0165555.
+    - PR #3 recorded PR001 scope/surface setup and was merged into fork dev at 4c11bbe1b37b57bca021dfa4cc15d45271a54c70.
     - GitHub Issues are disabled on the fork, so Issue creation for PR001 is blocked until repository settings change.
     - GitHub Project sync has not yet been created.
     - Vibe Kanban MCP command is available through npx, but no persistent sidecar/project/workspace IDs are synced yet.
@@ -24,8 +25,8 @@ status:
 validation:
   no_secret_tests:
     status: passed
-    command: python -m unittest discover -v
-    result: 2 passed, 0 failed
+    command: .venv/bin/python -m unittest discover -v
+    result: 6 passed, 0 failed
   private_data_check:
     status: passed
     reviewed_range: 7df2c9208db6f113f85a6c09295bec7f0f2114e7...c41e236466270625476148dca4f0b1f438593586
@@ -51,10 +52,10 @@ surfaces:
   github_pull_request:
     enabled: true
     status: open
-    number: 3
-    url: https://github.com/fr-meyer/ChatIndex/pull/3
+    number: 4
+    url: https://github.com/fr-meyer/ChatIndex/pull/4
     base_branch: dev
-    head_branch: chore/speculoos-pr001-setup
+    head_branch: feat/multi-llm-support
   vibe_kanban:
     enabled: true
     status: command-verified
