@@ -8,8 +8,8 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: chore/fork-dev-baseline
-  dev_sha: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
+  head: dev
+  dev_sha: c41e236466270625476148dca4f0b1f438593586
 issue:
   enabled: true
   number: null
@@ -21,11 +21,12 @@ project:
   url: null
 pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 1
   url: https://github.com/fr-meyer/ChatIndex/pull/1
   base_branch: dev
   head_branch: chore/fork-dev-baseline
+  merge_commit: c41e236466270625476148dca4f0b1f438593586
 required_before_sync:
   - Create GitHub Issue record for pr-000-fork-dev-baseline if desired.
   - Add the issue/PR to the chosen GitHub Project if desired.
