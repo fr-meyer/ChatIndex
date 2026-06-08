@@ -1,0 +1,89 @@
+schema_version: 0.1
+project: ChatIndex
+workflow: speculoos-v0
+canonical_task: pr-000-fork-dev-baseline
+repository:
+  upstream: VectifyAI/ChatIndex
+  fork: fr-meyer/ChatIndex
+  local_path: "${OPENCLAW_REPO_PATH}"
+  local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
+  base_branch: dev
+  working_branch: chore/fork-dev-baseline
+  upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
+status:
+  phase: pr-open-for-review
+  pret_a_coder: satisfied
+  blocker_summary:
+    - GitHub PR #1 is open against fork dev and awaiting review/iteration.
+    - GitHub Issues/Projects have not yet been created or synced.
+    - Vibe Kanban sidecar has not yet been started.
+    - gh is installed in the OpenClaw container but unauthenticated; use the GitHub connector or host bridge for GitHub writes.
+    - Docker is unavailable inside the OpenClaw container for sidecar control.
+    - tmux is not installed in the OpenClaw container.
+validation:
+  no_secret_tests:
+    status: passed
+    command: python -m unittest discover -v
+    result: 2 passed, 0 failed
+  powershell_parser:
+    status: passed
+    command: pwsh -NoProfile -Command "[System.Management.Automation.Language.Parser]::ParseFile(...)"
+    environment: PowerShell 7.6.2 portable linux-x64 runtime
+surfaces:
+  manifest:
+    enabled: true
+    authority: canonical-v0
+  github_issue:
+    enabled: true
+    status: pending
+    blocked_by: not-yet-created
+    file: .speculoos/surfaces/github.yaml
+  github_project:
+    enabled: true
+    status: pending
+    blocked_by: not-yet-created
+    file: .speculoos/surfaces/github.yaml
+  github_pull_request:
+    enabled: true
+    status: synced
+    number: 1
+    url: https://github.com/fr-meyer/ChatIndex/pull/1
+    base_branch: dev
+    head_branch: chore/fork-dev-baseline
+  vibe_kanban:
+    enabled: true
+    status: pending
+    blocked_by: sidecar-not-started
+    file: .speculoos/surfaces/vibe-kanban.yaml
+lanes:
+  codex_review:
+    enabled: true
+    role: baseline-review
+    contract: .speculoos/lane-contracts/codex-review.md
+  cursor_worker:
+    enabled: true
+    role: bounded-implementation
+    contract: .speculoos/lane-contracts/cursor-worker.md
+  opencode:
+    enabled: false
+    role: later-open-executor-candidate
+  omp:
+    enabled: false
+    role: later-advanced-executor-candidate
+  hermes:
+    enabled: false
+    role: later-advanced-executor-harness-candidate
+gates:
+  before_executor:
+    - scope-bounded
+    - acceptance-criteria-present
+    - write-paths-explicit
+    - branch-worktree-ready
+    - credential-policy-explicit
+    - tests-known
+  before_publish:
+    - human-approval
+    - git-auth-available
+    - fork-visible
+    - tests-pass
+    - private-data-check-pass

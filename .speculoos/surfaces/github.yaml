@@ -1,0 +1,32 @@
+schema_version: 0.1
+surface: github
+repository: fr-meyer/ChatIndex
+status: partial
+blocked_by:
+  - github-issues-not-yet-created
+  - github-project-not-yet-created
+  - gh-unauthenticated-in-openclaw-container
+branches:
+  base: dev
+  head: chore/fork-dev-baseline
+  dev_sha: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
+issue:
+  enabled: true
+  number: null
+  url: null
+project:
+  enabled: true
+  project_id: null
+  item_id: null
+  url: null
+pull_request:
+  enabled: true
+  status: open
+  number: 1
+  url: https://github.com/fr-meyer/ChatIndex/pull/1
+  base_branch: dev
+  head_branch: chore/fork-dev-baseline
+required_before_sync:
+  - Create GitHub Issue record for pr-000-fork-dev-baseline if desired.
+  - Add the issue/PR to the chosen GitHub Project if desired.
+  - Keep GitHub PRs targeting fork dev; promote dev to main only with a separate PR.
