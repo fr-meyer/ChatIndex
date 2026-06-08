@@ -3,31 +3,34 @@ surface: github
 repository: fr-meyer/ChatIndex
 status: partial
 blocked_by:
-  - github-issues-not-yet-created
+  - github-issues-disabled-on-repository
   - github-project-not-yet-created
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: dev
-  dev_sha: c41e236466270625476148dca4f0b1f438593586
+  head: chore/speculoos-pr001-setup
+  dev_sha: 1e566a1129ccef6d8421de23dfb5597fc0165555
 issue:
   enabled: true
-  number: null
+  status: blocked
   url: null
+  blocked_by: issues-disabled-on-repository
+  attempted_title: "Speculoos PR001: Multi-LLM support"
 project:
   enabled: true
+  status: pending
   project_id: null
   item_id: null
   url: null
+  blocked_by: no-issue-or-project-target-yet
 pull_request:
   enabled: true
-  status: merged
-  number: 1
-  url: https://github.com/fr-meyer/ChatIndex/pull/1
+  status: open
+  number: 3
+  url: https://github.com/fr-meyer/ChatIndex/pull/3
   base_branch: dev
-  head_branch: chore/fork-dev-baseline
-  merge_commit: c41e236466270625476148dca4f0b1f438593586
+  head_branch: chore/speculoos-pr001-setup
 required_before_sync:
-  - Create GitHub Issue record for pr-000-fork-dev-baseline if desired.
-  - Add the issue/PR to the chosen GitHub Project if desired.
+  - Enable GitHub Issues on fr-meyer/ChatIndex or accept PR-only tracking for v0.
+  - Add the PR to the chosen GitHub Project if desired.
   - Keep GitHub PRs targeting fork dev; promote dev to main only with a separate PR.
