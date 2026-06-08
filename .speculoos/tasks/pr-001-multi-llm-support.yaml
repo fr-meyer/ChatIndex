@@ -4,11 +4,9 @@ title: Multi-LLM support
 branch: feat/multi-llm-support
 setup_branch: chore/speculoos-pr001-setup
 base_branch: dev
-status: spec-draft
-pret_a_coder: not-yet
+status: implementation-in-progress
+pret_a_coder: satisfied
 blocked_by:
-  - spec-review-needed
-  - tests-and-write-scope-review-needed
   - github-issue-disabled-on-repository
   - vibe-project-not-yet-created
 objective: >
@@ -53,17 +51,17 @@ executor_lanes:
   codex_review:
     status: required
   cursor_worker:
-    status: planned
-    reason: first real implementation dogfood after spec review and PRet-a-Coder gate
+    status: bypassed-for-v0
+    reason: Franck approved proceeding directly in Codex on 2026-06-08 14:29 KST after the PR001 setup gate.
 surface_sync:
   manifest: done
   github_issue: blocked
   github_project: pending
-  github_pr: pending
+  github_pr: setup-merged
   vibe_kanban: mcp-present-service-missing
 review:
-  tests: pending
-  test_command: python -m unittest discover -v
-  private_data_check: pending
-  approval_to_publish: pending
+  tests: passing
+  test_command: .venv/bin/python -m unittest discover -v
+  private_data_check: passed
+  approval_to_publish: approved-via-chat-2026-06-08-1429-kst
   approval_to_merge: pending
