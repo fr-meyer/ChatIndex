@@ -1,22 +1,23 @@
 schema_version: 0.1
 project: ChatIndex
 workflow: speculoos-v0
-canonical_task: pr-000-fork-dev-baseline
+canonical_task: pr-001-multi-llm-support
 repository:
   upstream: VectifyAI/ChatIndex
   fork: fr-meyer/ChatIndex
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: dev
+  working_branch: chore/speculoos-pr001-setup
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: baseline-merged
-  pret_a_coder: satisfied
+  phase: pr001-spec-surface-setup
+  pret_a_coder: not-yet
   blocker_summary:
-    - Baseline PR #1 was merged into fork dev at c41e236466270625476148dca4f0b1f438593586.
-    - GitHub Issues/Projects have not yet been created or synced.
-    - Vibe Kanban sidecar has not yet been started.
+    - Baseline PR #1 was merged into fork dev at c41e236466270625476148dca4f0b1f438593586; PR #2 recorded the completed review state at 1e566a1129ccef6d8421de23dfb5597fc0165555.
+    - GitHub Issues are disabled on the fork, so Issue creation for PR001 is blocked until repository settings change.
+    - GitHub Project sync has not yet been created.
+    - Vibe Kanban MCP command is available through npx, but no persistent sidecar/project/workspace IDs are synced yet.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container for sidecar control.
     - tmux is not installed in the OpenClaw container.
@@ -39,8 +40,8 @@ surfaces:
     authority: canonical-v0
   github_issue:
     enabled: true
-    status: pending
-    blocked_by: not-yet-created
+    status: blocked
+    blocked_by: issues-disabled-on-repository
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
@@ -49,16 +50,15 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: merged
-    number: 1
-    url: https://github.com/fr-meyer/ChatIndex/pull/1
+    status: pending
+    number: null
+    url: null
     base_branch: dev
-    head_branch: chore/fork-dev-baseline
-    merge_commit: c41e236466270625476148dca4f0b1f438593586
+    head_branch: chore/speculoos-pr001-setup
   vibe_kanban:
     enabled: true
-    status: pending
-    blocked_by: sidecar-not-started
+    status: command-verified
+    blocked_by: project-not-yet-created
     file: .speculoos/surfaces/vibe-kanban.yaml
 lanes:
   codex_review:
