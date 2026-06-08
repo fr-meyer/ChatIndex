@@ -51,12 +51,11 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: merged
-    number: 3
-    url: https://github.com/fr-meyer/ChatIndex/pull/3
+    status: open
+    number: 4
+    url: https://github.com/fr-meyer/ChatIndex/pull/4
     base_branch: dev
-    head_branch: chore/speculoos-pr001-setup
-    merge_commit: 4c11bbe1b37b57bca021dfa4cc15d45271a54c70
+    head_branch: feat/multi-llm-support
   vibe_kanban:
     enabled: true
     status: command-verified
