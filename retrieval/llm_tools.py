@@ -6,9 +6,423 @@ for intelligent conversation retrieval.
 """
 
 import json
-from typing import List, Dict, Any, Optional
+import os
+from dataclasses import dataclass
+from typing import Callable, List, Dict, Any, Optional
 from anthropic import Anthropic
+from openai import OpenAI
 from ctree import CTree, TopicNode, MessageNode
+
+
+DEFAULT_RETRIEVAL_PROVIDER = "anthropic"
+DEFAULT_RETRIEVAL_MODELS = {
+    "anthropic": "claude-sonnet-4-5",
+    "openai": "gpt-4o-mini",
+}
+PROVIDER_ENV_VARS = {
+    "anthropic": "ANTHROPIC_API_KEY",
+    "openai": "OPENAI_API_KEY",
+}
+
+
+@dataclass
+class LLMProviderConfig:
+    """Configuration for the LLM used by retrieval."""
+
+    provider: str = DEFAULT_RETRIEVAL_PROVIDER
+    model: Optional[str] = None
+    api_key: Optional[str] = None
+    max_tokens: int = 8192
+
+
+@dataclass
+class TextBlock:
+    """Provider-neutral text content block."""
+
+    text: str
+    type: str = "text"
+
+
+@dataclass
+class ToolUseBlock:
+    """Provider-neutral tool-use content block."""
+
+    id: str
+    name: str
+    input: Dict[str, Any]
+    type: str = "tool_use"
+
+
+@dataclass
+class RetrievalResponse:
+    """Provider-neutral response used by the retrieval loop."""
+
+    stop_reason: str
+    content: List[Any]
+    raw_response: Any = None
+
+
+def _block_type(block: Any) -> Optional[str]:
+    if isinstance(block, dict):
+        return block.get("type")
+    return getattr(block, "type", None)
+
+
+def _block_value(block: Any, key: str, default: Any = None) -> Any:
+    if isinstance(block, dict):
+        return block.get(key, default)
+    return getattr(block, key, default)
+
+
+def _normalize_provider(provider: Optional[str]) -> str:
+    normalized = (provider or DEFAULT_RETRIEVAL_PROVIDER).strip().lower()
+    aliases = {
+        "claude": "anthropic",
+        "anthropic": "anthropic",
+        "chatgpt": "openai",
+        "openai": "openai",
+    }
+    if normalized not in aliases:
+        supported = ", ".join(sorted(DEFAULT_RETRIEVAL_MODELS))
+        raise ValueError(f"Unsupported retrieval provider '{provider}'. Supported providers: {supported}")
+    return aliases[normalized]
+
+
+def _resolve_provider_config(
+    api_key: Optional[str] = None,
+    provider: Optional[str] = None,
+    model: Optional[str] = None,
+    max_tokens: Optional[int] = None,
+    config: Optional[LLMProviderConfig] = None,
+) -> LLMProviderConfig:
+    if config is None:
+        resolved = LLMProviderConfig(
+            provider=provider or DEFAULT_RETRIEVAL_PROVIDER,
+            model=model,
+            api_key=api_key,
+            max_tokens=max_tokens or LLMProviderConfig.max_tokens,
+        )
+    else:
+        resolved = LLMProviderConfig(
+            provider=provider or config.provider,
+            model=model or config.model,
+            api_key=api_key or config.api_key,
+            max_tokens=max_tokens or config.max_tokens,
+        )
+
+    resolved.provider = _normalize_provider(resolved.provider)
+    if not resolved.model:
+        resolved.model = DEFAULT_RETRIEVAL_MODELS[resolved.provider]
+
+    if not resolved.api_key:
+        resolved.api_key = os.getenv(PROVIDER_ENV_VARS[resolved.provider])
+
+    if not resolved.api_key:
+        env_var = PROVIDER_ENV_VARS[resolved.provider]
+        raise ValueError(
+            f"API key required for retrieval provider '{resolved.provider}'. "
+            f"Pass api_key=... or set {env_var}."
+        )
+
+    return resolved
+
+
+def _anthropic_content(content: Any) -> Any:
+    if isinstance(content, str):
+        return content
+
+    converted = []
+    for block in content:
+        block_type = _block_type(block)
+        if block_type == "text":
+            converted.append({"type": "text", "text": _block_value(block, "text", "")})
+        elif block_type == "tool_use":
+            converted.append({
+                "type": "tool_use",
+                "id": _block_value(block, "id"),
+                "name": _block_value(block, "name"),
+                "input": _block_value(block, "input", {}),
+            })
+        elif block_type == "tool_result":
+            converted.append(block)
+    return converted
+
+
+def _anthropic_messages(messages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    return [
+        {"role": message["role"], "content": _anthropic_content(message["content"])}
+        for message in messages
+    ]
+
+
+def _normalize_anthropic_response(response: Any) -> RetrievalResponse:
+    content = []
+    for block in response.content:
+        block_type = _block_type(block)
+        if block_type == "text":
+            content.append(TextBlock(text=_block_value(block, "text", "")))
+        elif block_type == "tool_use":
+            content.append(ToolUseBlock(
+                id=_block_value(block, "id"),
+                name=_block_value(block, "name"),
+                input=_block_value(block, "input", {}),
+            ))
+    return RetrievalResponse(
+        stop_reason=response.stop_reason,
+        content=content,
+        raw_response=response,
+    )
+
+
+def _openai_tools(tools: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    return [
+        {
+            "type": "function",
+            "function": {
+                "name": tool["name"],
+                "description": tool["description"],
+                "parameters": tool["input_schema"],
+            },
+        }
+        for tool in tools
+    ]
+
+
+def _openai_messages(messages: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    converted = []
+
+    for message in messages:
+        role = message["role"]
+        content = message["content"]
+
+        if isinstance(content, str):
+            converted.append({"role": role, "content": content})
+            continue
+
+        if role == "assistant":
+            text_parts = []
+            tool_calls = []
+            for block in content:
+                block_type = _block_type(block)
+                if block_type == "text":
+                    text_parts.append(_block_value(block, "text", ""))
+                elif block_type == "tool_use":
+                    tool_calls.append({
+                        "id": _block_value(block, "id"),
+                        "type": "function",
+                        "function": {
+                            "name": _block_value(block, "name"),
+                            "arguments": json.dumps(_block_value(block, "input", {})),
+                        },
+                    })
+
+            openai_message = {
+                "role": "assistant",
+                "content": "".join(text_parts) if text_parts else None,
+            }
+            if tool_calls:
+                openai_message["tool_calls"] = tool_calls
+            converted.append(openai_message)
+            continue
+
+        for block in content:
+            if _block_type(block) == "tool_result":
+                converted.append({
+                    "role": "tool",
+                    "tool_call_id": _block_value(block, "tool_use_id"),
+                    "content": _block_value(block, "content", ""),
+                })
+
+    return converted
+
+
+def _parse_tool_arguments(arguments: Optional[str]) -> Dict[str, Any]:
+    if not arguments:
+        return {}
+    try:
+        parsed = json.loads(arguments)
+    except json.JSONDecodeError:
+        return {}
+    return parsed if isinstance(parsed, dict) else {}
+
+
+def _normalize_openai_response(response: Any) -> RetrievalResponse:
+    message = response.choices[0].message
+    content = []
+
+    if getattr(message, "content", None):
+        content.append(TextBlock(text=message.content))
+
+    tool_calls = getattr(message, "tool_calls", None) or []
+    for tool_call in tool_calls:
+        content.append(ToolUseBlock(
+            id=tool_call.id,
+            name=tool_call.function.name,
+            input=_parse_tool_arguments(tool_call.function.arguments),
+        ))
+
+    return RetrievalResponse(
+        stop_reason="tool_use" if tool_calls else "end_turn",
+        content=content,
+        raw_response=response,
+    )
+
+
+class AnthropicRetrievalClient:
+    """Retrieval client backed by Anthropic Messages."""
+
+    def __init__(self, config: LLMProviderConfig):
+        self.config = config
+        self.client = Anthropic(api_key=config.api_key)
+
+    def create_message(
+        self,
+        system: str,
+        tools: List[Dict[str, Any]],
+        messages: List[Dict[str, Any]],
+    ) -> RetrievalResponse:
+        response = self.client.messages.create(
+            model=self.config.model,
+            max_tokens=self.config.max_tokens,
+            system=system,
+            tools=tools,
+            messages=_anthropic_messages(messages),
+        )
+        return _normalize_anthropic_response(response)
+
+    def stream_message(
+        self,
+        system: str,
+        tools: List[Dict[str, Any]],
+        messages: List[Dict[str, Any]],
+        on_text_chunk: Optional[Callable[[str], None]] = None,
+    ) -> RetrievalResponse:
+        with self.client.messages.stream(
+            model=self.config.model,
+            max_tokens=self.config.max_tokens,
+            system=system,
+            tools=tools,
+            messages=_anthropic_messages(messages),
+        ) as stream:
+            for event in stream:
+                if event.type == "content_block_delta" and hasattr(event.delta, "text"):
+                    if on_text_chunk:
+                        on_text_chunk(event.delta.text)
+
+            return _normalize_anthropic_response(stream.get_final_message())
+
+
+class OpenAIRetrievalClient:
+    """Retrieval client backed by OpenAI Chat Completions tool calls."""
+
+    def __init__(self, config: LLMProviderConfig):
+        self.config = config
+        self.client = OpenAI(api_key=config.api_key)
+
+    def create_message(
+        self,
+        system: str,
+        tools: List[Dict[str, Any]],
+        messages: List[Dict[str, Any]],
+    ) -> RetrievalResponse:
+        openai_messages = [{"role": "system", "content": system}]
+        openai_messages.extend(_openai_messages(messages))
+        response = self.client.chat.completions.create(
+            model=self.config.model,
+            max_tokens=self.config.max_tokens,
+            tools=_openai_tools(tools),
+            tool_choice="auto",
+            messages=openai_messages,
+        )
+        return _normalize_openai_response(response)
+
+    def stream_message(
+        self,
+        system: str,
+        tools: List[Dict[str, Any]],
+        messages: List[Dict[str, Any]],
+        on_text_chunk: Optional[Callable[[str], None]] = None,
+    ) -> RetrievalResponse:
+        openai_messages = [{"role": "system", "content": system}]
+        openai_messages.extend(_openai_messages(messages))
+        stream = self.client.chat.completions.create(
+            model=self.config.model,
+            max_tokens=self.config.max_tokens,
+            tools=_openai_tools(tools),
+            tool_choice="auto",
+            messages=openai_messages,
+            stream=True,
+        )
+
+        text_parts = []
+        tool_calls_by_index = {}
+        raw_chunks = []
+
+        for chunk in stream:
+            raw_chunks.append(chunk)
+            if not chunk.choices:
+                continue
+
+            delta = chunk.choices[0].delta
+            if getattr(delta, "content", None):
+                text_parts.append(delta.content)
+                if on_text_chunk:
+                    on_text_chunk(delta.content)
+
+            for tool_call in getattr(delta, "tool_calls", None) or []:
+                index = tool_call.index
+                current = tool_calls_by_index.setdefault(
+                    index,
+                    {"id": None, "name": None, "arguments": ""},
+                )
+                if getattr(tool_call, "id", None):
+                    current["id"] = tool_call.id
+                if getattr(tool_call, "function", None):
+                    if getattr(tool_call.function, "name", None):
+                        current["name"] = tool_call.function.name
+                    if getattr(tool_call.function, "arguments", None):
+                        current["arguments"] += tool_call.function.arguments
+
+        content = []
+        if text_parts:
+            content.append(TextBlock(text="".join(text_parts)))
+        for tool_call in [tool_calls_by_index[key] for key in sorted(tool_calls_by_index)]:
+            content.append(ToolUseBlock(
+                id=tool_call["id"],
+                name=tool_call["name"],
+                input=_parse_tool_arguments(tool_call["arguments"]),
+            ))
+
+        return RetrievalResponse(
+            stop_reason="tool_use" if tool_calls_by_index else "end_turn",
+            content=content,
+            raw_response=raw_chunks,
+        )
+
+
+def build_retrieval_client(
+    api_key: Optional[str] = None,
+    provider: Optional[str] = None,
+    model: Optional[str] = None,
+    max_tokens: Optional[int] = None,
+    config: Optional[LLMProviderConfig] = None,
+):
+    """Build a retrieval LLM client from provider configuration."""
+
+    resolved = _resolve_provider_config(
+        api_key=api_key,
+        provider=provider,
+        model=model,
+        max_tokens=max_tokens,
+        config=config,
+    )
+
+    if resolved.provider == "anthropic":
+        return AnthropicRetrievalClient(resolved)
+    if resolved.provider == "openai":
+        return OpenAIRetrievalClient(resolved)
+
+    raise ValueError(f"Unsupported retrieval provider '{resolved.provider}'")
 
 
 # Tool definitions for LLM API
@@ -209,24 +623,40 @@ class ChatIndexTools:
 
 
 def query_ctree(
-    api_key: str,
+    api_key: Optional[str],
     ctree: CTree,
     user_query: str,
-    max_turns: int = 50
+    max_turns: int = 50,
+    provider: str = DEFAULT_RETRIEVAL_PROVIDER,
+    model: Optional[str] = None,
+    max_tokens: Optional[int] = None,
+    config: Optional[LLMProviderConfig] = None,
+    llm_client: Any = None,
 ) -> Dict[str, Any]:
     """
     Query a CTree to answer questions about the conversation.
 
     Args:
-        api_key: Anthropic API key
+        api_key: Provider API key. Defaults to Anthropic for backward compatibility.
         ctree: CTree instance with conversation data
         user_query: User's question about the conversation
         max_turns: Maximum number of conversation turns
+        provider: Retrieval provider name ("anthropic" or "openai")
+        model: Provider model name. Uses provider defaults when omitted.
+        max_tokens: Maximum tokens for each provider call.
+        config: Optional LLMProviderConfig. Explicit arguments override matching fields.
+        llm_client: Optional test/client injection implementing create_message().
 
     Returns:
         Dictionary with the conversation history and final response
     """
-    client = Anthropic(api_key=api_key)
+    client = llm_client or build_retrieval_client(
+        api_key=api_key,
+        provider=provider,
+        model=model,
+        max_tokens=max_tokens,
+        config=config,
+    )
     tools_handler = ChatIndexTools(ctree)
 
     # Initial system message explaining the context
@@ -255,17 +685,15 @@ Each TopicNode has start_index and end_index fields that define the range of mes
 
     for turn in range(max_turns):
         # Make API call to LLM
-        response = client.messages.create(
-            model="claude-sonnet-4-5",
-            max_tokens=8192,
+        response = client.create_message(
             system=system_message,
             tools=TOOLS,
-            messages=messages
+            messages=messages,
         )
 
         conversation_history.append({
             "turn": turn + 1,
-            "response": response
+            "response": response.raw_response if response.raw_response is not None else response
         })
 
         # Check if we're done (no tool use)
@@ -273,8 +701,8 @@ Each TopicNode has start_index and end_index fields that define the range of mes
             # Extract final text response
             final_response = ""
             for block in response.content:
-                if block.type == "text":
-                    final_response += block.text
+                if _block_type(block) == "text":
+                    final_response += _block_value(block, "text", "")
 
             return {
                 "success": True,
@@ -294,11 +722,14 @@ Each TopicNode has start_index and end_index fields that define the range of mes
             # Process each tool use
             tool_results = []
             for block in response.content:
-                if block.type == "tool_use":
-                    result = tools_handler.process_tool_call(block.name, block.input)
+                if _block_type(block) == "tool_use":
+                    result = tools_handler.process_tool_call(
+                        _block_value(block, "name"),
+                        _block_value(block, "input", {}),
+                    )
                     tool_results.append({
                         "type": "tool_result",
-                        "tool_use_id": block.id,
+                        "tool_use_id": _block_value(block, "id"),
                         "content": json.dumps(result, indent=2)
                     })
 
@@ -324,30 +755,46 @@ Each TopicNode has start_index and end_index fields that define the range of mes
 
 
 def query_ctree_streaming(
-    api_key: str,
+    api_key: Optional[str],
     ctree: CTree,
     user_query: str,
     max_turns: int = 50,
-    on_text_chunk: callable = None,
-    on_tool_use: callable = None,
-    on_turn_complete: callable = None
+    on_text_chunk: Optional[Callable[[str], None]] = None,
+    on_tool_use: Optional[Callable[[str, Dict[str, Any]], None]] = None,
+    on_turn_complete: Optional[Callable[[int], None]] = None,
+    provider: str = DEFAULT_RETRIEVAL_PROVIDER,
+    model: Optional[str] = None,
+    max_tokens: Optional[int] = None,
+    config: Optional[LLMProviderConfig] = None,
+    llm_client: Any = None,
 ) -> Dict[str, Any]:
     """
     Query a CTree with streaming output.
 
     Args:
-        api_key: Anthropic API key
+        api_key: Provider API key. Defaults to Anthropic for backward compatibility.
         ctree: CTree instance with conversation data
         user_query: User's question about the conversation
         max_turns: Maximum number of conversation turns
         on_text_chunk: Callback for text chunks (chunk_text: str)
         on_tool_use: Callback for tool use (tool_name: str, tool_input: dict)
         on_turn_complete: Callback when turn completes (turn_number: int)
+        provider: Retrieval provider name ("anthropic" or "openai")
+        model: Provider model name. Uses provider defaults when omitted.
+        max_tokens: Maximum tokens for each provider call.
+        config: Optional LLMProviderConfig. Explicit arguments override matching fields.
+        llm_client: Optional test/client injection implementing stream_message().
 
     Returns:
         Dictionary with the conversation history and final response
     """
-    client = Anthropic(api_key=api_key)
+    client = llm_client or build_retrieval_client(
+        api_key=api_key,
+        provider=provider,
+        model=model,
+        max_tokens=max_tokens,
+        config=config,
+    )
     tools_handler = ChatIndexTools(ctree)
 
     # Initial system message explaining the context
@@ -377,100 +824,81 @@ Each TopicNode has start_index and end_index fields that define the range of mes
 
     for turn in range(max_turns):
         # Make streaming API call to LLM
-        with client.messages.stream(
-            model="claude-sonnet-4-5",
-            max_tokens=8192,
+        streamed_chunks = []
+
+        def handle_text_chunk(chunk_text: str) -> None:
+            streamed_chunks.append(chunk_text)
+            if on_text_chunk:
+                on_text_chunk(chunk_text)
+
+        final_message = client.stream_message(
             system=system_message,
             tools=TOOLS,
-            messages=messages
-        ) as stream:
-            current_content = []
+            messages=messages,
+            on_text_chunk=handle_text_chunk,
+        )
+        final_response += "".join(streamed_chunks)
 
-            for event in stream:
-                # Handle text delta events
-                if event.type == "content_block_delta":
-                    if hasattr(event.delta, "text"):
-                        if on_text_chunk:
-                            on_text_chunk(event.delta.text)
-                        final_response += event.delta.text
+        conversation_history.append({
+            "turn": turn + 1,
+            "response": final_message.raw_response if final_message.raw_response is not None else final_message
+        })
 
-                # Handle content block start (for tool use)
-                elif event.type == "content_block_start":
-                    if hasattr(event.content_block, "type"):
-                        if event.content_block.type == "tool_use":
-                            current_content.append({
-                                "type": "tool_use",
-                                "id": event.content_block.id,
-                                "name": event.content_block.name,
-                                "input": {}
-                            })
-                        elif event.content_block.type == "text":
-                            current_content.append({
-                                "type": "text",
-                                "text": ""
-                            })
+        if on_turn_complete:
+            on_turn_complete(turn + 1)
 
-                # Handle input_json_delta for tool use
-                elif event.type == "content_block_delta":
-                    if hasattr(event.delta, "partial_json"):
-                        # Accumulate tool input JSON
-                        pass
+        # Check if we're done (no tool use)
+        if final_message.stop_reason == "end_turn":
+            if not final_response:
+                final_response = "".join(
+                    _block_value(block, "text", "")
+                    for block in final_message.content
+                    if _block_type(block) == "text"
+                )
+            return {
+                "success": True,
+                "final_response": final_response,
+                "turns_used": turn + 1,
+                "conversation_history": conversation_history
+            }
 
-            # Get final message from stream
-            final_message = stream.get_final_message()
-
-            conversation_history.append({
-                "turn": turn + 1,
-                "response": final_message
+        # Process tool calls
+        if final_message.stop_reason == "tool_use":
+            # Add assistant message to conversation
+            messages.append({
+                "role": "assistant",
+                "content": final_message.content
             })
 
-            if on_turn_complete:
-                on_turn_complete(turn + 1)
+            # Process each tool use
+            tool_results = []
+            for block in final_message.content:
+                if _block_type(block) == "tool_use":
+                    tool_name = _block_value(block, "name")
+                    tool_input = _block_value(block, "input", {})
+                    if on_tool_use:
+                        on_tool_use(tool_name, tool_input)
 
-            # Check if we're done (no tool use)
-            if final_message.stop_reason == "end_turn":
-                return {
-                    "success": True,
-                    "final_response": final_response,
-                    "turns_used": turn + 1,
-                    "conversation_history": conversation_history
-                }
+                    result = tools_handler.process_tool_call(tool_name, tool_input)
+                    tool_results.append({
+                        "type": "tool_result",
+                        "tool_use_id": _block_value(block, "id"),
+                        "content": json.dumps(result, indent=2)
+                    })
 
-            # Process tool calls
-            if final_message.stop_reason == "tool_use":
-                # Add assistant message to conversation
-                messages.append({
-                    "role": "assistant",
-                    "content": final_message.content
-                })
-
-                # Process each tool use
-                tool_results = []
-                for block in final_message.content:
-                    if block.type == "tool_use":
-                        if on_tool_use:
-                            on_tool_use(block.name, block.input)
-
-                        result = tools_handler.process_tool_call(block.name, block.input)
-                        tool_results.append({
-                            "type": "tool_result",
-                            "tool_use_id": block.id,
-                            "content": json.dumps(result, indent=2)
-                        })
-
-                # Add tool results to conversation
-                messages.append({
-                    "role": "user",
-                    "content": tool_results
-                })
-            else:
-                # Unexpected stop reason
-                return {
-                    "success": False,
-                    "error": f"Unexpected stop reason: {final_message.stop_reason}",
-                    "turns_used": turn + 1,
-                    "conversation_history": conversation_history
-                }
+            # Add tool results to conversation
+            messages.append({
+                "role": "user",
+                "content": tool_results
+            })
+        else:
+            # Unexpected stop reason
+            return {
+                "success": False,
+                "error": f"Unexpected stop reason: {final_message.stop_reason}",
+                "turns_used": turn + 1,
+                "conversation_history": conversation_history
+            }
 
     return {
         "success": False,
