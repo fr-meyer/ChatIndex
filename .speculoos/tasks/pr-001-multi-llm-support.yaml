@@ -1,0 +1,69 @@
+schema_version: 0.1
+id: pr-001-multi-llm-support
+title: Multi-LLM support
+branch: feat/multi-llm-support
+setup_branch: chore/speculoos-pr001-setup
+base_branch: dev
+status: spec-draft
+pret_a_coder: not-yet
+blocked_by:
+  - spec-review-needed
+  - tests-and-write-scope-review-needed
+  - github-issue-disabled-on-repository
+  - vibe-project-not-yet-created
+objective: >
+  Implement ChatIndex roadmap item "Multi-LLM support" through a small,
+  testable provider abstraction that keeps existing OpenAI tree-building and
+  Anthropic retrieval paths working while removing hardcoded provider/model
+  choices from the retrieval loop.
+acceptance_criteria:
+  - Existing no-key baseline tests still pass.
+  - New tests cover provider/model selection without live provider API calls.
+  - `query_ctree` and streaming retrieval can accept an explicit provider/model configuration.
+  - Existing public call sites remain compatible or have a documented migration path.
+  - No real provider keys, `.env`, private logs, raw sessions, or generated run payloads are committed.
+write_scope:
+  allowed:
+    - ctree/**
+    - retrieval/**
+    - tests/**
+    - specs/001-multi-llm-support/**
+    - .speculoos/tasks/pr-001-multi-llm-support.yaml
+    - .speculoos/manifest.yaml
+    - .speculoos/surfaces/**
+    - README.md
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+executor_lanes:
+  codex_review:
+    status: required
+  cursor_worker:
+    status: planned
+    reason: first real implementation dogfood after spec review and PRet-a-Coder gate
+surface_sync:
+  manifest: done
+  github_issue: blocked
+  github_project: pending
+  github_pr: pending
+  vibe_kanban: mcp-present-service-missing
+review:
+  tests: pending
+  test_command: python -m unittest discover -v
+  private_data_check: pending
+  approval_to_publish: pending
+  approval_to_merge: pending
