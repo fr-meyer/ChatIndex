@@ -28,4 +28,4 @@
 - [x] T013 Run Python compile check.
 - [x] T014 Run `git diff --check`.
 - [x] T015 Run Speculoos preflight.
-- [ ] T016 Open PR against fork `dev`.
+- [x] T016 Open PR against fork `dev`.

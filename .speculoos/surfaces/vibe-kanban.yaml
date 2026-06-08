@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-synced
+status: local-task-inreview
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -19,8 +19,9 @@ service:
   manager: scripts/openclaw-vibe-kanban-service
 task:
   title: "PR002: Offline tree optimization"
-  status: inprogress
+  status: inreview
   github_issue: https://github.com/fr-meyer/ChatIndex/issues/7
+  github_pr: https://github.com/fr-meyer/ChatIndex/pull/8
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check
