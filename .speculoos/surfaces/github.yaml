@@ -25,9 +25,9 @@ project:
   blocked_by: no-issue-or-project-target-yet
 pull_request:
   enabled: true
-  status: pending
-  number: null
-  url: null
+  status: open
+  number: 3
+  url: https://github.com/fr-meyer/ChatIndex/pull/3
   base_branch: dev
   head_branch: chore/speculoos-pr001-setup
 required_before_sync:
