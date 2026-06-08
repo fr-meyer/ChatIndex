@@ -3,7 +3,7 @@
 ## No-Key Validation
 
 ```bash
-python -m unittest discover -v
+.venv/bin/python -m unittest discover -v
 ```
 
 The PR001 tests must use fake clients and must not require real provider API
@@ -33,4 +33,16 @@ result = query_ctree(
 )
 ```
 
-The final API may use a config object if the implementation proves that cleaner.
+OpenAI retrieval can be selected explicitly:
+
+```python
+result = query_ctree(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    ctree=tree,
+    user_query="What was discussed?",
+    provider="openai",
+    model="gpt-4o-mini"
+)
+```
+
+Tests can inject `llm_client` and avoid live provider calls entirely.
