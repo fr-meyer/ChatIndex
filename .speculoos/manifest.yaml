@@ -11,13 +11,14 @@ repository:
   working_branch: feat/incremental-updates
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: pr003-ready-for-pr
+  phase: pr003-in-review
   pret_a_coder: satisfied
   blocker_summary:
     - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, and PR002 implementation PR #8 are merged into fork dev.
     - Current fork dev is cf3b6a35394548da22e600803a4cf64573cb4388.
     - PR003 is tracked as GitHub issue #9 and Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIRYA with Status In Progress.
-    - PR003 is mirrored as local Vibe task 7348d605-6d20-528e-9a66-6dad5887e971 with Status inprogress.
+    - PR003 implementation is open as PR #10 and Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIXhA with Status In Progress.
+    - PR003 is mirrored as local Vibe task 7348d605-6d20-528e-9a66-6dad5887e971 with Status inreview.
     - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
@@ -53,16 +54,16 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: pending
-    number: null
-    url: null
+    status: open
+    number: 10
+    url: https://github.com/fr-meyer/ChatIndex/pull/10
     base_branch: dev
     head_branch: feat/incremental-updates
     merge_commit: null
     merged_at: null
   vibe_kanban:
     enabled: true
-    status: local-task-inprogress
+    status: local-task-inreview
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
     issue_id: 7348d605-6d20-528e-9a66-6dad5887e971
     file: .speculoos/surfaces/vibe-kanban.yaml
