@@ -7,7 +7,7 @@ blocked_by:
 branches:
   base: dev
   head: feat/e2e-smoke-speculoos-closure
-  dev_sha: 6410d7c8e5095e26efa22a6049ab215f2e9fa4c3
+  dev_sha: dd7b563a0edb2032e153d8b162dd97b8cc55b04f
 issue:
   enabled: true
   status: synced
@@ -15,6 +15,9 @@ issue:
   url: https://github.com/fr-meyer/ChatIndex/issues/13
   title: "PR005: End-to-end smoke and Speculoos closure"
   linked_task: pr-005-e2e-smoke-speculoos-closure
+  state: closed
+  state_reason: completed
+  closed_at: 2026-06-09T06:06:05Z
 project:
   enabled: true
   status: synced
@@ -48,7 +51,7 @@ project:
       linked_task: pr-004-vector-search-integration
     - kind: issue
       number: 13
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI42Q
       url: https://github.com/fr-meyer/ChatIndex/issues/13
       linked_task: pr-005-e2e-smoke-speculoos-closure
@@ -98,29 +101,29 @@ project:
       linked_task: pr-004-vector-search-integration
     - kind: pull_request
       number: 14
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ
       url: https://github.com/fr-meyer/ChatIndex/pull/14
       linked_task: pr-005-e2e-smoke-speculoos-closure
 pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 14
   url: https://github.com/fr-meyer/ChatIndex/pull/14
   base_branch: dev
   head_branch: feat/e2e-smoke-speculoos-closure
   created_at: 2026-06-09T05:46:13Z
-  merge_commit: null
-  merged_at: null
+  merge_commit: dd7b563a0edb2032e153d8b162dd97b8cc55b04f
+  merged_at: 2026-06-09T06:05:45Z
 last_merged_pull_request:
   enabled: true
   status: merged
-  number: 12
-  url: https://github.com/fr-meyer/ChatIndex/pull/12
+  number: 14
+  url: https://github.com/fr-meyer/ChatIndex/pull/14
   base_branch: dev
-  head_branch: feat/vector-search-integration
-  merge_commit: 6410d7c8e5095e26efa22a6049ab215f2e9fa4c3
-  merged_at: 2026-06-09T05:18:14Z
+  head_branch: feat/e2e-smoke-speculoos-closure
+  merge_commit: dd7b563a0edb2032e153d8b162dd97b8cc55b04f
+  merged_at: 2026-06-09T06:05:45Z
 surface_sync_pull_request:
   enabled: true
   status: merged

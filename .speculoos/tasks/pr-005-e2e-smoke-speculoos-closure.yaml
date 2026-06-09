@@ -3,7 +3,7 @@ id: pr-005-e2e-smoke-speculoos-closure
 title: End-to-end smoke and Speculoos closure
 branch: feat/e2e-smoke-speculoos-closure
 base_branch: dev
-status: in-review
+status: done
 pret_a_coder: satisfied
 objective: >
   Add a focused no-key hardening slice that proves build/save/load,
@@ -51,17 +51,21 @@ surface_sync:
   github_project: synced
   github_project_number: 1
   github_project_url: https://github.com/users/fr-meyer/projects/1
-  github_project_item_status: In Progress
+  github_project_item_status: Done
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI42Q
-  github_pull_request: synced
+  github_issue_state: closed
+  github_issue_closed_at: 2026-06-09T06:06:05Z
+  github_pull_request: merged
   github_pull_request_number: 14
   github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/14
-  github_pull_request_project_item_status: In Progress
+  github_pull_request_merged_at: 2026-06-09T06:05:45Z
+  github_pull_request_merge_commit: dd7b563a0edb2032e153d8b162dd97b8cc55b04f
+  github_pull_request_project_item_status: Done
   github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ
-  vibe_kanban: local-task-inreview
+  vibe_kanban: local-task-done
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: e7826ad8-9761-5e76-8b79-51d914871344
-  vibe_task_status: inreview
+  vibe_task_status: done
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
