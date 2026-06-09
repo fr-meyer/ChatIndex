@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: ed4d8459-f2d6-5dd5-9505-d314fa96eaa3
+issue_id: e7826ad8-9761-5e76-8b79-51d914871344
 workspace_id: null
 session_id: null
 service:
@@ -18,10 +18,10 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR004: Vector search integration"
+  title: "PR005: End-to-end smoke and Speculoos closure"
   status: inreview
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/11
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/12
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/13
+  github_pr: https://github.com/fr-meyer/ChatIndex/pull/14
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check

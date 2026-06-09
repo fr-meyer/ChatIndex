@@ -1,38 +1,35 @@
-# Goal: ChatIndex Fork PR 0 Baseline
+# Goal: ChatIndex Speculoos Closure
 
 ## Objective
 
-Create the first ChatIndex fork baseline branch through Speculoos v0 so later
-roadmap PRs can use a repeatable spec, task, executor, review, and PR workflow.
+Close the initial ChatIndex roadmap dogfood loop with one composed no-key smoke
+test and accurate Speculoos surface metadata.
 
 ## Scope
 
-- Initialize Spec Kit artifacts.
-- Add repo-local Speculoos workflow state.
-- Define task surfaces and executor authority boundaries.
-- Establish a no-secret validation path.
-- Prepare for fork `dev` and PR 0 publication once GitHub auth/fork access is
-  available.
+- Keep PR001-PR004 recorded as merged/done.
+- Add no-key smoke coverage proving save/load, incremental append, vector
+  search, and message-range retrieval compose.
+- Keep GitHub Project, Vibe Kanban, and repo-local metadata synchronized.
+- Preserve the no-secret validation path for future roadmap or hardening PRs.
 
 ## Non-goals
 
-- Implement multi-LLM support.
-- Implement offline tree optimization.
-- Implement incremental updates.
-- Implement vector search.
+- Add new roadmap features beyond the closure smoke test.
+- Promote fork `dev` to `main`.
 - Commit private OpenClaw logs or real provider responses.
 
 ## Stop Conditions
 
-- Fork visibility or GitHub auth is missing when a publish action is required.
+- Fork visibility or GitHub/Project auth is missing when a publish action is required.
 - Tests require real provider keys for baseline validation.
 - Executor output includes private logs, secrets, or unapproved files.
 - The task is not PRet-a-Coder.
 
 ## Acceptance Criteria
 
-- Spec Kit and Speculoos files are present and reviewable.
+- PR004 is recorded as merged/done in all tracked surfaces.
+- PR005 smoke coverage is present and no-key.
 - Surface status is explicit for manifest, GitHub, and Vibe Kanban.
 - Lane contracts define Codex and Cursor authority boundaries.
 - Local no-secret validation is documented and runnable.
-- Commit/push/PR actions remain blocked until explicit approval.

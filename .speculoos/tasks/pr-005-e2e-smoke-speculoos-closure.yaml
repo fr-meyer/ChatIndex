@@ -1,0 +1,87 @@
+schema_version: 0.1
+id: pr-005-e2e-smoke-speculoos-closure
+title: End-to-end smoke and Speculoos closure
+branch: feat/e2e-smoke-speculoos-closure
+base_branch: dev
+status: in-review
+pret_a_coder: satisfied
+objective: >
+  Add a focused no-key hardening slice that proves build/save/load,
+  incremental append, vector search, and message-range retrieval compose after
+  the roadmap PRs have merged.
+acceptance_criteria:
+  - Existing no-key tests still pass.
+  - New no-key smoke test covers build/save/load/append plus vector retrieval.
+  - New smoke test verifies vector result ranges can fetch raw messages.
+  - Speculoos goal/manifest/surface metadata records PR004 as done and PR005 as active.
+  - No real provider keys, `.env`, private logs, raw sessions, generated run payloads, generated tree files, vector index dumps, or OpenClaw private state are committed.
+write_scope:
+  allowed:
+    - tests/**
+    - README.md
+    - specs/005-e2e-smoke-speculoos-closure/**
+    - .speculoos/goal.md
+    - .speculoos/manifest.yaml
+    - .speculoos/tasks/pr-004-vector-search-integration.yaml
+    - .speculoos/tasks/pr-005-e2e-smoke-speculoos-closure.yaml
+    - .speculoos/surfaces/**
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 13
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/13
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: In Progress
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI42Q
+  github_pull_request: synced
+  github_pull_request_number: 14
+  github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/14
+  github_pull_request_project_item_status: In Progress
+  github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ
+  vibe_kanban: local-task-inreview
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: e7826ad8-9761-5e76-8b79-51d914871344
+  vibe_task_status: inreview
+review:
+  tests: passed
+  test_command: .venv/bin/python -m unittest discover -v
+  test_count: 22
+  compile_check: passed
+  yaml_check: passed
+  diff_check: passed
+  speculoos_preflight: passed
+  private_data_check: passed
+  cursor_worker: completed
+  cursor_worker_job: speculoos-pr005-e2e-smoke-closure-20260609
+  validation_notes: >
+    OpenClaw validation passed: unittest discover ran 22 tests, py_compile
+    completed for touched Python modules, YAML parse passed, git diff --check
+    passed, Speculoos preflight passed, and private-data/path scan passed.
+  implementation:
+    smoke_test: tests/test_e2e_smoke.py
+    coverage:
+      - ctree build with stubbed LLM helpers
+      - save and load with conversation persistence
+      - incremental append after load
+      - vector search over appended exchange
+      - get_node_messages range retrieval

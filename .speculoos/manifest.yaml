@@ -1,24 +1,27 @@
 schema_version: 0.1
 project: ChatIndex
 workflow: speculoos-v0
-canonical_task: pr-004-vector-search-integration
+canonical_task: pr-005-e2e-smoke-speculoos-closure
 repository:
   upstream: VectifyAI/ChatIndex
   fork: fr-meyer/ChatIndex
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: feat/vector-search-integration
+  working_branch: feat/e2e-smoke-speculoos-closure
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: pr004-in-review
+  phase: pr005-in-review
   pret_a_coder: satisfied
   blocker_summary:
-    - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, and PR003 implementation PR #10 are merged into fork dev.
-    - Current fork dev is 82d2f1ab8480997374a4ba50874c989d14cef80b.
-    - PR004 is tracked as GitHub issue #11 and Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIsEY with Status In Progress.
-    - PR004 implementation PR #12 is open and Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ has Status In Progress.
-    - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status inreview.
+    - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, and PR004 implementation PR #12 are merged into fork dev.
+    - Current fork dev is 6410d7c8e5095e26efa22a6049ab215f2e9fa4c3; PR004 merged-surface sync commit 727cd51f275658c364bbd8c4cc2c762489d1620c is queued in the PR005 branch.
+    - PR004 issue #11 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIsEY is recorded as Done.
+    - PR004 implementation PR #12 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ is recorded as Done.
+    - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status done.
+    - PR005 is tracked as GitHub issue #13 and Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvI42Q with Status In Progress.
+    - PR005 implementation PR #14 is open; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ is recorded as In Progress.
+    - PR005 is mirrored as local Vibe task e7826ad8-9761-5e76-8b79-51d914871344 with Status inreview.
     - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
@@ -27,11 +30,11 @@ validation:
   no_secret_tests:
     status: passed
     command: .venv/bin/python -m unittest discover -v
-    result: 21 passed, 0 failed
+    result: 22 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: origin/dev...feat/vector-search-integration
-    notes: PR004 implementation scope scanned; no committed secret, private-log, session, tmp, vector-index dump, .openclaw, key/pem, .index, or .faiss artifacts found.
+    reviewed_range: origin/dev...feat/e2e-smoke-speculoos-closure
+    notes: PR005 implementation scope scanned; no committed secret, private-log, session, tmp, vector-index dump, .openclaw, key/pem, .index, or .faiss artifacts found.
   powershell_parser:
     status: not_applicable
     command: null
@@ -43,8 +46,8 @@ surfaces:
   github_issue:
     enabled: true
     status: synced
-    number: 11
-    url: https://github.com/fr-meyer/ChatIndex/issues/11
+    number: 13
+    url: https://github.com/fr-meyer/ChatIndex/issues/13
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
@@ -55,18 +58,18 @@ surfaces:
   github_pull_request:
     enabled: true
     status: open
-    number: 12
-    url: https://github.com/fr-meyer/ChatIndex/pull/12
+    number: 14
+    url: https://github.com/fr-meyer/ChatIndex/pull/14
     base_branch: dev
-    head_branch: feat/vector-search-integration
-    created_at: 2026-06-09T04:54:46Z
+    head_branch: feat/e2e-smoke-speculoos-closure
+    created_at: 2026-06-09T05:46:13Z
     merge_commit: null
     merged_at: null
   vibe_kanban:
     enabled: true
     status: local-task-inreview
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-    issue_id: ed4d8459-f2d6-5dd5-9505-d314fa96eaa3
+    issue_id: e7826ad8-9761-5e76-8b79-51d914871344
     file: .speculoos/surfaces/vibe-kanban.yaml
 lanes:
   codex_review:
