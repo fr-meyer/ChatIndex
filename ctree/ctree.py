@@ -319,6 +319,15 @@ class CTree:
         self.root.end_index = msg_count
         self.current_node = first_topic
     
+    def _update_ancestor_end_indices(self, topic: TopicNode) -> None:
+        """Propagate the conversation end through a topic and its ancestors."""
+        end_index = len(self.conversation)
+        current: Optional[TopicNode] = topic
+        while current is not None:
+            current.end_index = end_index
+            parent = current.parent
+            current = parent if isinstance(parent, TopicNode) else None
+
     def _add_message(self, msg_dict: Dict) -> None:
         """Add a message to the tree."""
         # Determine which topic this message belongs to
@@ -341,8 +350,7 @@ class CTree:
         target_topic.children.append(msg_node)
         target_topic.update_sub_node_count()
         
-        # Update the end_index of the target topic
-        target_topic.end_index = len(self.conversation)
+        self._update_ancestor_end_indices(target_topic)
         self.current_node = target_topic
         
         # Check if any nodes need reorganization due to too many children
@@ -1496,6 +1504,10 @@ Respond ONLY with valid JSON, no other text."""
         
         # Find the current node (rightmost/most recent node)
         tree.current_node = tree._find_current_node(tree.root)
+
+        # Keep root end range aligned with restored conversation length
+        if tree.conversation:
+            tree.root.end_index = len(tree.conversation)
         
         return tree
     
