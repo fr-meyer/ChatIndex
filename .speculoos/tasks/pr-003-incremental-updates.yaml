@@ -1,0 +1,74 @@
+schema_version: 0.1
+id: pr-003-incremental-updates
+title: Incremental updates
+branch: feat/incremental-updates
+base_branch: dev
+status: validation
+pret_a_coder: satisfied
+objective: >
+  Implement ChatIndex roadmap item "Incremental updates" so a saved or loaded
+  CTree can accept appended user/assistant exchanges without rebuilding the
+  whole tree or disturbing unrelated frozen structure.
+acceptance_criteria:
+  - Existing no-key tests still pass.
+  - New no-key tests cover appending to a loaded tree and preserving message index continuity.
+  - New no-key tests cover current-node preservation after save/load plus append.
+  - New no-key tests cover localized reorganization for appended messages without full-tree rebuild.
+  - Public CTree add/load/save call shapes remain compatible.
+  - No real provider keys, `.env`, private logs, raw sessions, generated run payloads, or OpenClaw private state are committed.
+write_scope:
+  allowed:
+    - ctree/**
+    - tests/**
+    - README.md
+    - specs/003-incremental-updates/**
+    - .speculoos/tasks/pr-002-offline-tree-optimization.yaml
+    - .speculoos/tasks/pr-003-incremental-updates.yaml
+    - .speculoos/manifest.yaml
+    - .speculoos/surfaces/**
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 9
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/9
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: In Progress
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIRYA
+  github_pull_request: pending
+  github_pull_request_number: null
+  github_pull_request_url: null
+  vibe_kanban: local-task-inprogress
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: 7348d605-6d20-528e-9a66-6dad5887e971
+  vibe_task_status: inprogress
+review:
+  tests: passing
+  test_command: .venv/bin/python -m unittest discover -v
+  test_result: 14 passed, 0 failed
+  compile_check: passed
+  yaml_check: passed
+  diff_check: passed
+  speculoos_preflight: passed
+  private_data_check: passed
+  cursor_worker: completed
+  cursor_worker_job: speculoos-pr003-incremental-updates-20260609
+  cursor_worker_exit_code: 0
+  cursor_worker_note: Cursor produced the first implementation pass; Codex patched tests to keep them no-key and then validated locally.
