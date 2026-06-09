@@ -27,7 +27,7 @@ validation:
   no_secret_tests:
     status: passed
     command: .venv/bin/python -m unittest discover -v
-    result: 20 passed, 0 failed
+    result: 21 passed, 0 failed
   private_data_check:
     status: passed
     reviewed_range: origin/dev...feat/vector-search-integration
@@ -59,6 +59,7 @@ surfaces:
     url: https://github.com/fr-meyer/ChatIndex/pull/12
     base_branch: dev
     head_branch: feat/vector-search-integration
+    created_at: 2026-06-09T04:54:46Z
     merge_commit: null
     merged_at: null
   vibe_kanban:

@@ -2,7 +2,7 @@ import json
 import unittest
 from types import SimpleNamespace
 
-from ctree.ctree import MessageNode, TopicNode
+from ctree.ctree import CTree, MessageNode, TopicNode
 from retrieval.llm_tools import (
     AnthropicRetrievalClient,
     ChatIndexTools,
@@ -15,7 +15,7 @@ from retrieval.llm_tools import (
     query_ctree,
     query_ctree_streaming,
 )
-from retrieval.vector_index import VectorIndex, deterministic_embed
+from retrieval.vector_index import VectorIndex, _exchange_range, deterministic_embed
 
 
 class FakeRetrievalClient:
@@ -156,6 +156,31 @@ class VectorIndexTests(unittest.TestCase):
             [result["message_index"] for result in repeated],
             [result["message_index"] for result in excessive],
         )
+
+    def test_system_message_exchange_range_matches_conversation_slice(self):
+        tree = CTree(api_key="test-key")
+        tree._llm_generate_topic_from_message = lambda *args, **kwargs: "System Setup"
+        tree.add([
+            {"role": "system", "content": "Use concise deployment answers."},
+            {"role": "user", "content": "How do we deploy?"},
+            {"role": "assistant", "content": "Deploy with Kubernetes."},
+        ])
+
+        message_node = tree.root.children[0].children[0]
+        self.assertIsInstance(message_node, MessageNode)
+        self.assertEqual(_exchange_range(message_node), (0, 3))
+
+        tools = ChatIndexTools(tree)
+        messages = tools.get_node_messages(0, 3)
+        self.assertEqual(messages["message_count"], 3)
+        self.assertEqual(
+            [message["role"] for message in messages["messages"]],
+            ["system", "user", "assistant"],
+        )
+
+        vector_result = tools.vector_search("kubernetes deployment", top_k=1)
+        self.assertEqual(vector_result["results"][0]["start_index"], 0)
+        self.assertEqual(vector_result["results"][0]["end_index"], 3)
 
 
 class RetrievalProviderTests(unittest.TestCase):
