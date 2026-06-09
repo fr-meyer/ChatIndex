@@ -84,11 +84,17 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIXhA
       url: https://github.com/fr-meyer/ChatIndex/pull/10
       linked_task: pr-003-incremental-updates
+    - kind: pull_request
+      number: 12
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ
+      url: https://github.com/fr-meyer/ChatIndex/pull/12
+      linked_task: pr-004-vector-search-integration
 pull_request:
   enabled: true
-  status: pending
-  number: null
-  url: null
+  status: open
+  number: 12
+  url: https://github.com/fr-meyer/ChatIndex/pull/12
   base_branch: dev
   head_branch: feat/vector-search-integration
   merge_commit: null
