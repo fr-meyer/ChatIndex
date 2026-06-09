@@ -1506,8 +1506,7 @@ Respond ONLY with valid JSON, no other text."""
         tree.current_node = tree._find_current_node(tree.root)
 
         # Keep root end range aligned with restored conversation length
-        if tree.conversation:
-            tree.root.end_index = len(tree.conversation)
+        tree.root.end_index = len(tree.conversation)
         
         return tree
     
