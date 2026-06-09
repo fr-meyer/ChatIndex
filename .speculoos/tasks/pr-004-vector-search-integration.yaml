@@ -1,0 +1,78 @@
+schema_version: 0.1
+id: pr-004-vector-search-integration
+title: Vector search integration
+branch: feat/vector-search-integration
+base_branch: dev
+status: in-review
+pret_a_coder: satisfied
+objective: >
+  Implement ChatIndex roadmap item "Vector search integration" so retrieval can
+  combine tree navigation with deterministic, no-key vector candidates.
+acceptance_criteria:
+  - Existing no-key tests still pass.
+  - New no-key tests cover deterministic vector indexing and nearest-neighbor search.
+  - New no-key tests cover vector search exposure through retrieval tools.
+  - Existing retrieval tools and public query call shapes remain compatible.
+  - README roadmap/docs mention vector search integration after implementation.
+  - No real provider keys, `.env`, private logs, raw sessions, generated run payloads, vector index dumps, or OpenClaw private state are committed.
+write_scope:
+  allowed:
+    - retrieval/**
+    - tests/**
+    - README.md
+    - specs/004-vector-search-integration/**
+    - .speculoos/tasks/pr-004-vector-search-integration.yaml
+    - .speculoos/manifest.yaml
+    - .speculoos/surfaces/**
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 11
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/11
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: In Progress
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIsEY
+  github_pull_request: open
+  github_pull_request_number: 12
+  github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/12
+  github_pull_request_created_at: 2026-06-09T04:54:46Z
+  github_pull_request_project_item_status: In Progress
+  github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ
+  vibe_kanban: local-task-inreview
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: ed4d8459-f2d6-5dd5-9505-d314fa96eaa3
+  vibe_task_status: inreview
+review:
+  tests: passed
+  test_command: .venv/bin/python -m unittest discover -v
+  compile_check: passed
+  yaml_check: passed
+  diff_check: passed
+  speculoos_preflight: passed
+  private_data_check: passed
+  cursor_worker: completed
+  cursor_worker_job: speculoos-pr004-vector-search-20260609
+  cursor_worker_exit_code: 0
+  cursor_worker_note: Cursor produced the first implementation pass; Codex patched result payloads, top_k coercion, stable hashing, and lazy vector-index construction before final validation.
+  coderabbit_requested: true
+  coderabbit_request_comment_id: 4656268129

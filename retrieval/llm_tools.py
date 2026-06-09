@@ -12,6 +12,7 @@ from typing import Callable, List, Dict, Any, Optional
 from anthropic import Anthropic
 from openai import OpenAI
 from ctree import CTree, TopicNode, MessageNode
+from retrieval.vector_index import VectorIndex
 
 
 DEFAULT_RETRIEVAL_PROVIDER = "anthropic"
@@ -468,6 +469,27 @@ TOOLS = [
             },
             "required": ["start_index", "end_index"]
         }
+    },
+    {
+        "name": "vector_search",
+        "description": "Search conversation exchanges by similarity to a natural-language query. "
+                      "Returns ranked matches with message_index, similarity score, previews, and "
+                      "message ranges suitable for get_node_messages.",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Natural-language search query"
+                },
+                "top_k": {
+                    "type": "integer",
+                    "description": "Maximum number of ranked results to return",
+                    "minimum": 1
+                }
+            },
+            "required": ["query"]
+        }
     }
 ]
 
@@ -483,6 +505,12 @@ class ChatIndexTools:
             ctree: A CTree instance with conversation data
         """
         self.ctree = ctree
+        self._vector_index: Optional[VectorIndex] = None
+
+    def _get_vector_index(self) -> VectorIndex:
+        if self._vector_index is None:
+            self._vector_index = VectorIndex.from_ctree(self.ctree)
+        return self._vector_index
 
     def view_node_and_children(self, node_path: List[int]) -> Dict[str, Any]:
         """
@@ -603,6 +631,32 @@ class ChatIndexTools:
         except Exception as e:
             return {"error": f"Error retrieving messages: {str(e)}"}
 
+    def vector_search(self, query: str, top_k: Optional[int] = None) -> Dict[str, Any]:
+        """
+        Search indexed conversation exchanges by deterministic vector similarity.
+
+        Args:
+            query: Natural-language search query
+            top_k: Maximum number of ranked results to return
+
+        Returns:
+            Dictionary with ranked vector-search matches
+        """
+        try:
+            if not isinstance(query, str) or not query.strip():
+                return {"error": "query must be a non-empty string"}
+
+            results = self._get_vector_index().search(query.strip(), top_k=top_k)
+            return {
+                "query": query.strip(),
+                "top_k": len(results),
+                "result_count": len(results),
+                "results": results,
+            }
+
+        except Exception as e:
+            return {"error": f"Error performing vector search: {str(e)}"}
+
     def process_tool_call(self, tool_name: str, tool_input: Dict[str, Any]) -> Dict[str, Any]:
         """
         Process a tool call from LLM.
@@ -618,6 +672,11 @@ class ChatIndexTools:
             return self.view_node_and_children(tool_input["node_path"])
         elif tool_name == "get_node_messages":
             return self.get_node_messages(tool_input["start_index"], tool_input["end_index"])
+        elif tool_name == "vector_search":
+            return self.vector_search(
+                tool_input["query"],
+                top_k=tool_input.get("top_k"),
+            )
         else:
             return {"error": f"Unknown tool: {tool_name}"}
 
@@ -662,12 +721,15 @@ def query_ctree(
     # Initial system message explaining the context
     system_message = """You are an AI assistant with access to a ChatIndex tree structure containing a conversation history.
 
-The conversation is organized hierarchically into topics and subtopics. You have two tools available:
+The conversation is organized hierarchically into topics and subtopics. You have three tools available:
 
 1. view_node_and_children: Navigate the tree structure to understand topics and subtopics
 2. get_node_messages: Retrieve actual message content from specific ranges
+3. vector_search: Find candidate exchanges by similarity to a natural-language query
 
-Start by viewing the root node to understand the conversation structure, then drill down into relevant topics to find the information needed to answer the user's query.
+Start by viewing the root node to understand the conversation structure, then drill down into relevant topics or use vector_search to find candidate exchanges. Use get_node_messages with the returned start_index and end_index to read the raw conversation range.
+
+Each vector_search result includes message_index, score, previews, and a message range suitable for get_node_messages.
 
 The tree uses a path-based navigation system where each node is accessed by a list of child indices from root:
 - [] = root node
@@ -800,12 +862,15 @@ def query_ctree_streaming(
     # Initial system message explaining the context
     system_message = """You are an AI assistant with access to a ChatIndex tree structure containing a conversation history.
 
-The conversation is organized hierarchically into topics and subtopics. You have two tools available:
+The conversation is organized hierarchically into topics and subtopics. You have three tools available:
 
 1. view_node_and_children: Navigate the tree structure to understand topics and subtopics
 2. get_node_messages: Retrieve actual message content from specific ranges
+3. vector_search: Find candidate exchanges by similarity to a natural-language query
 
-Start by viewing the root node to understand the conversation structure, then drill down into relevant topics to find the information needed to answer the user's query.
+Start by viewing the root node to understand the conversation structure, then drill down into relevant topics or use vector_search to find candidate exchanges. Use get_node_messages with the returned start_index and end_index to read the raw conversation range.
+
+Each vector_search result includes message_index, score, previews, and a message range suitable for get_node_messages.
 
 The tree uses a path-based navigation system where each node is accessed by a list of child indices from root:
 - [] = root node
