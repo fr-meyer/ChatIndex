@@ -320,6 +320,9 @@ topic = tools.view_node_and_children([0])  # View first topic
 
 # Get messages
 messages = tools.get_node_messages(0, 10)  # Get messages 0-10
+
+# Search by similarity
+matches = tools.vector_search("kubernetes deployment", top_k=3)
 ```
 
 ## Roadmap
@@ -330,7 +333,7 @@ messages = tools.get_node_messages(0, 10)  # Get messages 0-10
 - [x] **Offline tree optimization** - Post-processing for better structure
 - [x] **Multi-LLM support** - Support for different LLMs in retrieval
 - [x] **Incremental updates** - Efficiently update trees with new messages
-- [ ] **Vector search integration** - Hybrid retrieval combining tree + embeddings
+- [x] **Vector search integration** - Hybrid retrieval combining tree + embeddings
 
 
 ## Contributing

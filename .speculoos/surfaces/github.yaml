@@ -6,15 +6,15 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: null
-  dev_sha: 9a3f5dad0f91e764e5b2e1f070b45cba8bfac526
+  head: feat/vector-search-integration
+  dev_sha: 82d2f1ab8480997374a4ba50874c989d14cef80b
 issue:
   enabled: true
-  status: closed
-  number: 9
-  url: https://github.com/fr-meyer/ChatIndex/issues/9
-  title: "PR003: Incremental updates"
-  linked_task: pr-003-incremental-updates
+  status: synced
+  number: 11
+  url: https://github.com/fr-meyer/ChatIndex/issues/11
+  title: "PR004: Vector search integration"
+  linked_task: pr-004-vector-search-integration
 project:
   enabled: true
   status: synced
@@ -40,6 +40,12 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIRYA
       url: https://github.com/fr-meyer/ChatIndex/issues/9
       linked_task: pr-003-incremental-updates
+    - kind: issue
+      number: 11
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIsEY
+      url: https://github.com/fr-meyer/ChatIndex/issues/11
+      linked_task: pr-004-vector-search-integration
     - kind: pull_request
       number: 1
       status: Done
@@ -80,13 +86,13 @@ project:
       linked_task: pr-003-incremental-updates
 pull_request:
   enabled: true
-  status: merged
-  number: 10
-  url: https://github.com/fr-meyer/ChatIndex/pull/10
+  status: pending
+  number: null
+  url: null
   base_branch: dev
-  head_branch: feat/incremental-updates
-  merge_commit: 9a3f5dad0f91e764e5b2e1f070b45cba8bfac526
-  merged_at: 2026-06-09T03:34:07Z
+  head_branch: feat/vector-search-integration
+  merge_commit: null
+  merged_at: null
 surface_sync_pull_request:
   enabled: true
   status: merged

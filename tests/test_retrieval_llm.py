@@ -1,17 +1,21 @@
+import json
 import unittest
 from types import SimpleNamespace
 
 from ctree.ctree import MessageNode, TopicNode
 from retrieval.llm_tools import (
     AnthropicRetrievalClient,
+    ChatIndexTools,
     OpenAIRetrievalClient,
     RetrievalResponse,
     TextBlock,
     ToolUseBlock,
+    TOOLS,
     build_retrieval_client,
     query_ctree,
     query_ctree_streaming,
 )
+from retrieval.vector_index import VectorIndex, deterministic_embed
 
 
 class FakeRetrievalClient:
@@ -68,6 +72,90 @@ def make_tree():
         root=root,
         conversation=[user_message, assistant_message],
     )
+
+
+def make_multi_exchange_tree():
+    exchanges = [
+        ("What is the plan?", "Create a baseline first."),
+        ("How do we deploy?", "Use container orchestration with Kubernetes."),
+        ("What about testing?", "Write unit tests for each module."),
+    ]
+
+    conversation = []
+    root = TopicNode(
+        topic_name="ROOT",
+        summary="Virtual root",
+        start_index=0,
+        end_index=0,
+    )
+    topic = TopicNode(
+        topic_name="Project",
+        summary="Project discussion",
+        start_index=0,
+        end_index=0,
+        parent=root,
+    )
+
+    for user_text, assistant_text in exchanges:
+        user_message = {"role": "user", "content": user_text}
+        assistant_message = {"role": "assistant", "content": assistant_text}
+        start_index = len(conversation)
+        conversation.extend([user_message, assistant_message])
+        topic.children.append(MessageNode(
+            user_message=user_message,
+            assistant_message=assistant_message,
+            message_index=start_index,
+            parent=topic,
+        ))
+
+    topic.end_index = len(conversation)
+    root.children.append(topic)
+    root.end_index = len(conversation)
+    root.update_sub_node_count()
+
+    return SimpleNamespace(root=root, conversation=conversation)
+
+
+class VectorIndexTests(unittest.TestCase):
+    def test_deterministic_embedding_is_stable(self):
+        text = "kubernetes deployment orchestration"
+        first = deterministic_embed(text)
+        second = deterministic_embed(text)
+
+        self.assertEqual(first, second)
+        self.assertAlmostEqual(sum(value * value for value in first), 1.0, places=6)
+
+    def test_vector_search_ranks_most_relevant_exchange_first(self):
+        index = VectorIndex.from_ctree(make_multi_exchange_tree())
+        results = index.search("kubernetes deployment orchestration", top_k=3)
+
+        self.assertGreaterEqual(len(results), 2)
+        top_result = results[0]
+        self.assertEqual(top_result["message_index"], 2)
+        self.assertIn("deploy", top_result["text_preview"])
+        self.assertIn("Kubernetes", top_result["assistant_preview"])
+        self.assertNotIn("source_text", top_result)
+        self.assertEqual(top_result["start_index"], 2)
+        self.assertEqual(top_result["end_index"], 4)
+        self.assertGreater(top_result["score"], results[1]["score"])
+
+    def test_vector_search_bounds_top_k_and_preserves_stable_order(self):
+        index = VectorIndex.from_ctree(make_multi_exchange_tree())
+
+        bounded = index.search("project planning testing deploy", top_k=2)
+        self.assertEqual(len(bounded), 2)
+
+        string_top_k = index.search("project planning testing deploy", top_k="2")
+        self.assertEqual(len(string_top_k), 2)
+
+        excessive = index.search("project planning testing deploy", top_k=100)
+        self.assertEqual(len(excessive), 3)
+
+        repeated = index.search("project planning testing deploy", top_k=3)
+        self.assertEqual(
+            [result["message_index"] for result in repeated],
+            [result["message_index"] for result in excessive],
+        )
 
 
 class RetrievalProviderTests(unittest.TestCase):
@@ -159,6 +247,56 @@ class RetrievalProviderTests(unittest.TestCase):
                 provider="local-llm",
                 max_turns=1,
             )
+
+    def test_vector_search_tool_is_exposed_in_shared_tool_list(self):
+        tool_names = {tool["name"] for tool in TOOLS}
+        self.assertIn("vector_search", tool_names)
+        self.assertIn("view_node_and_children", tool_names)
+        self.assertIn("get_node_messages", tool_names)
+
+    def test_fake_client_runs_vector_search_tool_loop_without_api_key(self):
+        fake_client = FakeRetrievalClient([
+            RetrievalResponse(
+                stop_reason="tool_use",
+                content=[
+                    ToolUseBlock(
+                        id="tool-1",
+                        name="vector_search",
+                        input={"query": "kubernetes container orchestration", "top_k": 1},
+                    )
+                ],
+            ),
+            RetrievalResponse(
+                stop_reason="end_turn",
+                content=[TextBlock("Deployment uses Kubernetes.")],
+            ),
+        ])
+
+        result = query_ctree(
+            api_key=None,
+            ctree=make_multi_exchange_tree(),
+            user_query="How do we deploy?",
+            max_turns=2,
+            llm_client=fake_client,
+        )
+
+        self.assertTrue(result["success"])
+        tool_result = json.loads(
+            fake_client.calls[1]["messages"][-1]["content"][0]["content"]
+        )
+        self.assertEqual(tool_result["top_k"], 1)
+        self.assertEqual(tool_result["result_count"], 1)
+        self.assertEqual(tool_result["results"][0]["message_index"], 2)
+        self.assertEqual(tool_result["results"][0]["start_index"], 2)
+        self.assertEqual(tool_result["results"][0]["end_index"], 4)
+
+        tools = ChatIndexTools(make_multi_exchange_tree())
+        messages = tools.get_node_messages(
+            tool_result["results"][0]["start_index"],
+            tool_result["results"][0]["end_index"],
+        )
+        self.assertEqual(messages["message_count"], 2)
+        self.assertIn("Kubernetes", messages["messages"][1]["content"])
 
 
 if __name__ == "__main__":
