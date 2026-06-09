@@ -1,43 +1,40 @@
 schema_version: 0.1
 project: ChatIndex
 workflow: speculoos-v0
-canonical_task: pr-002-offline-tree-optimization
+canonical_task: pr-003-incremental-updates
 repository:
   upstream: VectifyAI/ChatIndex
   fork: fr-meyer/ChatIndex
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: feat/offline-tree-path-reorg
+  working_branch: feat/incremental-updates
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: pr002-review
+  phase: pr003-ready-for-pr
   pret_a_coder: satisfied
   blocker_summary:
-    - Baseline PR #1 was merged into fork dev at c41e236466270625476148dca4f0b1f438593586; PR #2 recorded the completed review state at 1e566a1129ccef6d8421de23dfb5597fc0165555.
-    - PR #3 recorded PR001 scope/surface setup and was merged into fork dev at 4c11bbe1b37b57bca021dfa4cc15d45271a54c70.
-    - PR #4 implemented PR001 and was merged into fork dev at 561b4ddb2f0166abe6029df6e39f40b2adfb2db9.
-    - GitHub Issues are enabled on the fork; PR001 is tracked as issue #5.
-    - GitHub Project #1 "Speculoos / ChatIndex" exists and contains issue #5 plus PRs #1-#6 with Status Done.
-    - PR002 issue #7 is open and tracked in Project #1 with Status In Progress.
-    - PR002 implementation PR #8 is open and mergeable against fork dev; Project #1 tracks it with Status In Progress.
-    - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142; PR002 is mirrored as local Vibe task 7f5b1c5b-a9eb-5699-9365-a061fa184c77 with Status inreview.
+    - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, and PR002 implementation PR #8 are merged into fork dev.
+    - Current fork dev is cf3b6a35394548da22e600803a4cf64573cb4388.
+    - PR003 is tracked as GitHub issue #9 and Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIRYA with Status In Progress.
+    - PR003 is mirrored as local Vibe task 7348d605-6d20-528e-9a66-6dad5887e971 with Status inprogress.
+    - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
-    - Docker is unavailable inside the OpenClaw container for sidecar control.
+    - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
     - tmux is not installed in the OpenClaw container.
 validation:
   no_secret_tests:
     status: passed
     command: .venv/bin/python -m unittest discover -v
-    result: 10 passed, 0 failed
+    result: 14 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: origin/dev...feat/offline-tree-path-reorg
-    notes: PR002 implementation scope; no committed secret, private-log, session, tmp, .openclaw, or key/pem artifacts expected.
+    reviewed_range: origin/dev...feat/incremental-updates
+    notes: PR003 implementation scope scanned; no committed secret, private-log, session, tmp, .openclaw, or key/pem artifacts found.
   powershell_parser:
-    status: passed
-    command: pwsh -NoProfile -Command "[System.Management.Automation.Language.Parser]::ParseFile(...)"
-    environment: PowerShell 7.6.2 portable linux-x64 runtime
+    status: not_applicable
+    command: null
+    environment: no PowerShell files expected in PR003
 surfaces:
   manifest:
     enabled: true
@@ -45,8 +42,8 @@ surfaces:
   github_issue:
     enabled: true
     status: synced
-    number: 7
-    url: https://github.com/fr-meyer/ChatIndex/issues/7
+    number: 9
+    url: https://github.com/fr-meyer/ChatIndex/issues/9
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
@@ -56,27 +53,18 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: open
-    number: 8
-    url: https://github.com/fr-meyer/ChatIndex/pull/8
+    status: pending
+    number: null
+    url: null
     base_branch: dev
-    head_branch: feat/offline-tree-path-reorg
+    head_branch: feat/incremental-updates
     merge_commit: null
     merged_at: null
-  github_surface_sync_pull_request:
-    enabled: true
-    status: merged
-    number: 6
-    url: https://github.com/fr-meyer/ChatIndex/pull/6
-    base_branch: dev
-    head_branch: chore/speculoos-project-surface-sync
-    merge_commit: e7a02ecdc39642d27e0fd405a18b8354009e8f8f
-    merged_at: 2026-06-08T12:05:08Z
   vibe_kanban:
     enabled: true
-    status: local-task-inreview
+    status: local-task-inprogress
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-    issue_id: 7f5b1c5b-a9eb-5699-9365-a061fa184c77
+    issue_id: 7348d605-6d20-528e-9a66-6dad5887e971
     file: .speculoos/surfaces/vibe-kanban.yaml
 lanes:
   codex_review:
