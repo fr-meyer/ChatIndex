@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-inreview
+status: local-task-inprogress
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: 7f5b1c5b-a9eb-5699-9365-a061fa184c77
+issue_id: 7348d605-6d20-528e-9a66-6dad5887e971
 workspace_id: null
 session_id: null
 service:
@@ -18,10 +18,10 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR002: Offline tree optimization"
-  status: inreview
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/7
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/8
+  title: "PR003: Incremental updates"
+  status: inprogress
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/9
+  github_pr: null
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check
