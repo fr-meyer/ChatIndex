@@ -3,7 +3,7 @@ id: pr-003-incremental-updates
 title: Incremental updates
 branch: feat/incremental-updates
 base_branch: dev
-status: validation
+status: in-review
 pret_a_coder: satisfied
 objective: >
   Implement ChatIndex roadmap item "Incremental updates" so a saved or loaded
@@ -52,13 +52,15 @@ surface_sync:
   github_project_url: https://github.com/users/fr-meyer/projects/1
   github_project_item_status: In Progress
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIRYA
-  github_pull_request: pending
-  github_pull_request_number: null
-  github_pull_request_url: null
-  vibe_kanban: local-task-inprogress
+  github_pull_request: open
+  github_pull_request_number: 10
+  github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/10
+  github_pull_request_project_item_status: In Progress
+  github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIXhA
+  vibe_kanban: local-task-inreview
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: 7348d605-6d20-528e-9a66-6dad5887e971
-  vibe_task_status: inprogress
+  vibe_task_status: inreview
 review:
   tests: passing
   test_command: .venv/bin/python -m unittest discover -v
@@ -72,3 +74,5 @@ review:
   cursor_worker_job: speculoos-pr003-incremental-updates-20260609
   cursor_worker_exit_code: 0
   cursor_worker_note: Cursor produced the first implementation pass; Codex patched tests to keep them no-key and then validated locally.
+  coderabbit_requested: true
+  coderabbit_request_comment_id: 4655650735
