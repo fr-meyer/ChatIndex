@@ -72,11 +72,17 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDkYA
       url: https://github.com/fr-meyer/ChatIndex/pull/8
       linked_task: pr-002-offline-tree-optimization
+    - kind: pull_request
+      number: 10
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIXhA
+      url: https://github.com/fr-meyer/ChatIndex/pull/10
+      linked_task: pr-003-incremental-updates
 pull_request:
   enabled: true
-  status: pending
-  number: null
-  url: null
+  status: open
+  number: 10
+  url: https://github.com/fr-meyer/ChatIndex/pull/10
   base_branch: dev
   head_branch: feat/incremental-updates
   merge_commit: null
