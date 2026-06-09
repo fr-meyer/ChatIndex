@@ -6,15 +6,15 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: feat/vector-search-integration
-  dev_sha: 82d2f1ab8480997374a4ba50874c989d14cef80b
+  head: feat/e2e-smoke-speculoos-closure
+  dev_sha: 6410d7c8e5095e26efa22a6049ab215f2e9fa4c3
 issue:
   enabled: true
   status: synced
-  number: 11
-  url: https://github.com/fr-meyer/ChatIndex/issues/11
-  title: "PR004: Vector search integration"
-  linked_task: pr-004-vector-search-integration
+  number: 13
+  url: https://github.com/fr-meyer/ChatIndex/issues/13
+  title: "PR005: End-to-end smoke and Speculoos closure"
+  linked_task: pr-005-e2e-smoke-speculoos-closure
 project:
   enabled: true
   status: synced
@@ -42,10 +42,16 @@ project:
       linked_task: pr-003-incremental-updates
     - kind: issue
       number: 11
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIsEY
       url: https://github.com/fr-meyer/ChatIndex/issues/11
       linked_task: pr-004-vector-search-integration
+    - kind: issue
+      number: 13
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI42Q
+      url: https://github.com/fr-meyer/ChatIndex/issues/13
+      linked_task: pr-005-e2e-smoke-speculoos-closure
     - kind: pull_request
       number: 1
       status: Done
@@ -86,20 +92,29 @@ project:
       linked_task: pr-003-incremental-updates
     - kind: pull_request
       number: 12
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ
       url: https://github.com/fr-meyer/ChatIndex/pull/12
       linked_task: pr-004-vector-search-integration
 pull_request:
   enabled: true
-  status: open
+  status: pending
+  number: null
+  url: null
+  base_branch: dev
+  head_branch: feat/e2e-smoke-speculoos-closure
+  created_at: null
+  merge_commit: null
+  merged_at: null
+last_merged_pull_request:
+  enabled: true
+  status: merged
   number: 12
   url: https://github.com/fr-meyer/ChatIndex/pull/12
   base_branch: dev
   head_branch: feat/vector-search-integration
-  created_at: 2026-06-09T04:54:46Z
-  merge_commit: null
-  merged_at: null
+  merge_commit: 6410d7c8e5095e26efa22a6049ab215f2e9fa4c3
+  merged_at: 2026-06-09T05:18:14Z
 surface_sync_pull_request:
   enabled: true
   status: merged
