@@ -6,15 +6,15 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: feat/offline-tree-path-reorg
-  dev_sha: e7a02ecdc39642d27e0fd405a18b8354009e8f8f
+  head: feat/incremental-updates
+  dev_sha: cf3b6a35394548da22e600803a4cf64573cb4388
 issue:
   enabled: true
   status: synced
-  number: 7
-  url: https://github.com/fr-meyer/ChatIndex/issues/7
-  title: "PR002: Offline tree optimization"
-  linked_task: pr-002-offline-tree-optimization
+  number: 9
+  url: https://github.com/fr-meyer/ChatIndex/issues/9
+  title: "PR003: Incremental updates"
+  linked_task: pr-003-incremental-updates
 project:
   enabled: true
   status: synced
@@ -28,6 +28,18 @@ project:
       status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvE
       url: https://github.com/fr-meyer/ChatIndex/issues/5
+    - kind: issue
+      number: 7
+      status: Done
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDRWc
+      url: https://github.com/fr-meyer/ChatIndex/issues/7
+      linked_task: pr-002-offline-tree-optimization
+    - kind: issue
+      number: 9
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIRYA
+      url: https://github.com/fr-meyer/ChatIndex/issues/9
+      linked_task: pr-003-incremental-updates
     - kind: pull_request
       number: 1
       status: Done
@@ -54,25 +66,25 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCusc
       url: https://github.com/fr-meyer/ChatIndex/pull/6
       purpose: surface-metadata-sync
-    - kind: issue
-      number: 7
-      status: In Progress
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDRWc
-      url: https://github.com/fr-meyer/ChatIndex/issues/7
-      linked_task: pr-002-offline-tree-optimization
     - kind: pull_request
       number: 8
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDkYA
       url: https://github.com/fr-meyer/ChatIndex/pull/8
       linked_task: pr-002-offline-tree-optimization
+    - kind: pull_request
+      number: 10
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIXhA
+      url: https://github.com/fr-meyer/ChatIndex/pull/10
+      linked_task: pr-003-incremental-updates
 pull_request:
   enabled: true
   status: open
-  number: 8
-  url: https://github.com/fr-meyer/ChatIndex/pull/8
+  number: 10
+  url: https://github.com/fr-meyer/ChatIndex/pull/10
   base_branch: dev
-  head_branch: feat/offline-tree-path-reorg
+  head_branch: feat/incremental-updates
   merge_commit: null
   merged_at: null
 surface_sync_pull_request:

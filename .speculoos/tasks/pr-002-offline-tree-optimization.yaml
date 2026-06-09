@@ -3,7 +3,7 @@ id: pr-002-offline-tree-optimization
 title: Offline tree optimization
 branch: feat/offline-tree-path-reorg
 base_branch: dev
-status: in-progress
+status: done
 pret_a_coder: satisfied
 objective: >
   Optimize incremental offline CTree construction by limiting overflow
@@ -47,17 +47,17 @@ surface_sync:
   github_project: synced
   github_project_number: 1
   github_project_url: https://github.com/users/fr-meyer/projects/1
-  github_project_item_status: In Progress
+  github_project_item_status: Done
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDRWc
-  github_pull_request: open
+  github_pull_request: merged
   github_pull_request_number: 8
   github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/8
-  github_pull_request_project_item_status: In Progress
+  github_pull_request_project_item_status: Done
   github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDkYA
-  vibe_kanban: local-task-inreview
+  vibe_kanban: local-task-done
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: 7f5b1c5b-a9eb-5699-9365-a061fa184c77
-  vibe_task_status: inreview
+  vibe_task_status: done
 review:
   tests: passing
   test_command: .venv/bin/python -m unittest discover -v
@@ -68,3 +68,5 @@ review:
   private_data_check: passed
   approval_to_publish: received
   coderabbit_review: mixed-child-split-finding-addressed
+  merged_at: 2026-06-08T13:35:33Z
+  merge_commit: cf3b6a35394548da22e600803a4cf64573cb4388

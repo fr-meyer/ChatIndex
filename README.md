@@ -327,9 +327,9 @@ messages = tools.get_node_messages(0, 10)  # Get messages 0-10
 - [x] **Hierarchical tree indexing** - Build topic-based conversation trees
 - [x] **LLM-guided retrieval** - Intelligent navigation with tools
 - [x] **Streaming support** - Real-time responses
-- [ ] **Offline tree optimization** - Post-processing for better structure
-- [ ] **Multi-LLM support** - Support for different LLMs in retrieval
-- [ ] **Incremental updates** - Efficiently update trees with new messages
+- [x] **Offline tree optimization** - Post-processing for better structure
+- [x] **Multi-LLM support** - Support for different LLMs in retrieval
+- [x] **Incremental updates** - Efficiently update trees with new messages
 - [ ] **Vector search integration** - Hybrid retrieval combining tree + embeddings
 
 
