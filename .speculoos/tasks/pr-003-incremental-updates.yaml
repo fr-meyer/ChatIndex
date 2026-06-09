@@ -64,7 +64,7 @@ surface_sync:
 review:
   tests: passing
   test_command: .venv/bin/python -m unittest discover -v
-  test_result: 14 passed, 0 failed
+  test_result: 15 passed, 0 failed
   compile_check: passed
   yaml_check: passed
   diff_check: passed
@@ -76,3 +76,7 @@ review:
   cursor_worker_note: Cursor produced the first implementation pass; Codex patched tests to keep them no-key and then validated locally.
   coderabbit_requested: true
   coderabbit_request_comment_id: 4655650735
+  coderabbit_review: addressed
+  coderabbit_review_notes: >
+    Stale PR metadata finding was addressed by surface metadata sync, and empty
+    conversation root end_index normalization was fixed with a regression test.
