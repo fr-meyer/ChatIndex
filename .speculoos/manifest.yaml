@@ -11,7 +11,7 @@ repository:
   working_branch: feat/e2e-smoke-speculoos-closure
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: pr005-in-progress
+  phase: pr005-in-review
   pret_a_coder: satisfied
   blocker_summary:
     - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, and PR004 implementation PR #12 are merged into fork dev.
@@ -20,7 +20,8 @@ status:
     - PR004 implementation PR #12 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ is recorded as Done.
     - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status done.
     - PR005 is tracked as GitHub issue #13 and Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvI42Q with Status In Progress.
-    - PR005 is mirrored as local Vibe task e7826ad8-9761-5e76-8b79-51d914871344 with Status inprogress.
+    - PR005 implementation PR #14 is open; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ is recorded as In Progress.
+    - PR005 is mirrored as local Vibe task e7826ad8-9761-5e76-8b79-51d914871344 with Status inreview.
     - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
@@ -29,11 +30,11 @@ validation:
   no_secret_tests:
     status: passed
     command: .venv/bin/python -m unittest discover -v
-    result: 21 passed, 0 failed
+    result: 22 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: origin/dev...feat/vector-search-integration
-    notes: PR004 implementation scope scanned; no committed secret, private-log, session, tmp, vector-index dump, .openclaw, key/pem, .index, or .faiss artifacts found.
+    reviewed_range: origin/dev...feat/e2e-smoke-speculoos-closure
+    notes: PR005 implementation scope scanned; no committed secret, private-log, session, tmp, vector-index dump, .openclaw, key/pem, .index, or .faiss artifacts found.
   powershell_parser:
     status: not_applicable
     command: null
@@ -56,17 +57,17 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: pending
-    number: null
-    url: null
+    status: open
+    number: 14
+    url: https://github.com/fr-meyer/ChatIndex/pull/14
     base_branch: dev
     head_branch: feat/e2e-smoke-speculoos-closure
-    created_at: null
+    created_at: 2026-06-09T05:46:13Z
     merge_commit: null
     merged_at: null
   vibe_kanban:
     enabled: true
-    status: local-task-inprogress
+    status: local-task-inreview
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
     issue_id: e7826ad8-9761-5e76-8b79-51d914871344
     file: .speculoos/surfaces/vibe-kanban.yaml

@@ -96,14 +96,20 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ
       url: https://github.com/fr-meyer/ChatIndex/pull/12
       linked_task: pr-004-vector-search-integration
+    - kind: pull_request
+      number: 14
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ
+      url: https://github.com/fr-meyer/ChatIndex/pull/14
+      linked_task: pr-005-e2e-smoke-speculoos-closure
 pull_request:
   enabled: true
-  status: pending
-  number: null
-  url: null
+  status: open
+  number: 14
+  url: https://github.com/fr-meyer/ChatIndex/pull/14
   base_branch: dev
   head_branch: feat/e2e-smoke-speculoos-closure
-  created_at: null
+  created_at: 2026-06-09T05:46:13Z
   merge_commit: null
   merged_at: null
 last_merged_pull_request:

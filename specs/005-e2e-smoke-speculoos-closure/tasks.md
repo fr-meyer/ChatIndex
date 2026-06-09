@@ -35,7 +35,7 @@
 
 ## Phase 5: PR
 
-- [ ] T020 Push branch to fork.
-- [ ] T021 Open PR against fork `dev`.
-- [ ] T022 Add PR to GitHub Project #1.
-- [ ] T023 Move GitHub Project and Vibe task to review state.
+- [x] T020 Push branch to fork.
+- [x] T021 Open PR against fork `dev`.
+- [x] T022 Add PR to GitHub Project #1.
+- [x] T023 Move GitHub Project and Vibe task to review state.
