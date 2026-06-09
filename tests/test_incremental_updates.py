@@ -141,6 +141,22 @@ class IncrementalUpdateTests(unittest.TestCase):
         finally:
             os.unlink(path)
 
+    def test_load_normalizes_empty_conversation_root_end_index(self):
+        tree = self.make_tree()
+        tree.root.end_index = 42
+
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as handle:
+            path = handle.name
+
+        try:
+            tree.save(path, save_conversation=True)
+            loaded = CTree.load(path, api_key="test-openai-key")
+
+            self.assertEqual(loaded.conversation, [])
+            self.assertEqual(loaded.root.end_index, 0)
+        finally:
+            os.unlink(path)
+
     def test_append_uses_path_local_reorganization(self):
         tree = self.make_tree(max_children=2)
         active = TopicNode(topic_name="Active", start_index=0, end_index=4, parent=tree.root)
