@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-done
+status: pending
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: 0a5fd950-64b0-53f6-a139-257c8dbffbd2
+issue_id: null
 workspace_id: null
 session_id: null
 service:
@@ -18,10 +18,10 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR009: Pyproject build-system metadata"
-  status: done
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/21
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/22
+  title: "PR010: Release prep for v0.1.0"
+  status: todo
+  github_issue: null
+  github_pr: null
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check
