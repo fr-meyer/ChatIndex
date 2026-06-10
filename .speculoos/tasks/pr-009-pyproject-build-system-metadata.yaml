@@ -1,0 +1,78 @@
+schema_version: 0.1
+id: pr-009-pyproject-build-system-metadata
+title: Pyproject build-system metadata
+branch: feat/pyproject-build-system-metadata
+base_branch: dev
+status: in_progress
+pret_a_coder: satisfied
+objective: >
+  Run another small Speculoos v1 pilot by adding minimal PEP 517 build-system
+  metadata so modern installers have a pyproject.toml entry point matching
+  setup.py guidance.
+acceptance_criteria:
+  - pyproject.toml exists with setuptools build-system metadata.
+  - Package and runtime behavior are unchanged.
+  - Full unit tests and metadata parse checks pass.
+  - Speculoos task metadata records this as a bounded codex-only pilot.
+  - Validation passes before PR publication.
+write_scope:
+  allowed:
+    - pyproject.toml
+    - .speculoos/manifest.yaml
+    - .speculoos/tasks/pr-009-pyproject-build-system-metadata.yaml
+    - .speculoos/surfaces/github.yaml
+    - .speculoos/surfaces/vibe-kanban.yaml
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 21
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/21
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: In Progress
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ_1g
+  github_issue_state: open
+  github_pull_request: pending
+  github_pull_request_number: null
+  github_pull_request_url: null
+  github_pull_request_project_item_status: null
+  github_pull_request_project_item_id: null
+  vibe_kanban: local-task-inprogress
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: 0a5fd950-64b0-53f6-a139-257c8dbffbd2
+  vibe_task_status: inprogress
+review:
+  tests: passed
+  test_command: .venv/bin/python -m unittest discover -v
+  test_count: 22
+  compile_check: passed
+  pyproject_check: passed
+  yaml_check: passed
+  diff_check: passed
+  speculoos_preflight: passed
+  speculoos_validate: passed
+  private_data_check: passed
+  cursor_worker: not_used
+  executor_lane: codex-only
+  validation_notes: >
+    PR009 is intentionally packaging-metadata-only and uses the local Speculoos
+    v1 helper as guardrails. Runtime behavior should not change.
