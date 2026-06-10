@@ -1,0 +1,38 @@
+# Release Notes
+
+## v0.1.0 - Planned
+
+Initial beta release of the ChatIndex fork.
+
+This release promotes the current `dev` branch work as the first stable branch
+publication point for the fork. The package version remains `0.1.0` because the
+public API is still pre-1.0, but the project maturity moves from alpha to beta:
+the initial roadmap items are implemented and covered by local unit/smoke tests,
+while future compatibility guarantees still need to be defined before `v1.0.0`.
+
+### Highlights
+
+- Added retrieval provider selection for Anthropic and OpenAI-backed retrieval.
+- Added offline tree reorganization optimization.
+- Added incremental CTree update support.
+- Added vector-search-backed retrieval helpers.
+- Added end-to-end smoke coverage and expanded unit tests.
+- Cleaned README install instructions and package metadata.
+- Added minimal PEP 517 build-system metadata.
+- Added Speculoos workflow artifacts used to coordinate the implementation loop.
+
+### Validation
+
+- Unit tests: `.venv/bin/python -m unittest discover -v`
+- Python syntax parse over tracked source and test files.
+- YAML syntax parse over tracked workflow and metadata files.
+- `git diff --check`
+- Speculoos validation for the release-prep task.
+
+### Known Limitations
+
+- The API remains pre-1.0 and may still change.
+- The release/tag publication flow is still manual and confirmation-gated.
+- Branch protection and release immutability rules are not yet enabled.
+- The package metadata is still split between `setup.py` and minimal
+  `pyproject.toml` build-system metadata.
