@@ -335,10 +335,16 @@ matches = tools.vector_search("kubernetes deployment", top_k=3)
 - [x] **Incremental updates** - Efficiently update trees with new messages
 - [x] **Vector search integration** - Hybrid retrieval combining tree + embeddings
 
+## Release Status
+
+The project is preparing its first fork release as `v0.1.0`. The initial
+roadmap items are implemented, so package metadata now marks the project as
+beta. The public API remains pre-1.0 and may still change before a future
+stable `v1.0.0` release.
 
 ## Contributing
 
-This project is currently under active development. Any contributions are welcome! Please feel free to:
+This project is currently in beta development. Any contributions are welcome! Please feel free to:
 - Submit issues for bugs or feature requests
 - Open pull requests with improvements
 - Share your use cases and feedback
