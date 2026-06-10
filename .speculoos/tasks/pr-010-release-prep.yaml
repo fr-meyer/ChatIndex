@@ -1,0 +1,67 @@
+schema_version: 0.1
+id: pr-010-release-prep
+title: Release prep for v0.1.0
+branch: feat/release-prep-v0-1-0
+base_branch: dev
+status: in_progress
+pret_a_coder: satisfied
+objective: >
+  Prepare the first ChatIndex fork release by documenting v0.1.0 release notes,
+  adding a minimal CI gate, and explicitly updating package maturity metadata
+  from alpha to beta while keeping the public version at 0.1.0.
+acceptance_criteria:
+  - Release notes for v0.1.0 summarize the current dev-to-main promotion scope.
+  - Package metadata records the current maturity decision without changing the package version.
+  - A minimal GitHub Actions CI workflow runs unit tests across the declared Python versions.
+  - Speculoos task metadata records this as a bounded codex-only release-prep task.
+  - Validation passes before PR publication.
+write_scope:
+  allowed:
+    - RELEASE_NOTES.md
+    - README.md
+    - .gitignore
+    - setup.py
+    - .github/workflows/ci.yml
+    - .speculoos/manifest.yaml
+    - .speculoos/tasks/pr-010-release-prep.yaml
+    - .speculoos/surfaces/github.yaml
+    - .speculoos/surfaces/vibe-kanban.yaml
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+surface_sync:
+  github_issue: pending
+  github_project: pending
+  github_pull_request: pending
+  vibe_kanban: pending
+review:
+  tests: passed
+  test_command: .venv/bin/python -m unittest discover -v
+  test_count: 22
+  compile_check: passed
+  yaml_check: passed
+  diff_check: passed
+  speculoos_preflight: passed
+  speculoos_validate: passed
+  private_data_check: passed
+  cursor_worker: not_used
+  executor_lane: codex-only
+  validation_notes: >
+    PR010 is release-prep work only. It should not merge dev to main, create
+    a Git tag, or publish a GitHub Release.
