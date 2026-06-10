@@ -21,6 +21,7 @@ write_scope:
     - README.md
     - .gitignore
     - setup.py
+    - retrieval/vector_index.py
     - .github/workflows/ci.yml
     - .speculoos/manifest.yaml
     - .speculoos/tasks/pr-010-release-prep.yaml
