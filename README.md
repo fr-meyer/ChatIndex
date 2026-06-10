@@ -112,7 +112,7 @@ A Context Tree consists of two types of nodes:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ChatIndex.git
+git clone https://github.com/fr-meyer/ChatIndex.git
 cd ChatIndex
 ```
 
