@@ -46,10 +46,23 @@ write_scope:
     - "*.index"
     - "*.faiss"
 surface_sync:
-  github_issue: pending
-  github_project: pending
-  github_pull_request: pending
-  vibe_kanban: pending
+  github_issue: synced
+  github_issue_number: 23
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/23
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: In Progress
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvTMgk
+  github_pull_request: open
+  github_pull_request_number: 24
+  github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/24
+  github_pull_request_project_item_status: In Progress
+  github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvTMg0
+  vibe_kanban: local-task-inreview
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: 8b212e03-a7e8-56e0-9cc5-b626df978473
+  vibe_task_status: inreview
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
