@@ -3,7 +3,7 @@ id: pr-009-pyproject-build-system-metadata
 title: Pyproject build-system metadata
 branch: feat/pyproject-build-system-metadata
 base_branch: dev
-status: in_review
+status: done
 pret_a_coder: satisfied
 objective: >
   Run another small Speculoos v1 pilot by adding minimal PEP 517 build-system
@@ -48,18 +48,22 @@ surface_sync:
   github_project: synced
   github_project_number: 1
   github_project_url: https://github.com/users/fr-meyer/projects/1
-  github_project_item_status: In Progress
+  github_project_item_status: Done
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ_1g
-  github_issue_state: open
-  github_pull_request: open
+  github_issue_state: closed
+  github_issue_state_reason: completed
+  github_issue_closed_at: 2026-06-10T06:06:40Z
+  github_pull_request: merged
   github_pull_request_number: 22
   github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/22
-  github_pull_request_project_item_status: In Progress
+  github_pull_request_project_item_status: Done
   github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvRB5c
-  vibe_kanban: local-task-inreview
+  github_pull_request_merge_commit: f8edfabc6c2e444c37b6380b4193f8cc46e958d7
+  github_pull_request_merged_at: 2026-06-10T06:06:18Z
+  vibe_kanban: local-task-done
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: 0a5fd950-64b0-53f6-a139-257c8dbffbd2
-  vibe_task_status: inreview
+  vibe_task_status: done
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
