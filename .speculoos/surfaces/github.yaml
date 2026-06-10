@@ -6,18 +6,18 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: feat/readme-install-url-cleanup
-  dev_sha: 3a8d66322ca983ded4856a65f6226d0f5a9f2568
+  head: feat/setup-metadata-url-cleanup
+  dev_sha: ef59aec9d02c3acf4bda8d0a59156a1139c68fea
 issue:
   enabled: true
   status: synced
-  number: 15
-  url: https://github.com/fr-meyer/ChatIndex/issues/15
-  title: "PR006: README install URL cleanup"
-  linked_task: pr-006-readme-install-url-cleanup
-  state: closed
-  state_reason: completed
-  closed_at: 2026-06-10T02:30:56Z
+  number: 17
+  url: https://github.com/fr-meyer/ChatIndex/issues/17
+  title: "PR007: Setup metadata URL cleanup"
+  linked_task: pr-007-setup-metadata-url-cleanup
+  state: open
+  state_reason: null
+  closed_at: null
 project:
   enabled: true
   status: synced
@@ -61,6 +61,12 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvP5kc
       url: https://github.com/fr-meyer/ChatIndex/issues/15
       linked_task: pr-006-readme-install-url-cleanup
+    - kind: issue
+      number: 17
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQeOc
+      url: https://github.com/fr-meyer/ChatIndex/issues/17
+      linked_task: pr-007-setup-metadata-url-cleanup
     - kind: pull_request
       number: 1
       status: Done
@@ -117,16 +123,22 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvP8OA
       url: https://github.com/fr-meyer/ChatIndex/pull/16
       linked_task: pr-006-readme-install-url-cleanup
+    - kind: pull_request
+      number: 18
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQhJ0
+      url: https://github.com/fr-meyer/ChatIndex/pull/18
+      linked_task: pr-007-setup-metadata-url-cleanup
 pull_request:
   enabled: true
-  status: merged
-  number: 16
-  url: https://github.com/fr-meyer/ChatIndex/pull/16
+  status: open
+  number: 18
+  url: https://github.com/fr-meyer/ChatIndex/pull/18
   base_branch: dev
-  head_branch: feat/readme-install-url-cleanup
-  created_at: 2026-06-10T01:42:34Z
-  merge_commit: 3a8d66322ca983ded4856a65f6226d0f5a9f2568
-  merged_at: 2026-06-10T02:30:26Z
+  head_branch: feat/setup-metadata-url-cleanup
+  created_at: 2026-06-10T04:07:34Z
+  merge_commit: null
+  merged_at: null
 last_merged_pull_request:
   enabled: true
   status: merged
