@@ -58,9 +58,9 @@ surfaces:
     authority: canonical-v0
   github_issue:
     enabled: true
-    status: pending
-    number: null
-    url: null
+    status: synced
+    number: 23
+    url: https://github.com/fr-meyer/ChatIndex/issues/23
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
@@ -70,19 +70,19 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: pending
-    number: null
-    url: null
+    status: open
+    number: 24
+    url: https://github.com/fr-meyer/ChatIndex/pull/24
     base_branch: dev
     head_branch: feat/release-prep-v0-1-0
-    created_at: null
+    created_at: 2026-06-10T11:31:32Z
     merge_commit: null
     merged_at: null
   vibe_kanban:
     enabled: true
-    status: pending
+    status: local-task-inreview
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-    issue_id: null
+    issue_id: 8b212e03-a7e8-56e0-9cc5-b626df978473
     file: .speculoos/surfaces/vibe-kanban.yaml
 lanes:
   codex_review:
