@@ -111,14 +111,20 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ
       url: https://github.com/fr-meyer/ChatIndex/pull/14
       linked_task: pr-005-e2e-smoke-speculoos-closure
+    - kind: pull_request
+      number: 16
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvP8OA
+      url: https://github.com/fr-meyer/ChatIndex/pull/16
+      linked_task: pr-006-readme-install-url-cleanup
 pull_request:
   enabled: true
-  status: pending
-  number: null
-  url: null
+  status: open
+  number: 16
+  url: https://github.com/fr-meyer/ChatIndex/pull/16
   base_branch: dev
   head_branch: feat/readme-install-url-cleanup
-  created_at: null
+  created_at: 2026-06-10T01:42:34Z
   merge_commit: null
   merged_at: null
 last_merged_pull_request:
