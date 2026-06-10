@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-done
+status: local-task-inreview
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: 98b07bd2-066d-5cb4-98d6-beb96a0cb378
+issue_id: efbe3790-1c03-56ce-b05c-5e2e2e65fe31
 workspace_id: null
 session_id: null
 service:
@@ -18,10 +18,10 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR007: Setup metadata URL cleanup"
-  status: done
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/17
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/18
+  title: "PR008: Setup author metadata cleanup"
+  status: inreview
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/19
+  github_pr: https://github.com/fr-meyer/ChatIndex/pull/20
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check
