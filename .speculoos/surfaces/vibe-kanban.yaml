@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: pending
+status: local-task-inreview
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: null
+issue_id: 8b212e03-a7e8-56e0-9cc5-b626df978473
 workspace_id: null
 session_id: null
 service:
@@ -19,9 +19,9 @@ service:
   manager: scripts/openclaw-vibe-kanban-service
 task:
   title: "PR010: Release prep for v0.1.0"
-  status: todo
-  github_issue: null
-  github_pr: null
+  status: inreview
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/23
+  github_pr: https://github.com/fr-meyer/ChatIndex/pull/24
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check
