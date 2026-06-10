@@ -1,21 +1,21 @@
 schema_version: 0.1
 project: ChatIndex
 workflow: speculoos-v1
-canonical_task: pr-006-readme-install-url-cleanup
+canonical_task: pr-007-setup-metadata-url-cleanup
 repository:
   upstream: VectifyAI/ChatIndex
   fork: fr-meyer/ChatIndex
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: dev
+  working_branch: feat/setup-metadata-url-cleanup
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: roadmap-closure-complete
+  phase: implementation-in-progress
   pret_a_coder: satisfied
   blocker_summary:
     - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, PR004 implementation PR #12, and PR005 implementation PR #14 are merged into fork dev.
-    - Current fork dev implementation merge is 3a8d66322ca983ded4856a65f6226d0f5a9f2568.
+    - Current fork dev implementation merge is ef59aec9d02c3acf4bda8d0a59156a1139c68fea.
     - PR004 issue #11 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIsEY is recorded as Done.
     - PR004 implementation PR #12 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ is recorded as Done.
     - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status done.
@@ -25,6 +25,8 @@ status:
     - PR006 issue #15 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvP5kc is recorded as Done.
     - PR006 implementation PR #16 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvP8OA is recorded as Done.
     - PR006 is mirrored as local Vibe task 7071d762-d285-5d13-b03f-4e945d7db4f6 with Status done.
+    - PR007 issue #17 is open; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQeOc is recorded as In Progress.
+    - PR007 is mirrored as local Vibe task 98b07bd2-066d-5cb4-98d6-beb96a0cb378 with Status inprogress.
     - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
@@ -36,12 +38,12 @@ validation:
     result: 22 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: origin/dev...feat/readme-install-url-cleanup before PR006 merge
-    notes: PR006 implementation scope scanned; no committed secret, private-log, session, tmp, vector-index dump, .openclaw, key/pem, .index, or .faiss artifacts found.
+    reviewed_range: origin/dev...feat/setup-metadata-url-cleanup before PR007 publication
+    notes: PR007 implementation scope scanned; no committed secret, private-log, session, tmp, vector-index dump, .openclaw, key/pem, .index, or .faiss artifacts found.
   powershell_parser:
     status: not_applicable
     command: null
-    environment: no PowerShell files expected in PR005
+    environment: no PowerShell files expected in PR007
 surfaces:
   manifest:
     enabled: true
@@ -49,8 +51,8 @@ surfaces:
   github_issue:
     enabled: true
     status: synced
-    number: 15
-    url: https://github.com/fr-meyer/ChatIndex/issues/15
+    number: 17
+    url: https://github.com/fr-meyer/ChatIndex/issues/17
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
@@ -60,19 +62,19 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: merged
-    number: 16
-    url: https://github.com/fr-meyer/ChatIndex/pull/16
+    status: pending
+    number: null
+    url: null
     base_branch: dev
-    head_branch: feat/readme-install-url-cleanup
-    created_at: 2026-06-10T01:42:34Z
-    merge_commit: 3a8d66322ca983ded4856a65f6226d0f5a9f2568
-    merged_at: 2026-06-10T02:30:26Z
+    head_branch: feat/setup-metadata-url-cleanup
+    created_at: null
+    merge_commit: null
+    merged_at: null
   vibe_kanban:
     enabled: true
-    status: local-task-done
+    status: local-task-inprogress
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-    issue_id: 7071d762-d285-5d13-b03f-4e945d7db4f6
+    issue_id: 98b07bd2-066d-5cb4-98d6-beb96a0cb378
     file: .speculoos/surfaces/vibe-kanban.yaml
 lanes:
   codex_review:

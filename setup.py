@@ -26,11 +26,11 @@ setup(
     long_description_content_type="text/markdown",
     author="Your Name",
     author_email="your.email@example.com",
-    url="https://github.com/yourusername/ictree",
+    url="https://github.com/fr-meyer/ChatIndex",
     project_urls={
-        "Documentation": "https://github.com/yourusername/ictree#readme",
-        "Source": "https://github.com/yourusername/ictree",
-        "Tracker": "https://github.com/yourusername/ictree/issues",
+        "Documentation": "https://github.com/fr-meyer/ChatIndex#readme",
+        "Source": "https://github.com/fr-meyer/ChatIndex",
+        "Tracker": "https://github.com/fr-meyer/ChatIndex/issues",
     },
     packages=find_packages(exclude=["tests", "tests.*", "examples", "examples.*", "docs", "docs.*"]),
     python_requires=">=3.8",
@@ -57,4 +57,3 @@ setup(
     include_package_data=True,
     zip_safe=False,
 )
-
