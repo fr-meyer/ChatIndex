@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-done
+status: local-task-inprogress
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: e7826ad8-9761-5e76-8b79-51d914871344
+issue_id: 7071d762-d285-5d13-b03f-4e945d7db4f6
 workspace_id: null
 session_id: null
 service:
@@ -18,10 +18,10 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR005: End-to-end smoke and Speculoos closure"
-  status: done
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/13
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/14
+  title: "PR006: README install URL cleanup"
+  status: inprogress
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/15
+  github_pr: null
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check
