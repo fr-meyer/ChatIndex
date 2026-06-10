@@ -1,23 +1,23 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: synced
+status: pending
 blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: feat/pyproject-build-system-metadata
-  dev_sha: f8edfabc6c2e444c37b6380b4193f8cc46e958d7
+  head: feat/release-prep-v0-1-0
+  dev_sha: fa23b4fdaa485393ad9ba46cc8081fdb9597753f
 issue:
   enabled: true
-  status: synced
-  number: 21
-  url: https://github.com/fr-meyer/ChatIndex/issues/21
-  title: "PR009: Pyproject build-system metadata"
-  linked_task: pr-009-pyproject-build-system-metadata
-  state: closed
-  state_reason: completed
-  closed_at: 2026-06-10T06:06:40Z
+  status: pending
+  number: null
+  url: null
+  title: "PR010: Release prep for v0.1.0"
+  linked_task: pr-010-release-prep
+  state: null
+  state_reason: null
+  closed_at: null
 project:
   enabled: true
   status: synced
@@ -155,14 +155,14 @@ project:
       linked_task: pr-009-pyproject-build-system-metadata
 pull_request:
   enabled: true
-  status: merged
-  number: 22
-  url: https://github.com/fr-meyer/ChatIndex/pull/22
+  status: pending
+  number: null
+  url: null
   base_branch: dev
-  head_branch: feat/pyproject-build-system-metadata
-  created_at: 2026-06-10T06:01:57Z
-  merge_commit: f8edfabc6c2e444c37b6380b4193f8cc46e958d7
-  merged_at: 2026-06-10T06:06:18Z
+  head_branch: feat/release-prep-v0-1-0
+  created_at: null
+  merge_commit: null
+  merged_at: null
 last_merged_pull_request:
   enabled: true
   status: merged
