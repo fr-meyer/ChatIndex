@@ -24,8 +24,7 @@ setup(
     description="Incremental Context Tree for hierarchical conversation management",
     long_description=read_file("README.md"),
     long_description_content_type="text/markdown",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="ChatIndex contributors",
     url="https://github.com/fr-meyer/ChatIndex",
     project_urls={
         "Documentation": "https://github.com/fr-meyer/ChatIndex#readme",
