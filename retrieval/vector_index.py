@@ -8,7 +8,7 @@ or external vector databases.
 import hashlib
 import math
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 from ctree import MessageNode, TopicNode
 
@@ -60,7 +60,7 @@ def _preview_text(content: str, max_length: int = PREVIEW_LENGTH) -> str:
     return content[:max_length] + "..."
 
 
-def _exchange_range(node: MessageNode) -> tuple[int, int]:
+def _exchange_range(node: MessageNode) -> Tuple[int, int]:
     """Return the conversation message range covered by one exchange."""
     message_count = 2
     if node.system_message:
