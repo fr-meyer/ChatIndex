@@ -7,7 +7,7 @@ blocked_by:
 branches:
   base: dev
   head: feat/setup-metadata-url-cleanup
-  dev_sha: ef59aec9d02c3acf4bda8d0a59156a1139c68fea
+  dev_sha: c3706291a87b48af8e3812ffdc193fb0980b460a
 issue:
   enabled: true
   status: synced
@@ -15,9 +15,9 @@ issue:
   url: https://github.com/fr-meyer/ChatIndex/issues/17
   title: "PR007: Setup metadata URL cleanup"
   linked_task: pr-007-setup-metadata-url-cleanup
-  state: open
-  state_reason: null
-  closed_at: null
+  state: closed
+  state_reason: completed
+  closed_at: 2026-06-10T04:13:05Z
 project:
   enabled: true
   status: synced
@@ -63,7 +63,7 @@ project:
       linked_task: pr-006-readme-install-url-cleanup
     - kind: issue
       number: 17
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQeOc
       url: https://github.com/fr-meyer/ChatIndex/issues/17
       linked_task: pr-007-setup-metadata-url-cleanup
@@ -125,29 +125,29 @@ project:
       linked_task: pr-006-readme-install-url-cleanup
     - kind: pull_request
       number: 18
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQhJ0
       url: https://github.com/fr-meyer/ChatIndex/pull/18
       linked_task: pr-007-setup-metadata-url-cleanup
 pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 18
   url: https://github.com/fr-meyer/ChatIndex/pull/18
   base_branch: dev
   head_branch: feat/setup-metadata-url-cleanup
   created_at: 2026-06-10T04:07:34Z
-  merge_commit: null
-  merged_at: null
+  merge_commit: c3706291a87b48af8e3812ffdc193fb0980b460a
+  merged_at: 2026-06-10T04:12:32Z
 last_merged_pull_request:
   enabled: true
   status: merged
-  number: 16
-  url: https://github.com/fr-meyer/ChatIndex/pull/16
+  number: 18
+  url: https://github.com/fr-meyer/ChatIndex/pull/18
   base_branch: dev
-  head_branch: feat/readme-install-url-cleanup
-  merge_commit: 3a8d66322ca983ded4856a65f6226d0f5a9f2568
-  merged_at: 2026-06-10T02:30:26Z
+  head_branch: feat/setup-metadata-url-cleanup
+  merge_commit: c3706291a87b48af8e3812ffdc193fb0980b460a
+  merged_at: 2026-06-10T04:12:32Z
 surface_sync_pull_request:
   enabled: true
   status: merged
