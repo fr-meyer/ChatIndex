@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-inreview
+status: local-task-done
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -19,7 +19,7 @@ service:
   manager: scripts/openclaw-vibe-kanban-service
 task:
   title: "PR008: Setup author metadata cleanup"
-  status: inreview
+  status: done
   github_issue: https://github.com/fr-meyer/ChatIndex/issues/19
   github_pr: https://github.com/fr-meyer/ChatIndex/pull/20
 last_probe:

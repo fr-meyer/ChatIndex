@@ -3,7 +3,7 @@ id: pr-008-setup-author-metadata-cleanup
 title: Setup author metadata cleanup
 branch: feat/setup-author-metadata-cleanup
 base_branch: dev
-status: in_review
+status: done
 pret_a_coder: satisfied
 objective: >
   Run another small Speculoos v1 pilot by replacing placeholder setup.py author
@@ -47,18 +47,18 @@ surface_sync:
   github_project: synced
   github_project_number: 1
   github_project_url: https://github.com/users/fr-meyer/projects/1
-  github_project_item_status: In Progress
+  github_project_item_status: Done
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ3fg
-  github_issue_state: open
-  github_pull_request: open
+  github_issue_state: closed
+  github_pull_request: merged
   github_pull_request_number: 20
   github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/20
-  github_pull_request_project_item_status: In Progress
+  github_pull_request_project_item_status: Done
   github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ5QE
-  vibe_kanban: local-task-inreview
+  vibe_kanban: local-task-done
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: efbe3790-1c03-56ce-b05c-5e2e2e65fe31
-  vibe_task_status: inreview
+  vibe_task_status: done
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v

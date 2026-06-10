@@ -7,7 +7,7 @@ blocked_by:
 branches:
   base: dev
   head: feat/setup-author-metadata-cleanup
-  dev_sha: 7e3359d80f5f401f827ad7c016134984976916ba
+  dev_sha: 14872a1146ae182666a90c6a845a1f73d65a4013
 issue:
   enabled: true
   status: synced
@@ -15,9 +15,9 @@ issue:
   url: https://github.com/fr-meyer/ChatIndex/issues/19
   title: "PR008: Setup author metadata cleanup"
   linked_task: pr-008-setup-author-metadata-cleanup
-  state: open
-  state_reason: null
-  closed_at: null
+  state: closed
+  state_reason: completed
+  closed_at: 2026-06-10T05:34:10Z
 project:
   enabled: true
   status: synced
@@ -69,7 +69,7 @@ project:
       linked_task: pr-007-setup-metadata-url-cleanup
     - kind: issue
       number: 19
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ3fg
       url: https://github.com/fr-meyer/ChatIndex/issues/19
       linked_task: pr-008-setup-author-metadata-cleanup
@@ -137,29 +137,29 @@ project:
       linked_task: pr-007-setup-metadata-url-cleanup
     - kind: pull_request
       number: 20
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ5QE
       url: https://github.com/fr-meyer/ChatIndex/pull/20
       linked_task: pr-008-setup-author-metadata-cleanup
 pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 20
   url: https://github.com/fr-meyer/ChatIndex/pull/20
   base_branch: dev
   head_branch: feat/setup-author-metadata-cleanup
   created_at: 2026-06-10T05:30:10Z
-  merge_commit: null
-  merged_at: null
+  merge_commit: 14872a1146ae182666a90c6a845a1f73d65a4013
+  merged_at: 2026-06-10T05:33:52Z
 last_merged_pull_request:
   enabled: true
   status: merged
-  number: 18
-  url: https://github.com/fr-meyer/ChatIndex/pull/18
+  number: 20
+  url: https://github.com/fr-meyer/ChatIndex/pull/20
   base_branch: dev
-  head_branch: feat/setup-metadata-url-cleanup
-  merge_commit: c3706291a87b48af8e3812ffdc193fb0980b460a
-  merged_at: 2026-06-10T04:12:32Z
+  head_branch: feat/setup-author-metadata-cleanup
+  merge_commit: 14872a1146ae182666a90c6a845a1f73d65a4013
+  merged_at: 2026-06-10T05:33:52Z
 surface_sync_pull_request:
   enabled: true
   status: merged
