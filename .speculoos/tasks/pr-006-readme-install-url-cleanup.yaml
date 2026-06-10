@@ -3,7 +3,7 @@ id: pr-006-readme-install-url-cleanup
 title: README install URL cleanup
 branch: feat/readme-install-url-cleanup
 base_branch: dev
-status: in_review
+status: done
 pret_a_coder: satisfied
 objective: >
   Run the first small Speculoos v1 pilot on a docs-only cleanup by replacing
@@ -46,18 +46,21 @@ surface_sync:
   github_project: synced
   github_project_number: 1
   github_project_url: https://github.com/users/fr-meyer/projects/1
-  github_project_item_status: In Progress
+  github_project_item_status: Done
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvP5kc
-  github_issue_state: open
-  github_pull_request: open
+  github_issue_state: closed
+  github_issue_closed_at: 2026-06-10T02:30:56Z
+  github_pull_request: merged
   github_pull_request_number: 16
   github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/16
-  github_pull_request_project_item_status: In Progress
+  github_pull_request_merged_at: 2026-06-10T02:30:26Z
+  github_pull_request_merge_commit: 3a8d66322ca983ded4856a65f6226d0f5a9f2568
+  github_pull_request_project_item_status: Done
   github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvP8OA
-  vibe_kanban: local-task-inreview
+  vibe_kanban: local-task-done
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: 7071d762-d285-5d13-b03f-4e945d7db4f6
-  vibe_task_status: inreview
+  vibe_task_status: done
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
@@ -73,7 +76,6 @@ review:
   validation_notes: >
     OpenClaw validation passed: unittest discover ran 22 tests, py_compile
     passed over tracked Python files, YAML parse passed, git diff --check
-    passed, Speculoos preflight passed, and private-data scan passed. PR006 is
-    intentionally docs-only and uses the local Speculoos v1 helper as
-    guardrails. Merge remains pending explicit approval after PR publication and
-    review.
+    passed, Speculoos preflight passed, and private-data scan passed. PR006 was
+    intentionally docs-only and used the local Speculoos v1 helper as
+    guardrails.
