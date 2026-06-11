@@ -1,0 +1,72 @@
+schema_version: 0.1
+id: pr-002-offline-tree-optimization
+title: Offline tree optimization
+branch: feat/offline-tree-path-reorg
+base_branch: dev
+status: done
+pret_a_coder: satisfied
+objective: >
+  Optimize incremental offline CTree construction by limiting overflow
+  reorganization checks to the changed topic path while preserving current
+  public call shapes and no-key testability.
+acceptance_criteria:
+  - Existing no-key tests still pass.
+  - New tests cover path-local overflow checks and parent rechecks without live provider API calls.
+  - "`CTree.add()` no longer scans the full tree after each added exchange."
+  - Explicit full-tree reorganization remains available for internal callers.
+  - No real provider keys, `.env`, private logs, raw sessions, or generated run payloads are committed.
+write_scope:
+  allowed:
+    - ctree/**
+    - tests/**
+    - specs/002-offline-tree-optimization/**
+    - .speculoos/tasks/pr-002-offline-tree-optimization.yaml
+    - .speculoos/manifest.yaml
+    - .speculoos/surfaces/**
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 7
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/7
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: Done
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDRWc
+  github_pull_request: merged
+  github_pull_request_number: 8
+  github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/8
+  github_pull_request_project_item_status: Done
+  github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDkYA
+  vibe_kanban: local-task-done
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: 7f5b1c5b-a9eb-5699-9365-a061fa184c77
+  vibe_task_status: done
+review:
+  tests: passing
+  test_command: .venv/bin/python -m unittest discover -v
+  compile_check: passed
+  yaml_check: passed
+  diff_check: passed
+  speculoos_preflight: passed
+  private_data_check: passed
+  approval_to_publish: received
+  coderabbit_review: mixed-child-split-finding-addressed
+  merged_at: 2026-06-08T13:35:33Z
+  merge_commit: cf3b6a35394548da22e600803a4cf64573cb4388

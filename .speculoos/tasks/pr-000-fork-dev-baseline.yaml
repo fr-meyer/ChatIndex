@@ -1,0 +1,73 @@
+schema_version: 0.1
+id: pr-000-fork-dev-baseline
+title: Fork dev baseline and Speculoos v0 workflow contract
+branch: chore/fork-dev-baseline
+base_branch: dev
+status: merged
+pret_a_coder: satisfied
+blocked_by:
+  - vibe-sidecar-not-started
+merged:
+  pull_request: 1
+  merged_at: 2026-06-08T04:24:45Z
+  merge_commit: c41e236466270625476148dca4f0b1f438593586
+objective: >
+  Establish the first ChatIndex fork baseline with Spec Kit artifacts,
+  Speculoos workflow state, additive task surface mappings, and explicit
+  executor authority boundaries.
+acceptance_criteria:
+  - Spec Kit files are initialized and reviewable.
+  - .speculoos manifest, task, surface, and lane files exist.
+  - Baseline validation runs without real provider keys.
+  - GitHub PR targets fork dev, not main.
+  - GitHub and Vibe surface states are explicit even if pending.
+  - Merge to main remains gated behind a later dev-to-main promotion PR.
+write_scope:
+  allowed:
+    - .gitignore
+    - AGENTS.md
+    - .specify/**
+    - specs/000-fork-dev-baseline/**
+    - .speculoos/**
+    - tests/**
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+executor_lanes:
+  codex_review:
+    status: completed
+  cursor_worker:
+    status: gated
+    reason: no code implementation task until baseline tests and publish gates are clear
+surface_sync:
+  manifest: done
+  github_pr: merged
+  github_issue: not_applicable
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: Done
+  vibe_kanban: pending
+review:
+  tests: passed
+  test_command: python -m unittest discover -v
+  test_result: 2 passed, 0 failed
+  powershell_parser: passed with PowerShell 7.6.2 portable linux-x64 runtime
+  private_data_check: passed
+  private_data_reviewed_range: 7df2c9208db6f113f85a6c09295bec7f0f2114e7...c41e236466270625476148dca4f0b1f438593586
+  approval_to_publish: done
+  approval_to_merge: done

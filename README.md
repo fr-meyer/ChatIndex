@@ -112,7 +112,7 @@ A Context Tree consists of two types of nodes:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ChatIndex.git
+git clone https://github.com/fr-meyer/ChatIndex.git
 cd ChatIndex
 ```
 
@@ -126,8 +126,11 @@ pip install -r requirements.txt
 # For building trees (Phase 1)
 export OPENAI_API_KEY="your-openai-key"
 
-# For querying trees (Phase 2)
+# For querying trees (Phase 2, default retrieval provider)
 export ANTHROPIC_API_KEY="your-anthropic-key"
+
+# Optional: use OpenAI for retrieval instead
+export OPENAI_API_KEY="your-openai-key"
 
 # Or use a .env file:
 echo "OPENAI_API_KEY=your-openai-key" > .env
@@ -172,6 +175,7 @@ result = query_ctree(
     api_key=os.getenv("ANTHROPIC_API_KEY"),
     ctree=tree,
     user_query="What programming concepts were discussed?",
+    provider="anthropic",  # default; uses claude-sonnet-4-5 unless model is set
     max_turns=50
 )
 
@@ -229,10 +233,23 @@ result = query_ctree(
     api_key=os.getenv("ANTHROPIC_API_KEY"),
     ctree=tree,
     user_query="What topics were discussed about network protocols?",
+    provider="anthropic",
     max_turns=50  # default is 50
 )
 
 print(result["final_response"])
+```
+
+To query with OpenAI instead of Anthropic, pass an explicit provider and model:
+
+```python
+result = query_ctree(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    ctree=tree,
+    user_query="What topics were discussed about network protocols?",
+    provider="openai",
+    model="gpt-4o-mini",
+)
 ```
 
 **Key benefits:**
@@ -282,6 +299,7 @@ result = query_ctree_streaming(
     api_key=os.getenv("ANTHROPIC_API_KEY"),
     ctree=tree,
     user_query="What are the main topics?",
+    provider="anthropic",
     on_text_chunk=on_text,
     on_tool_use=on_tool_use
 )
@@ -302,6 +320,9 @@ topic = tools.view_node_and_children([0])  # View first topic
 
 # Get messages
 messages = tools.get_node_messages(0, 10)  # Get messages 0-10
+
+# Search by similarity
+matches = tools.vector_search("kubernetes deployment", top_k=3)
 ```
 
 ## Roadmap
@@ -309,15 +330,21 @@ messages = tools.get_node_messages(0, 10)  # Get messages 0-10
 - [x] **Hierarchical tree indexing** - Build topic-based conversation trees
 - [x] **LLM-guided retrieval** - Intelligent navigation with tools
 - [x] **Streaming support** - Real-time responses
-- [ ] **Offline tree optimization** - Post-processing for better structure
-- [ ] **Multi-LLM support** - Support for different LLMs in retrieval
-- [ ] **Incremental updates** - Efficiently update trees with new messages
-- [ ] **Vector search integration** - Hybrid retrieval combining tree + embeddings
+- [x] **Offline tree optimization** - Post-processing for better structure
+- [x] **Multi-LLM support** - Support for different LLMs in retrieval
+- [x] **Incremental updates** - Efficiently update trees with new messages
+- [x] **Vector search integration** - Hybrid retrieval combining tree + embeddings
 
+## Release Status
+
+The project is preparing its first fork release as `v0.1.0`. The initial
+roadmap items are implemented, so package metadata now marks the project as
+beta. The public API remains pre-1.0 and may still change before a future
+stable `v1.0.0` release.
 
 ## Contributing
 
-This project is currently under active development. Any contributions are welcome! Please feel free to:
+This project is currently in beta development. Any contributions are welcome! Please feel free to:
 - Submit issues for bugs or feature requests
 - Open pull requests with improvements
 - Share your use cases and feedback

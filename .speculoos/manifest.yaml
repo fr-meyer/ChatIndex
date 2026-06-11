@@ -1,0 +1,118 @@
+schema_version: 0.1
+project: ChatIndex
+workflow: speculoos-v1
+canonical_task: pr-010-release-prep
+repository:
+  upstream: VectifyAI/ChatIndex
+  fork: fr-meyer/ChatIndex
+  local_path: "${OPENCLAW_REPO_PATH}"
+  local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
+  base_branch: dev
+  working_branch: dev
+  upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
+status:
+  phase: release-prep-in-progress
+  pret_a_coder: satisfied
+  blocker_summary:
+    - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, PR004 implementation PR #12, and PR005 implementation PR #14 are merged into fork dev.
+    - Current fork dev is fa23b4fdaa485393ad9ba46cc8081fdb9597753f after PR009 final surface sync.
+    - PR004 issue #11 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIsEY is recorded as Done.
+    - PR004 implementation PR #12 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ is recorded as Done.
+    - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status done.
+    - PR005 issue #13 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvI42Q is recorded as Done.
+    - PR005 implementation PR #14 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ is recorded as Done.
+    - PR005 is mirrored as local Vibe task e7826ad8-9761-5e76-8b79-51d914871344 with Status done.
+    - PR006 issue #15 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvP5kc is recorded as Done.
+    - PR006 implementation PR #16 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvP8OA is recorded as Done.
+    - PR006 is mirrored as local Vibe task 7071d762-d285-5d13-b03f-4e945d7db4f6 with Status done.
+    - PR007 issue #17 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQeOc is recorded as Done.
+    - PR007 implementation PR #18 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQhJ0 is recorded as Done.
+    - PR007 is mirrored as local Vibe task 98b07bd2-066d-5cb4-98d6-beb96a0cb378 with Status done.
+    - PR008 issue #19 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQ3fg is recorded as Done.
+    - PR008 implementation PR #20 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQ5QE is recorded as Done.
+    - PR008 is mirrored as local Vibe task efbe3790-1c03-56ce-b05c-5e2e2e65fe31 with Status done.
+    - PR009 issue #21 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQ_1g is recorded as Done.
+    - PR009 implementation PR #22 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvRB5c is recorded as Done.
+    - PR009 is mirrored as local Vibe task 0a5fd950-64b0-53f6-a139-257c8dbffbd2 with Status done.
+    - PR010 release-prep is in progress on feat/release-prep-v0-1-0. It prepares release notes, CI, and package maturity metadata only; it does not merge dev to main, create a tag, or publish a release.
+    - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
+    - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
+    - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
+    - tmux is not installed in the OpenClaw container.
+validation:
+  no_secret_tests:
+    status: passed
+    command: .venv/bin/python -m unittest discover -v
+    result: 22 passed, 0 failed
+  private_data_check:
+    status: passed
+    reviewed_range: origin/dev...feat/release-prep-v0-1-0 before PR010 publication
+    notes: PR010 implementation scope scanned; no committed secret, private-log, session, tmp, vector-index dump, key/pem, .index, or .faiss artifacts found.
+  powershell_parser:
+    status: not_applicable
+    command: null
+    environment: no PowerShell files expected in PR010
+surfaces:
+  manifest:
+    enabled: true
+    authority: canonical-v0
+  github_issue:
+    enabled: true
+    status: synced
+    number: 23
+    url: https://github.com/fr-meyer/ChatIndex/issues/23
+    file: .speculoos/surfaces/github.yaml
+  github_project:
+    enabled: true
+    status: synced
+    number: 1
+    url: https://github.com/users/fr-meyer/projects/1
+    file: .speculoos/surfaces/github.yaml
+  github_pull_request:
+    enabled: true
+    status: open
+    number: 24
+    url: https://github.com/fr-meyer/ChatIndex/pull/24
+    base_branch: dev
+    head_branch: feat/release-prep-v0-1-0
+    created_at: 2026-06-10T11:31:32Z
+    merge_commit: null
+    merged_at: null
+  vibe_kanban:
+    enabled: true
+    status: local-task-inreview
+    project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+    issue_id: 8b212e03-a7e8-56e0-9cc5-b626df978473
+    file: .speculoos/surfaces/vibe-kanban.yaml
+lanes:
+  codex_review:
+    enabled: true
+    role: baseline-review
+    contract: .speculoos/lane-contracts/codex-review.md
+  cursor_worker:
+    enabled: true
+    role: bounded-implementation
+    contract: .speculoos/lane-contracts/cursor-worker.md
+  opencode:
+    enabled: false
+    role: later-open-executor-candidate
+  omp:
+    enabled: false
+    role: later-advanced-executor-candidate
+  hermes:
+    enabled: false
+    role: later-advanced-executor-harness-candidate
+gates:
+  before_executor:
+    - scope-bounded
+    - acceptance-criteria-present
+    - write-paths-explicit
+    - branch-worktree-ready
+    - credential-policy-explicit
+    - tests-known
+  before_publish:
+    - human-approval
+    - git-auth-available
+    - fork-visible
+    - tests-pass
+    - private-data-check-pass
