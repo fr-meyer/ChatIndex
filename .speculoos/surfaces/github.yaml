@@ -7,7 +7,7 @@ blocked_by:
 branches:
   base: dev
   head: speculoos/pr-012-coderabbit-dev-review-caveat
-  dev_sha: 835d2ad4e6e1cc1b6a85712546853f8ebb892606
+  dev_sha: ad82391f19b81e3b51067a855a43415e14c280c4
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
@@ -94,7 +94,7 @@ project:
       linked_task: pr-011-speculoos-readme-release-plan
     - kind: issue
       number: 28
-      status: Todo
+      status: In Progress
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvacCM
       url: https://github.com/fr-meyer/ChatIndex/issues/28
       linked_task: pr-012-coderabbit-dev-review-caveat
@@ -190,15 +190,21 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaDro
       url: https://github.com/fr-meyer/ChatIndex/pull/27
       linked_task: pr-011-speculoos-readme-release-plan
+    - kind: pull_request
+      number: 29
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvafCM
+      url: https://github.com/fr-meyer/ChatIndex/pull/29
+      linked_task: pr-012-coderabbit-dev-review-caveat
 pull_request:
   enabled: true
-  status: planned
-  number: null
-  url: null
+  status: open
+  number: 29
+  url: https://github.com/fr-meyer/ChatIndex/pull/29
   base_branch: dev
   head_branch: speculoos/pr-012-coderabbit-dev-review-caveat
-  head_sha: null
-  created_at: null
+  head_sha: 1efdc361335bce7c8efa43b263d0a4cbda757963
+  created_at: 2026-06-11T09:42:33Z
   merge_commit: null
   merged_at: null
 last_merged_pull_request:
