@@ -17,7 +17,7 @@ status:
     - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, PR004 implementation PR #12, and PR005 implementation PR #14 are merged into fork dev.
     - Current fork dev is dc9dca26a869ad6813b0eeccd739e5d968c7336e after PR012 final metadata closeout.
     - PR014 issue #34 is open; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvdXpI is recorded as In Progress.
-    - PR014 is mirrored as local Vibe task ad2dc3d0-985c-5583-8252-4811aa7174a5 with Status inprogress.
+    - PR014 is mirrored as local Vibe task ad2dc3d0-985c-5583-8252-4811aa7174a5 with Status inreview.
     - PR004 issue #11 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIsEY is recorded as Done.
     - PR004 implementation PR #12 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ is recorded as Done.
     - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status done.
@@ -52,11 +52,11 @@ validation:
   no_secret_tests:
     status: passed
     command: .venv/bin/python -m unittest discover -v
-    result: 48 passed, 0 failed
+    result: 46 passed, 0 failed
   private_data_check:
     status: passed
     reviewed_range: PR014 code, tests, and metadata before PR publication
-    notes: PR014 touches ctree/utils.py, tests/test_utils.py, tests/test_extract_json.py, and .speculoos metadata only; no committed secret, private-log, session, tmp, vector-index dump, key/pem, .index, or .faiss artifacts found.
+    notes: PR014 touches ctree/utils.py, tests/test_extract_json.py, and .speculoos metadata only; no committed secret, private-log, session, tmp, vector-index dump, key/pem, .index, or .faiss artifacts found.
   powershell_parser:
     status: not_applicable
     command: null

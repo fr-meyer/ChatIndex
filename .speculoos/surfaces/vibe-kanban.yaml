@@ -32,7 +32,7 @@ last_probe:
   result: Vibe service and TCP forwarder are healthy; MCP write tools return 401 Unauthorized until Vibe OAuth/session auth is configured.
 last_sync:
   status: inreview
-  synced_at: 2026-06-11T16:57:12Z
+  synced_at: 2026-06-11T17:12:59Z
   method: local-sqlite-helper
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.

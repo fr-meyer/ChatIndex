@@ -52,10 +52,32 @@ class ExtractJsonTests(unittest.TestCase):
         self.assertIsNone(result["alt"])
         self.assertIs(result["disabled"], False)
 
+    def test_parses_single_quoted_python_literal_dict(self):
+        content = "{'topic_name': None, 'belongs_to_current': True, 'children': []}"
+        result = extract_json(content)
+        self.assertIsNone(result["topic_name"])
+        self.assertIs(result["belongs_to_current"], True)
+        self.assertEqual(result["children"], [])
+
     def test_fenced_json_block(self):
         content = 'Some preamble\n```json\n{"key": "value"}\n```\nSome epilogue'
         result = extract_json(content)
         self.assertEqual(result, {"key": "value"})
+
+    def test_multiline_fenced_json_block(self):
+        content = """
+        Here is the result:
+
+        ```json
+        {
+          "topic_name": "Planning",
+          "belongs_to_current": true
+        }
+        ```
+        """
+        result = extract_json(content)
+        self.assertEqual(result["topic_name"], "Planning")
+        self.assertTrue(result["belongs_to_current"])
 
     def test_fenced_python_literal_block(self):
         content = '```json\n{"key": None, "flag": True}\n```'
@@ -85,6 +107,11 @@ class ExtractJsonTests(unittest.TestCase):
         result = extract_json('{"flag": true, "off": false}')
         self.assertIs(result["flag"], True)
         self.assertIs(result["off"], False)
+
+    def test_removes_trailing_commas_before_json_parse(self):
+        result = extract_json('{"topic_name": "Planning", "children": [],}')
+        self.assertEqual(result["topic_name"], "Planning")
+        self.assertEqual(result["children"], [])
 
     def test_nested_structures(self):
         content = '{"items": [1, 2, 3], "meta": {"active": True, "label": None}}'

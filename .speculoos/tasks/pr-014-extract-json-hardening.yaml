@@ -18,7 +18,6 @@ write_scope:
   allowed:
     - ctree/utils.py
     - tests/test_extract_json.py
-    - tests/test_utils.py
     - .speculoos/manifest.yaml
     - .speculoos/tasks/pr-014-extract-json-hardening.yaml
     - .speculoos/surfaces/github.yaml
@@ -65,9 +64,9 @@ surface_sync:
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
-  test_count: 48
+  test_count: 46
   compile_check: passed
-  compile_command: .venv/bin/python -m py_compile ctree/utils.py tests/test_utils.py tests/test_extract_json.py
+  compile_command: .venv/bin/python -m py_compile ctree/utils.py tests/test_extract_json.py
   yaml_check: passed
   diff_check: passed
   speculoos_preflight: passed
@@ -81,12 +80,22 @@ review:
   pullfrog_workflow_job: 80856734011
   pullfrog_bot_commit: d1d95d37f9091e9731671a2c78a4f033a7155885
   pullfrog_bot_merge_commit: 1aa101514f14ebdd661041a5b4cb4f0123e5a5f8
-  pullfrog_duplicate_run: not_observed_yet
+  pullfrog_incremental_reviews: observed
+  pullfrog_duplicate_run: not_observed_as_separate_workflow
+  pullfrog_minor_finding: addressed_by_test_consolidation
+  pullfrog_monthly_runs_before: "3/30"
+  pullfrog_monthly_runs_after: needs_console_confirmation
+  pullfrog_router_balance_before: "$9.80"
+  pullfrog_router_balance_after: needs_console_confirmation
   coderabbit_auto_review: pending
   validation_notes: >
     PR014 is the first real low-risk ChatIndex PR after the native Pullfrog
     smoke test. Do not mention @pullfrog manually unless a deliberate rerun is
     wanted. Pullfrog auto-ran without a manual mention, used DeepSeek Pro, and
     pushed an additional test-hardening commit plus merge commit to the branch.
-    Review completion, monthly run count, Router credit delta, duplicate-run
-    behavior, and CodeRabbit behavior still need final observation.
+    It then produced incremental reviews in the same observed workflow run
+    instead of a separate manual duplicate run. Its minor duplicate-test-file
+    observation was addressed by consolidating extract_json coverage into
+    tests/test_extract_json.py. Monthly run count, Router credit delta, and
+    final CodeRabbit behavior still need console/GitHub observation after the
+    final PR update lands.
