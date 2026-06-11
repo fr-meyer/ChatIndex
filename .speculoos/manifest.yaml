@@ -8,14 +8,14 @@ repository:
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: speculoos/pr-012-coderabbit-dev-review-caveat
+  working_branch: dev
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: in-review
+  phase: completed
   pret_a_coder: satisfied
   blocker_summary:
     - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, PR004 implementation PR #12, and PR005 implementation PR #14 are merged into fork dev.
-    - Current fork dev is fa23b4fdaa485393ad9ba46cc8081fdb9597753f after PR009 final surface sync.
+    - Current fork dev is 1c20796a0f97bccb40ade03a20380d4a13fe278a after PR012 merge.
     - PR004 issue #11 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIsEY is recorded as Done.
     - PR004 implementation PR #12 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ is recorded as Done.
     - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status done.
@@ -39,9 +39,9 @@ status:
     - PR011 issue #26 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvaAQY is recorded as Done.
     - PR011 pull request #27 is merged into fork dev at 835d2ad4e6e1cc1b6a85712546853f8ebb892606; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvaDro is recorded as Done.
     - PR011 is mirrored as local Vibe task 0fddb790-c4a5-55f5-bfc7-5e658f0de64d with Status done.
-    - PR012 issue #28 is open for repo-local CodeRabbit dev-target caveat documentation; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvacCM is recorded as In Progress.
-    - PR012 pull request #29 is open against fork dev at head 1efdc361335bce7c8efa43b263d0a4cbda757963; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvafCM is recorded as In Progress.
-    - PR012 is mirrored as local Vibe task 79dc858a-3638-5dcd-8054-e4aa36b189e0 with Status inreview.
+    - PR012 issue #28 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvacCM is recorded as Done.
+    - PR012 pull request #29 is merged into fork dev at 1c20796a0f97bccb40ade03a20380d4a13fe278a; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvafCM is recorded as Done.
+    - PR012 is mirrored as local Vibe task 79dc858a-3638-5dcd-8054-e4aa36b189e0 with Status done.
     - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
@@ -53,7 +53,7 @@ validation:
     result: 22 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: PR012 docs/metadata-only changes before publication
+    reviewed_range: PR012 docs/metadata-only changes before merge and closeout
     notes: PR012 touches only .speculoos documentation and metadata; no committed secret, private-log, session, tmp, vector-index dump, key/pem, .index, or .faiss artifacts found.
   powershell_parser:
     status: not_applicable
@@ -77,14 +77,14 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: open
+    status: merged
     number: 29
     url: https://github.com/fr-meyer/ChatIndex/pull/29
     base_branch: dev
     head_branch: speculoos/pr-012-coderabbit-dev-review-caveat
     created_at: 2026-06-11T09:42:33Z
-    merge_commit: null
-    merged_at: null
+    merge_commit: 1c20796a0f97bccb40ade03a20380d4a13fe278a
+    merged_at: 2026-06-11T09:49:24Z
   release_promotion_pull_request:
     enabled: true
     status: merged
@@ -104,7 +104,7 @@ surfaces:
     published_at: 2026-06-11T05:56:13Z
   vibe_kanban:
     enabled: true
-    status: local-task-inreview
+    status: local-task-done
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
     issue_id: 79dc858a-3638-5dcd-8054-e4aa36b189e0
     file: .speculoos/surfaces/vibe-kanban.yaml

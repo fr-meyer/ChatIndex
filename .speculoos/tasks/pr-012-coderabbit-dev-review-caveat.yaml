@@ -3,7 +3,7 @@ id: pr-012-coderabbit-dev-review-caveat
 title: Document CodeRabbit dev-target review caveat
 branch: speculoos/pr-012-coderabbit-dev-review-caveat
 base_branch: dev
-status: in_review
+status: completed
 pret_a_coder: satisfied
 objective: >
   Document that CodeRabbit can skip automatic review on PRs targeting the fork
@@ -48,19 +48,21 @@ surface_sync:
   github_project: synced
   github_project_number: 1
   github_project_url: https://github.com/users/fr-meyer/projects/1
-  github_project_item_status: In Progress
+  github_project_item_status: Done
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvacCM
-  github_pull_request: open
+  github_pull_request: merged
   github_pull_request_number: 29
   github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/29
-  github_pull_request_head_sha: 1efdc361335bce7c8efa43b263d0a4cbda757963
+  github_pull_request_head_sha: 94f8bacf566764d5a9e0de28ba0452059ef018f3
   github_pull_request_created_at: 2026-06-11T09:42:33Z
-  github_pull_request_project_item_status: In Progress
+  github_pull_request_merged_at: 2026-06-11T09:49:24Z
+  github_pull_request_merge_commit: 1c20796a0f97bccb40ade03a20380d4a13fe278a
+  github_pull_request_project_item_status: Done
   github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvafCM
-  vibe_kanban: local-task-inreview
+  vibe_kanban: local-task-done
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: 79dc858a-3638-5dcd-8054-e4aa36b189e0
-  vibe_task_status: inreview
+  vibe_task_status: done
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
@@ -72,7 +74,7 @@ review:
   private_data_check: passed
   cursor_worker: not_used
   executor_lane: codex-only
-  coderabbit_auto_review: not_expected
+  coderabbit_auto_review: not_observed_for_dev_target
   validation_notes: >
     PR012 is a docs/metadata-only task. release-plan is not required because
     there is no dev-to-main promotion, tag, or GitHub Release.

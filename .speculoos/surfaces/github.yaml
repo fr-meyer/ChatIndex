@@ -6,8 +6,8 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: speculoos/pr-012-coderabbit-dev-review-caveat
-  dev_sha: ad82391f19b81e3b51067a855a43415e14c280c4
+  head: dev
+  dev_sha: 1c20796a0f97bccb40ade03a20380d4a13fe278a
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
@@ -16,9 +16,9 @@ issue:
   url: https://github.com/fr-meyer/ChatIndex/issues/28
   title: "PR012: Document CodeRabbit dev-target review caveat"
   linked_task: pr-012-coderabbit-dev-review-caveat
-  state: open
-  state_reason: null
-  closed_at: null
+  state: closed
+  state_reason: completed
+  closed_at: 2026-06-11T09:49:45Z
 project:
   enabled: true
   status: synced
@@ -94,7 +94,7 @@ project:
       linked_task: pr-011-speculoos-readme-release-plan
     - kind: issue
       number: 28
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvacCM
       url: https://github.com/fr-meyer/ChatIndex/issues/28
       linked_task: pr-012-coderabbit-dev-review-caveat
@@ -192,30 +192,30 @@ project:
       linked_task: pr-011-speculoos-readme-release-plan
     - kind: pull_request
       number: 29
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvafCM
       url: https://github.com/fr-meyer/ChatIndex/pull/29
       linked_task: pr-012-coderabbit-dev-review-caveat
 pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 29
   url: https://github.com/fr-meyer/ChatIndex/pull/29
   base_branch: dev
   head_branch: speculoos/pr-012-coderabbit-dev-review-caveat
-  head_sha: 1efdc361335bce7c8efa43b263d0a4cbda757963
+  head_sha: 94f8bacf566764d5a9e0de28ba0452059ef018f3
   created_at: 2026-06-11T09:42:33Z
-  merge_commit: null
-  merged_at: null
+  merge_commit: 1c20796a0f97bccb40ade03a20380d4a13fe278a
+  merged_at: 2026-06-11T09:49:24Z
 last_merged_pull_request:
   enabled: true
   status: merged
-  number: 27
-  url: https://github.com/fr-meyer/ChatIndex/pull/27
+  number: 29
+  url: https://github.com/fr-meyer/ChatIndex/pull/29
   base_branch: dev
-  head_branch: speculoos/pr-011-speculoos-readme-release-plan
-  merge_commit: 835d2ad4e6e1cc1b6a85712546853f8ebb892606
-  merged_at: 2026-06-11T08:50:15Z
+  head_branch: speculoos/pr-012-coderabbit-dev-review-caveat
+  merge_commit: 1c20796a0f97bccb40ade03a20380d4a13fe278a
+  merged_at: 2026-06-11T09:49:24Z
 release_promotion_pull_request:
   enabled: true
   status: merged
