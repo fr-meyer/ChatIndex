@@ -25,7 +25,7 @@ cleanup.
 - `.venv/bin/python -m py_compile ctree/ctree.py retrieval/llm_tools.py retrieval/vector_index.py tests/test_e2e_smoke.py`
 - `ruby -e "require 'yaml'; Dir['.speculoos/**/*.yaml'].each { |p| YAML.parse_file(p) }"`
 - `git diff --check`
-- `scripts/speculoos-chatindex-preflight /home/node/.openclaw/repos/ChatIndex`
+- `scripts/speculoos-chatindex-preflight <repo-root>`
 - Secret/path scan over the PR005 diff.
 
 ## Executor
