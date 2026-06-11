@@ -6,19 +6,19 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: dev
+  head: speculoos/pr-011-speculoos-readme-release-plan
   dev_sha: 86b9861839b73dccab9738e27296b79c81ea3778
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
   status: synced
-  number: 23
-  url: https://github.com/fr-meyer/ChatIndex/issues/23
-  title: "PR010: Release prep for v0.1.0"
-  linked_task: pr-010-release-prep
-  state: closed
-  state_reason: completed
-  closed_at: 2026-06-11T04:57:41Z
+  number: 26
+  url: https://github.com/fr-meyer/ChatIndex/issues/26
+  title: "PR011: Document release-plan helper in Speculoos README"
+  linked_task: pr-011-speculoos-readme-release-plan
+  state: open
+  state_reason: null
+  closed_at: null
 project:
   enabled: true
   status: synced
@@ -86,6 +86,12 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvTMgk
       url: https://github.com/fr-meyer/ChatIndex/issues/23
       linked_task: pr-010-release-prep
+    - kind: issue
+      number: 26
+      status: Todo
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaAQY
+      url: https://github.com/fr-meyer/ChatIndex/issues/26
+      linked_task: pr-011-speculoos-readme-release-plan
     - kind: pull_request
       number: 1
       status: Done
@@ -174,14 +180,14 @@ project:
       linked_task: pr-010-release-promotion
 pull_request:
   enabled: true
-  status: merged
-  number: 24
-  url: https://github.com/fr-meyer/ChatIndex/pull/24
+  status: planned
+  number: null
+  url: null
   base_branch: dev
-  head_branch: feat/release-prep-v0-1-0
-  created_at: 2026-06-10T11:31:32Z
-  merge_commit: 2a4a5762a3f515ad1f903e87d3a1dd6ccd64b184
-  merged_at: 2026-06-11T04:24:54Z
+  head_branch: speculoos/pr-011-speculoos-readme-release-plan
+  created_at: null
+  merge_commit: null
+  merged_at: null
 last_merged_pull_request:
   enabled: true
   status: merged

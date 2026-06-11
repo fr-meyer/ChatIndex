@@ -1,0 +1,75 @@
+schema_version: 0.1
+id: pr-011-speculoos-readme-release-plan
+title: Document release-plan helper in Speculoos README
+branch: speculoos/pr-011-speculoos-readme-release-plan
+base_branch: dev
+status: in_progress
+pret_a_coder: satisfied
+objective: >
+  Document the now-real scripts/speculoos-loop release-plan helper in the
+  repo-local Speculoos README so future ChatIndex maintenance tasks can
+  distinguish normal PR loops from release-gated promotion work.
+acceptance_criteria:
+  - .speculoos/README.md documents release-plan as a dry-run/no-write release gate planner.
+  - The task remains docs/metadata-only and does not change package code or release state.
+  - Repo-local Speculoos metadata records PR011 surfaces and validation evidence.
+  - Validation passes before merge.
+write_scope:
+  allowed:
+    - .speculoos/README.md
+    - .speculoos/manifest.yaml
+    - .speculoos/tasks/pr-011-speculoos-readme-release-plan.yaml
+    - .speculoos/surfaces/github.yaml
+    - .speculoos/surfaces/vibe-kanban.yaml
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 26
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/26
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: Todo
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaAQY
+  github_pull_request: planned
+  github_pull_request_number: null
+  github_pull_request_url: null
+  github_pull_request_project_item_status: null
+  github_pull_request_project_item_id: null
+  vibe_kanban: local-task-todo
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: 0fddb790-c4a5-55f5-bfc7-5e658f0de64d
+  vibe_task_status: todo
+review:
+  tests: passed
+  test_command: .venv/bin/python -m unittest discover -v
+  compile_check: not_applicable
+  yaml_check: passed
+  diff_check: passed
+  speculoos_preflight: passed
+  speculoos_validate: passed
+  private_data_check: passed
+  cursor_worker: not_used
+  executor_lane: codex-only
+  validation_notes: >
+    PR011 is a docs/metadata-only task. release-plan is documented but not
+    required for this task because there is no dev-to-main promotion, tag, or
+    GitHub Release.
