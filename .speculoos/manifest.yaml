@@ -52,11 +52,11 @@ validation:
   no_secret_tests:
     status: passed
     command: .venv/bin/python -m unittest discover -v
-    result: 27 passed, 0 failed
+    result: 48 passed, 0 failed
   private_data_check:
     status: passed
     reviewed_range: PR014 code, tests, and metadata before PR publication
-    notes: PR014 touches ctree/utils.py, tests/test_utils.py, and .speculoos metadata only; no committed secret, private-log, session, tmp, vector-index dump, key/pem, .index, or .faiss artifacts found.
+    notes: PR014 touches ctree/utils.py, tests/test_utils.py, tests/test_extract_json.py, and .speculoos metadata only; no committed secret, private-log, session, tmp, vector-index dump, key/pem, .index, or .faiss artifacts found.
   powershell_parser:
     status: not_applicable
     command: null

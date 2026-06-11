@@ -17,6 +17,7 @@ acceptance_criteria:
 write_scope:
   allowed:
     - ctree/utils.py
+    - tests/test_extract_json.py
     - tests/test_utils.py
     - .speculoos/manifest.yaml
     - .speculoos/tasks/pr-014-extract-json-hardening.yaml
@@ -53,7 +54,7 @@ surface_sync:
   github_pull_request: open
   github_pull_request_number: 35
   github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/35
-  github_pull_request_head_sha: dfd40e69af6f60e508c671ea936d747d237d9947
+  github_pull_request_head_sha: 1aa101514f14ebdd661041a5b4cb4f0123e5a5f8
   github_pull_request_created_at: 2026-06-11T16:57:12Z
   github_pull_request_project_item_status: In Progress
   github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdalA
@@ -64,9 +65,9 @@ surface_sync:
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
-  test_count: 27
+  test_count: 48
   compile_check: passed
-  compile_command: .venv/bin/python -m py_compile ctree/utils.py tests/test_utils.py
+  compile_command: .venv/bin/python -m py_compile ctree/utils.py tests/test_utils.py tests/test_extract_json.py
   yaml_check: passed
   diff_check: passed
   speculoos_preflight: passed
@@ -74,10 +75,18 @@ review:
   private_data_check: passed
   cursor_worker: not_used
   executor_lane: codex-only
-  pullfrog_auto_review: pending
+  pullfrog_auto_review: observed
+  pullfrog_model: DeepSeek Pro
+  pullfrog_workflow_run: 27363466441
+  pullfrog_workflow_job: 80856734011
+  pullfrog_bot_commit: d1d95d37f9091e9731671a2c78a4f033a7155885
+  pullfrog_bot_merge_commit: 1aa101514f14ebdd661041a5b4cb4f0123e5a5f8
+  pullfrog_duplicate_run: not_observed_yet
   coderabbit_auto_review: pending
   validation_notes: >
     PR014 is the first real low-risk ChatIndex PR after the native Pullfrog
     smoke test. Do not mention @pullfrog manually unless a deliberate rerun is
-    wanted; record monthly run count, Router credit delta, model used, review
-    quality, duplicate-run behavior, and CodeRabbit behavior after publication.
+    wanted. Pullfrog auto-ran without a manual mention, used DeepSeek Pro, and
+    pushed an additional test-hardening commit plus merge commit to the branch.
+    Review completion, monthly run count, Router credit delta, duplicate-run
+    behavior, and CodeRabbit behavior still need final observation.
