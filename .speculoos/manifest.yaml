@@ -11,7 +11,7 @@ repository:
   working_branch: dev
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: release-prep-in-progress
+  phase: completed
   pret_a_coder: satisfied
   blocker_summary:
     - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, PR004 implementation PR #12, and PR005 implementation PR #14 are merged into fork dev.
@@ -34,7 +34,8 @@ status:
     - PR009 issue #21 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQ_1g is recorded as Done.
     - PR009 implementation PR #22 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvRB5c is recorded as Done.
     - PR009 is mirrored as local Vibe task 0a5fd950-64b0-53f6-a139-257c8dbffbd2 with Status done.
-    - PR010 release-prep is in progress on feat/release-prep-v0-1-0. It prepares release notes, CI, and package maturity metadata only; it does not merge dev to main, create a tag, or publish a release.
+    - PR010 release-prep PR #24 is merged into fork dev at 2a4a5762a3f515ad1f903e87d3a1dd6ccd64b184.
+    - Release promotion PR #25 is merged into main at 86b9861839b73dccab9738e27296b79c81ea3778; fork dev is fast-forwarded to the same commit; annotated tag v0.1.0 and the GitHub Release are published.
     - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
     - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
@@ -70,17 +71,34 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: open
+    status: merged
     number: 24
     url: https://github.com/fr-meyer/ChatIndex/pull/24
     base_branch: dev
     head_branch: feat/release-prep-v0-1-0
     created_at: 2026-06-10T11:31:32Z
-    merge_commit: null
-    merged_at: null
+    merge_commit: 2a4a5762a3f515ad1f903e87d3a1dd6ccd64b184
+    merged_at: 2026-06-11T04:24:54Z
+  release_promotion_pull_request:
+    enabled: true
+    status: merged
+    number: 25
+    url: https://github.com/fr-meyer/ChatIndex/pull/25
+    base_branch: main
+    head_branch: chore/v0-1-0-main-promotion
+    merge_commit: 86b9861839b73dccab9738e27296b79c81ea3778
+    merged_at: 2026-06-11T04:57:40Z
+  github_release:
+    enabled: true
+    status: published
+    tag: v0.1.0
+    tag_object_sha: 40a5a34dabb351cdbc68db78bb06af1bb0be671b
+    target_sha: 86b9861839b73dccab9738e27296b79c81ea3778
+    url: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.0
+    published_at: 2026-06-11T05:56:13Z
   vibe_kanban:
     enabled: true
-    status: local-task-inreview
+    status: local-task-done
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
     issue_id: 8b212e03-a7e8-56e0-9cc5-b626df978473
     file: .speculoos/surfaces/vibe-kanban.yaml
