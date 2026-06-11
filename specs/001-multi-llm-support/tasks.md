@@ -13,7 +13,7 @@
 
 - [x] T005 Confirm write scope for retrieval, tests, docs, and Speculoos task state.
 - [x] T006 Confirm credential policy: fake-client tests only; no committed provider keys or `.env`.
-- [x] T007 Confirm executor lane: Codex implements directly for this v0 pass after Franck approved proceeding.
+- [x] T007 Confirm executor lane: Codex implements directly for this v0 pass after maintainer approval.
 - [x] T008 Confirm stop conditions and validation commands.
 
 ## Phase 3: Implementation
