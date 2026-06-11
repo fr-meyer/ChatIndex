@@ -39,7 +39,7 @@ setup(
         "docs": read_requirements("requirements-docs.txt") if os.path.exists("requirements-docs.txt") else [],
     },
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
