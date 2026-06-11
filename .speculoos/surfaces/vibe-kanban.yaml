@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-done
+status: local-task-inreview
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: 8b212e03-a7e8-56e0-9cc5-b626df978473
+issue_id: 0fddb790-c4a5-55f5-bfc7-5e658f0de64d
 workspace_id: null
 session_id: null
 service:
@@ -18,21 +18,21 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR010: Release prep for v0.1.0"
-  status: done
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/23
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/24
-  github_release_pr: https://github.com/fr-meyer/ChatIndex/pull/25
-  github_release: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.0
-  release_tag: v0.1.0
-  release_target_sha: 86b9861839b73dccab9738e27296b79c81ea3778
+  title: "PR011: Document release-plan helper in Speculoos README"
+  status: inreview
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/26
+  github_pr: https://github.com/fr-meyer/ChatIndex/pull/27
+  github_release_pr: null
+  github_release: null
+  release_tag: null
+  release_target_sha: null
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check
   result: Vibe service and TCP forwarder are healthy; MCP write tools return 401 Unauthorized until Vibe OAuth/session auth is configured.
 last_sync:
-  status: done
-  synced_at: 2026-06-11T05:56:13Z
+  status: inreview
+  synced_at: 2026-06-11T08:46:01Z
   method: local-sqlite-helper
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.
