@@ -202,15 +202,21 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvafCM
       url: https://github.com/fr-meyer/ChatIndex/pull/29
       linked_task: pr-012-coderabbit-dev-review-caveat
+    - kind: pull_request
+      number: 35
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdalA
+      url: https://github.com/fr-meyer/ChatIndex/pull/35
+      linked_task: pr-014-extract-json-hardening
 pull_request:
   enabled: true
-  status: pending
-  number: null
-  url: null
+  status: open
+  number: 35
+  url: https://github.com/fr-meyer/ChatIndex/pull/35
   base_branch: dev
   head_branch: feat/extract-json-hardening
-  head_sha: null
-  created_at: null
+  head_sha: dfd40e69af6f60e508c671ea936d747d237d9947
+  created_at: 2026-06-11T16:57:12Z
   merge_commit: null
   merged_at: null
 last_merged_pull_request:
