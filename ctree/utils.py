@@ -2,7 +2,9 @@ import openai
 import logging
 import time
 import os
-import json 
+import ast
+import json
+import re
 
 CHATGPT_API_KEY = os.getenv("CHATGPT_API_KEY")
 
@@ -41,29 +43,38 @@ def ChatGPT_API(model, prompt, api_key=CHATGPT_API_KEY, chat_history=None, tempe
                 return "Error"
 
 
+def _strip_json_fence(content):
+    text = content.strip()
+    fenced = re.search(r"```(?:json)?\s*(.*?)```", text, flags=re.IGNORECASE | re.DOTALL)
+    if fenced:
+        return fenced.group(1).strip()
+
+    opening_fence = re.search(r"```(?:json)?\s*", text, flags=re.IGNORECASE)
+    if opening_fence:
+        return text[opening_fence.end():].strip()
+
+    return text
+
+
+def _without_trailing_commas(content):
+    return re.sub(r",(\s*[}\]])", r"\1", content)
+
+
 def extract_json(content):
     try:
-        start_idx = content.find("```json")
-        if start_idx != -1:
-            start_idx += 7
-            end_idx = content.rfind("```")
-            json_content = content[start_idx:end_idx].strip()
-        else:
-            json_content = content.strip()
+        json_content = _strip_json_fence(content)
+    except Exception as e:
+        logging.error(f"Unexpected error while extracting JSON: {e}")
+        return {}
 
+    for candidate in (json_content, _without_trailing_commas(json_content)):
         try:
-            return json.loads(json_content)
+            return json.loads(candidate)
         except json.JSONDecodeError:
             pass
 
-        try:
-            import ast
-            return ast.literal_eval(json_content)
-        except (ValueError, SyntaxError):
-            pass
-
-        logging.error("Failed to parse JSON or Python-literal content")
-        return {}
-    except Exception as e:
-        logging.error(f"Unexpected error while extracting JSON: {e}")
+    try:
+        return ast.literal_eval(json_content)
+    except (SyntaxError, ValueError) as literal_error:
+        logging.error(f"Failed to parse JSON even after cleanup: {literal_error}")
         return {}

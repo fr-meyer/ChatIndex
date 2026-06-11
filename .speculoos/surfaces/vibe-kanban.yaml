@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-done
+status: local-task-inprogress
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: 79dc858a-3638-5dcd-8054-e4aa36b189e0
+issue_id: ad2dc3d0-985c-5583-8252-4811aa7174a5
 workspace_id: null
 session_id: null
 service:
@@ -18,10 +18,10 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR012: Document CodeRabbit dev-target review caveat"
-  status: done
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/28
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/29
+  title: "PR014: Harden JSON extraction utility"
+  status: inprogress
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/34
+  github_pr: null
   github_release_pr: null
   github_release: null
   release_tag: null
@@ -31,8 +31,8 @@ last_probe:
   service_check: scripts/openclaw-vibe-kanban-service check
   result: Vibe service and TCP forwarder are healthy; MCP write tools return 401 Unauthorized until Vibe OAuth/session auth is configured.
 last_sync:
-  status: done
-  synced_at: 2026-06-11T09:50:35Z
+  status: inprogress
+  synced_at: 2026-06-11T16:49:10Z
   method: local-sqlite-helper
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.
