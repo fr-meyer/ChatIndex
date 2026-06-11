@@ -1,0 +1,99 @@
+name: Pullfrog Review
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Pull request number to review"
+        required: true
+        type: string
+      model:
+        description: "Pullfrog model alias to use with repo/provider secrets"
+        required: true
+        type: string
+        default: "openai/gpt"
+      api_url:
+        description: "Pullfrog API URL; localhost default avoids hosted API dependency"
+        required: true
+        type: string
+        default: "http://127.0.0.1:9"
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  checks: read
+  actions: read
+
+concurrency:
+  group: pullfrog-review-${{ github.repository }}-${{ inputs.pr_number }}
+  cancel-in-progress: false
+
+jobs:
+  review:
+    name: Review PR #${{ inputs.pr_number }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      PR_NUMBER: ${{ inputs.pr_number }}
+
+    steps:
+      - name: Validate dispatch input
+        shell: bash
+        run: |
+          case "$PR_NUMBER" in
+            ''|*[!0-9]*)
+              echo "::error::pr_number must be a positive integer"
+              exit 64
+              ;;
+          esac
+          if [ "$PR_NUMBER" -lt 1 ]; then
+            echo "::error::pr_number must be greater than zero"
+            exit 64
+          fi
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Pullfrog review
+        uses: pullfrog/pullfrog@7b496f482ef10649cee18087a372cc1289dbbaa1
+        with:
+          model: ${{ inputs.model }}
+          push: disabled
+          shell: disabled
+          timeout: 30m
+          prompt: |
+            Review pull request #${{ inputs.pr_number }} in ${{ github.repository }}.
+
+            This is a self-managed Pullfrog pilot. Use the GitHub tools available
+            to inspect the PR metadata, changed files, diff, checks, and relevant
+            repository context. Submit a concise pull request review if you find
+            material issues; otherwise leave a short non-blocking review summary.
+
+            Constraints:
+            - Do not modify files.
+            - Do not create commits or branches.
+            - Do not push.
+            - Do not approve, merge, close, retarget, or label the PR.
+            - Focus on correctness, security, regression risk, missing tests, and
+              workflow problems.
+            - Note whether the run completed with API_URL=${{ inputs.api_url }},
+              because the default localhost URL is intended to prove that hosted
+              Pullfrog API calls are not required for this review-only path.
+        env:
+          API_URL: ${{ inputs.api_url }}
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PULLFROG_FORCE_LOCAL_CLI: "1"
+          PULLFROG_MODEL: ${{ inputs.model }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          MOONSHOT_API_KEY: ${{ secrets.MOONSHOT_API_KEY }}
