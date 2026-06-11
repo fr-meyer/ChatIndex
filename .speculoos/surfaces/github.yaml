@@ -202,15 +202,21 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvafCM
       url: https://github.com/fr-meyer/ChatIndex/pull/29
       linked_task: pr-012-coderabbit-dev-review-caveat
+    - kind: pull_request
+      number: 31
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvbXPc
+      url: https://github.com/fr-meyer/ChatIndex/pull/31
+      linked_task: pr-013-pullfrog-review-workflow
 pull_request:
   enabled: true
-  status: planned
-  number: null
-  url: null
+  status: open
+  number: 31
+  url: https://github.com/fr-meyer/ChatIndex/pull/31
   base_branch: dev
   head_branch: speculoos/pr-013-pullfrog-review-workflow
-  head_sha: null
-  created_at: null
+  head_sha: b7c5dae77c1952cad57e24b691856a1d50946ba2
+  created_at: 2026-06-11T12:12:34Z
   merge_commit: null
   merged_at: null
 last_merged_pull_request:

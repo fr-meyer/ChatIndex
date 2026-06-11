@@ -43,7 +43,8 @@ status:
     - PR012 pull request #29 is merged into fork dev at 1c20796a0f97bccb40ade03a20380d4a13fe278a; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvafCM is recorded as Done.
     - PR012 is mirrored as local Vibe task 79dc858a-3638-5dcd-8054-e4aa36b189e0 with Status done.
     - PR013 issue #30 is open; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvbTSQ is recorded as In Progress.
-    - PR013 is mirrored as local Vibe task 6acbc724-873c-546b-b587-7d574b1d40b0 with Status inprogress.
+    - PR013 pull request #31 is open against fork dev at b7c5dae77c1952cad57e24b691856a1d50946ba2; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvbXPc is recorded as In Progress.
+    - PR013 is mirrored as local Vibe task 6acbc724-873c-546b-b587-7d574b1d40b0 with Status inreview.
     - PR013 will add a manual review-only Pullfrog workflow; first live review may require a tiny follow-up PR after the workflow lands on fork dev.
     - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
     - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
@@ -80,12 +81,12 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: planned
-    number: null
-    url: null
+    status: open
+    number: 31
+    url: https://github.com/fr-meyer/ChatIndex/pull/31
     base_branch: dev
     head_branch: speculoos/pr-013-pullfrog-review-workflow
-    created_at: null
+    created_at: 2026-06-11T12:12:34Z
     merge_commit: null
     merged_at: null
   release_promotion_pull_request:
@@ -107,7 +108,7 @@ surfaces:
     published_at: 2026-06-11T05:56:13Z
   vibe_kanban:
     enabled: true
-    status: local-task-inprogress
+    status: local-task-inreview
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
     issue_id: 6acbc724-873c-546b-b587-7d574b1d40b0
     file: .speculoos/surfaces/vibe-kanban.yaml

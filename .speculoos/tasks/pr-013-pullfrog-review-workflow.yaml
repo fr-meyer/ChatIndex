@@ -53,13 +53,19 @@ surface_sync:
   github_project_url: https://github.com/users/fr-meyer/projects/1
   github_project_item_status: In Progress
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvbTSQ
-  github_pull_request: planned
-  github_pull_request_number: null
-  github_pull_request_url: null
-  vibe_kanban: local-task-inprogress
+  github_pull_request: open
+  github_pull_request_number: 31
+  github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/31
+  github_pull_request_head_sha: b7c5dae77c1952cad57e24b691856a1d50946ba2
+  github_pull_request_created_at: 2026-06-11T12:12:34Z
+  github_pull_request_merged_at: null
+  github_pull_request_merge_commit: null
+  github_pull_request_project_item_status: In Progress
+  github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvbXPc
+  vibe_kanban: local-task-inreview
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: 6acbc724-873c-546b-b587-7d574b1d40b0
-  vibe_task_status: inprogress
+  vibe_task_status: inreview
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
