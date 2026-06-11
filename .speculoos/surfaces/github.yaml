@@ -6,8 +6,8 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: speculoos/pr-011-speculoos-readme-release-plan
-  dev_sha: 37bf2365851afab0900322dc2c32240ebf8ffbe9
+  head: dev
+  dev_sha: 835d2ad4e6e1cc1b6a85712546853f8ebb892606
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
@@ -16,9 +16,9 @@ issue:
   url: https://github.com/fr-meyer/ChatIndex/issues/26
   title: "PR011: Document release-plan helper in Speculoos README"
   linked_task: pr-011-speculoos-readme-release-plan
-  state: open
-  state_reason: null
-  closed_at: null
+  state: closed
+  state_reason: completed
+  closed_at: 2026-06-11T08:51:02Z
 project:
   enabled: true
   status: synced
@@ -88,7 +88,7 @@ project:
       linked_task: pr-010-release-prep
     - kind: issue
       number: 26
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaAQY
       url: https://github.com/fr-meyer/ChatIndex/issues/26
       linked_task: pr-011-speculoos-readme-release-plan
@@ -180,30 +180,30 @@ project:
       linked_task: pr-010-release-promotion
     - kind: pull_request
       number: 27
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaDro
       url: https://github.com/fr-meyer/ChatIndex/pull/27
       linked_task: pr-011-speculoos-readme-release-plan
 pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 27
   url: https://github.com/fr-meyer/ChatIndex/pull/27
   base_branch: dev
   head_branch: speculoos/pr-011-speculoos-readme-release-plan
-  head_sha: 7f6a35890ec91d4964b96279810fd977d1cb668e
+  head_sha: 5f7677130fd05f5172e1996aedb5b6fc3d9a762b
   created_at: 2026-06-11T08:44:26Z
-  merge_commit: null
-  merged_at: null
+  merge_commit: 835d2ad4e6e1cc1b6a85712546853f8ebb892606
+  merged_at: 2026-06-11T08:50:15Z
 last_merged_pull_request:
   enabled: true
   status: merged
-  number: 24
-  url: https://github.com/fr-meyer/ChatIndex/pull/24
+  number: 27
+  url: https://github.com/fr-meyer/ChatIndex/pull/27
   base_branch: dev
-  head_branch: feat/release-prep-v0-1-0
-  merge_commit: 2a4a5762a3f515ad1f903e87d3a1dd6ccd64b184
-  merged_at: 2026-06-11T04:24:54Z
+  head_branch: speculoos/pr-011-speculoos-readme-release-plan
+  merge_commit: 835d2ad4e6e1cc1b6a85712546853f8ebb892606
+  merged_at: 2026-06-11T08:50:15Z
 release_promotion_pull_request:
   enabled: true
   status: merged
