@@ -43,33 +43,27 @@ def ChatGPT_API(model, prompt, api_key=CHATGPT_API_KEY, chat_history=None, tempe
 
 def extract_json(content):
     try:
-        # First, try to extract JSON enclosed within ```json and ```
         start_idx = content.find("```json")
         if start_idx != -1:
-            start_idx += 7  # Adjust index to start after the delimiter
+            start_idx += 7
             end_idx = content.rfind("```")
             json_content = content[start_idx:end_idx].strip()
         else:
-            # If no delimiters, assume entire content could be JSON
             json_content = content.strip()
 
-        # Clean up common issues that might cause parsing errors
-        json_content = json_content.replace('None', 'null')  # Replace Python None with JSON null
-        json_content = json_content.replace('\n', ' ').replace('\r', ' ')  # Remove newlines
-        json_content = ' '.join(json_content.split())  # Normalize whitespace
-
-        # Attempt to parse and return the JSON object
-        return json.loads(json_content)
-    except json.JSONDecodeError as e:
-        logging.error(f"Failed to extract JSON: {e}")
-        # Try to clean up the content further if initial parsing fails
         try:
-            # Remove any trailing commas before closing brackets/braces
-            json_content = json_content.replace(',]', ']').replace(',}', '}')
             return json.loads(json_content)
-        except:
-            logging.error("Failed to parse JSON even after cleanup")
-            return {}
+        except json.JSONDecodeError:
+            pass
+
+        try:
+            import ast
+            return ast.literal_eval(json_content)
+        except (ValueError, SyntaxError):
+            pass
+
+        logging.error("Failed to parse JSON or Python-literal content")
+        return {}
     except Exception as e:
         logging.error(f"Unexpected error while extracting JSON: {e}")
         return {}
