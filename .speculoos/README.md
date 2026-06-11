@@ -32,5 +32,12 @@ scripts/speculoos-loop release-plan --repo /path/to/ChatIndex \
 
 Normal docs, metadata, and maintenance PRs do not need `release-plan`.
 
+Review caveat:
+
+CodeRabbit can skip automatic review for PRs that target a non-default branch
+such as the fork `dev` branch. Treat CI and manual Speculoos validation as the
+required gate unless CodeRabbit review is explicitly triggered or repository
+settings are changed to review `dev`-targeted PRs.
+
 Do not commit private run logs, provider keys, raw private sessions, or executor
 payloads. Runtime artifacts belong in private OpenClaw storage.

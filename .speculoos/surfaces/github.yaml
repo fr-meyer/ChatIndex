@@ -6,19 +6,19 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: dev
+  head: speculoos/pr-012-coderabbit-dev-review-caveat
   dev_sha: 835d2ad4e6e1cc1b6a85712546853f8ebb892606
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
   status: synced
-  number: 26
-  url: https://github.com/fr-meyer/ChatIndex/issues/26
-  title: "PR011: Document release-plan helper in Speculoos README"
-  linked_task: pr-011-speculoos-readme-release-plan
-  state: closed
-  state_reason: completed
-  closed_at: 2026-06-11T08:51:02Z
+  number: 28
+  url: https://github.com/fr-meyer/ChatIndex/issues/28
+  title: "PR012: Document CodeRabbit dev-target review caveat"
+  linked_task: pr-012-coderabbit-dev-review-caveat
+  state: open
+  state_reason: null
+  closed_at: null
 project:
   enabled: true
   status: synced
@@ -92,6 +92,12 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaAQY
       url: https://github.com/fr-meyer/ChatIndex/issues/26
       linked_task: pr-011-speculoos-readme-release-plan
+    - kind: issue
+      number: 28
+      status: Todo
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvacCM
+      url: https://github.com/fr-meyer/ChatIndex/issues/28
+      linked_task: pr-012-coderabbit-dev-review-caveat
     - kind: pull_request
       number: 1
       status: Done
@@ -186,15 +192,15 @@ project:
       linked_task: pr-011-speculoos-readme-release-plan
 pull_request:
   enabled: true
-  status: merged
-  number: 27
-  url: https://github.com/fr-meyer/ChatIndex/pull/27
+  status: planned
+  number: null
+  url: null
   base_branch: dev
-  head_branch: speculoos/pr-011-speculoos-readme-release-plan
-  head_sha: 5f7677130fd05f5172e1996aedb5b6fc3d9a762b
-  created_at: 2026-06-11T08:44:26Z
-  merge_commit: 835d2ad4e6e1cc1b6a85712546853f8ebb892606
-  merged_at: 2026-06-11T08:50:15Z
+  head_branch: speculoos/pr-012-coderabbit-dev-review-caveat
+  head_sha: null
+  created_at: null
+  merge_commit: null
+  merged_at: null
 last_merged_pull_request:
   enabled: true
   status: merged
