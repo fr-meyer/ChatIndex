@@ -24,7 +24,7 @@ implementation should be deterministic, in-memory, and easy to test.
 - `.venv/bin/python -m py_compile retrieval/llm_tools.py`
 - `ruby -e "require 'yaml'; Dir['.speculoos/**/*.yaml'].each { |p| YAML.parse_file(p) }"`
 - `git diff --check`
-- `scripts/speculoos-chatindex-preflight /home/node/.openclaw/repos/ChatIndex`
+- `scripts/speculoos-chatindex-preflight <repo-root>`
 
 ## Executor
 
