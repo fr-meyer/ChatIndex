@@ -7,7 +7,7 @@ blocked_by:
 branches:
   base: dev
   head: speculoos/pr-011-speculoos-readme-release-plan
-  dev_sha: 86b9861839b73dccab9738e27296b79c81ea3778
+  dev_sha: 37bf2365851afab0900322dc2c32240ebf8ffbe9
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
@@ -88,7 +88,7 @@ project:
       linked_task: pr-010-release-prep
     - kind: issue
       number: 26
-      status: Todo
+      status: In Progress
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaAQY
       url: https://github.com/fr-meyer/ChatIndex/issues/26
       linked_task: pr-011-speculoos-readme-release-plan
@@ -178,14 +178,21 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvZJls
       url: https://github.com/fr-meyer/ChatIndex/pull/25
       linked_task: pr-010-release-promotion
+    - kind: pull_request
+      number: 27
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaDro
+      url: https://github.com/fr-meyer/ChatIndex/pull/27
+      linked_task: pr-011-speculoos-readme-release-plan
 pull_request:
   enabled: true
-  status: planned
-  number: null
-  url: null
+  status: open
+  number: 27
+  url: https://github.com/fr-meyer/ChatIndex/pull/27
   base_branch: dev
   head_branch: speculoos/pr-011-speculoos-readme-release-plan
-  created_at: null
+  head_sha: 7f6a35890ec91d4964b96279810fd977d1cb668e
+  created_at: 2026-06-11T08:44:26Z
   merge_commit: null
   merged_at: null
 last_merged_pull_request:
