@@ -51,7 +51,7 @@ executor_lanes:
     status: required
   cursor_worker:
     status: bypassed-for-v0
-    reason: Franck approved proceeding directly in Codex on 2026-06-08 14:29 KST after the PR001 setup gate.
+    reason: Maintainer approved proceeding directly in Codex on 2026-06-08 14:29 KST after the PR001 setup gate.
 surface_sync:
   manifest: done
   github_issue: synced
