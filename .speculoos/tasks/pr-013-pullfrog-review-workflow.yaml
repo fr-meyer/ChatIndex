@@ -1,0 +1,77 @@
+schema_version: 0.1
+id: pr-013-pullfrog-review-workflow
+title: Pilot self-managed Pullfrog review workflow
+branch: speculoos/pr-013-pullfrog-review-workflow
+base_branch: dev
+status: in_progress
+pret_a_coder: satisfied
+objective: >
+  Add a manual, review-only Pullfrog workflow that can pilot self-managed
+  PR review for ChatIndex dev-targeted pull requests without depending on
+  Pullfrog hosted premium per-run billing.
+acceptance_criteria:
+  - .github/workflows/pullfrog-review.yml defines a workflow_dispatch manual review path with a required PR number input.
+  - The workflow uses upstream Pullfrog unchanged, pinned by reviewed commit.
+  - The workflow passes GH_TOKEN, BYOK provider secrets, and an explicit model input.
+  - The workflow defaults API_URL to localhost to test the no-hosted-API path.
+  - The workflow sets push disabled and does not auto-fix, auto-merge, or write protected branches.
+  - Repo-local Speculoos metadata records PR013 surfaces and validation evidence.
+  - The first live review test is recorded as a follow-up if it needs a tiny post-merge PR.
+write_scope:
+  allowed:
+    - .github/workflows/pullfrog-review.yml
+    - .speculoos/README.md
+    - .speculoos/manifest.yaml
+    - .speculoos/tasks/pr-013-pullfrog-review-workflow.yaml
+    - .speculoos/surfaces/github.yaml
+    - .speculoos/surfaces/vibe-kanban.yaml
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 30
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/30
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: In Progress
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvbTSQ
+  github_pull_request: planned
+  github_pull_request_number: null
+  github_pull_request_url: null
+  vibe_kanban: local-task-inprogress
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: 6acbc724-873c-546b-b587-7d574b1d40b0
+  vibe_task_status: inprogress
+review:
+  tests: passed
+  test_command: .venv/bin/python -m unittest discover -v
+  workflow_yaml_check: passed
+  diff_check: passed
+  speculoos_validate: passed
+  private_data_check: passed
+  cursor_worker: not_used
+  executor_lane: codex-only
+  pullfrog_live_review: pending_follow_up
+  validation_notes: >
+    PR013 is workflow/metadata-only. Unit tests, YAML parsing, diff check,
+    scripts/speculoos-loop validate, and private-data scan passed before PR
+    publication. release-plan is not required because there is no dev-to-main
+    promotion, tag, or GitHub Release.

@@ -39,5 +39,15 @@ such as the fork `dev` branch. Treat CI and manual Speculoos validation as the
 required gate unless CodeRabbit review is explicitly triggered or repository
 settings are changed to review `dev`-targeted PRs.
 
+Pullfrog pilot:
+
+`Pullfrog Review` is a manual `workflow_dispatch` pilot for self-managed,
+review-only PR checks. It uses upstream Pullfrog unchanged, a pinned action
+commit, `GH_TOKEN`, BYOK model secrets, an explicit model input, `push:
+disabled`, and a localhost `API_URL` default so the first test can reveal
+whether hosted Pullfrog API calls are optional for this path. Do not enable
+automatic triggers, auto-fix, auto-merge, or protected-branch writes until a
+manual run is reviewed.
+
 Do not commit private run logs, provider keys, raw private sessions, or executor
 payloads. Runtime artifacts belong in private OpenClaw storage.
