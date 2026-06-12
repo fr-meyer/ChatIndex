@@ -8,16 +8,17 @@ repository:
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: feat/extract-json-hardening
+  working_branch: dev
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: in_review
+  phase: completed
   pret_a_coder: satisfied
   blocker_summary:
     - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, PR004 implementation PR #12, and PR005 implementation PR #14 are merged into fork dev.
-    - Current fork dev is dc9dca26a869ad6813b0eeccd739e5d968c7336e after PR012 final metadata closeout.
-    - PR014 issue #34 is open; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvdXpI is recorded as In Progress.
-    - PR014 is mirrored as local Vibe task ad2dc3d0-985c-5583-8252-4811aa7174a5 with Status inreview.
+    - Current fork dev is 001063fab74a7dd322379f6d309ee2ecc0377fd0 after PR014 merge.
+    - PR014 issue #34 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvdXpI is recorded as Done.
+    - PR014 pull request #35 is merged into fork dev at 001063fab74a7dd322379f6d309ee2ecc0377fd0; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvdalA is recorded as Done.
+    - PR014 is mirrored as local Vibe task ad2dc3d0-985c-5583-8252-4811aa7174a5 with Status done.
     - PR004 issue #11 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIsEY is recorded as Done.
     - PR004 implementation PR #12 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ is recorded as Done.
     - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status done.
@@ -55,7 +56,7 @@ validation:
     result: 46 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: PR014 code, tests, and metadata before PR publication
+    reviewed_range: PR014 code, tests, and closeout metadata before and after merge
     notes: PR014 touches ctree/utils.py, tests/test_extract_json.py, and .speculoos metadata only; no committed secret, private-log, session, tmp, vector-index dump, key/pem, .index, or .faiss artifacts found.
   powershell_parser:
     status: not_applicable
@@ -79,14 +80,14 @@ surfaces:
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: open
+    status: merged
     number: 35
     url: https://github.com/fr-meyer/ChatIndex/pull/35
     base_branch: dev
     head_branch: feat/extract-json-hardening
     created_at: 2026-06-11T16:57:12Z
-    merge_commit: null
-    merged_at: null
+    merge_commit: 001063fab74a7dd322379f6d309ee2ecc0377fd0
+    merged_at: 2026-06-12T06:49:42Z
   release_promotion_pull_request:
     enabled: true
     status: merged
@@ -106,7 +107,7 @@ surfaces:
     published_at: 2026-06-11T05:56:13Z
   vibe_kanban:
     enabled: true
-    status: local-task-inreview
+    status: local-task-done
     project_id: 0099a2a0-2b58-5aca-822d-317754378b82
     issue_id: ad2dc3d0-985c-5583-8252-4811aa7174a5
     file: .speculoos/surfaces/vibe-kanban.yaml
