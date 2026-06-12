@@ -1,24 +1,25 @@
 schema_version: 0.1
 project: ChatIndex
 workflow: speculoos-v1
-canonical_task: pr-016-dev-main-v0-1-1-promotion
+canonical_task: pr-017-v0-1-1-post-review-fixes
 repository:
   upstream: VectifyAI/ChatIndex
   fork: fr-meyer/ChatIndex
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: main
-  working_branch: chore/v0-1-1-main-promotion
+  working_branch: fix/v0-1-1-post-review
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
   phase: in_review
   pret_a_coder: satisfied
   blocker_summary:
-    - PR016 release-gated promotion issue #39 is open and tracked in GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvhx4Q.
-    - PR016 promotion branch chore/v0-1-1-main-promotion is based on origin/main, merges origin/dev, preserves .github/workflows/pullfrog.yml, and prepares v0.1.1 release notes plus package version metadata.
-    - Planned release evidence is promotion PR to main, annotated tag v0.1.1, and GitHub Release targeting the resulting main commit after merge.
+    - PR016 release-gated promotion issue #39 is the release tracking issue in GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvhx4Q.
+    - PR016 promotion PR #40 merged into main at 36578b18aac0e65da7301f0f1398de7321a912f2, but v0.1.1 tag and GitHub Release are blocked until the post-merge CodeRabbit findings are fixed.
+    - PR017 fix-forward branch fix/v0-1-1-post-review addresses the late CodeRabbit review findings before the v0.1.1 release is tagged.
+    - Planned release evidence is PR016 promotion PR #40, PR017 post-review fix PR, annotated tag v0.1.1, and GitHub Release targeting the resulting main commit after PR017 merges.
     - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, PR004 implementation PR #12, and PR005 implementation PR #14 are merged into fork dev.
-    - Current fork dev is 01b964c0656d3d7581203c080a46ee547409b138 after PR015 merge.
+    - Current fork dev is 117a13a85e1bc41891d6e2c1b02b2b971d9cfc14 after PR015 closeout metadata.
     - PR015 issue #36 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvhE2Y is recorded as Done.
     - PR015 pull request #38 is merged into fork dev at 01b964c0656d3d7581203c080a46ee547409b138; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvhHkE is recorded as Done.
     - PR015 is mirrored as local Vibe task 8b85501e-0ce0-5a82-9273-7658d8276fc1 with Status done.
@@ -67,7 +68,7 @@ validation:
   powershell_parser:
     status: not_applicable
     command: null
-    environment: no PowerShell files expected in PR015
+    environment: no PowerShell files expected in PR016 or PR017
 surfaces:
   manifest:
     enabled: true
@@ -96,22 +97,22 @@ surfaces:
     merged_at: null
   release_promotion_pull_request:
     enabled: true
-    status: planned
-    number: null
-    url: null
+    status: merged
+    number: 40
+    url: https://github.com/fr-meyer/ChatIndex/pull/40
     base_branch: main
     head_branch: chore/v0-1-1-main-promotion
-    merge_commit: planned-after-merge
-    merged_at: planned-after-merge
+    merge_commit: 36578b18aac0e65da7301f0f1398de7321a912f2
+    merged_at: 2026-06-12T10:01:00Z
   github_release:
     enabled: true
-    status: planned
+    status: blocked-pending-post-review-fix
     tag: v0.1.1
     previous_tag: v0.1.0
-    tag_object_sha: planned-after-main-merge
-    target_sha: planned-after-merge
+    tag_object_sha: planned-after-post-review-fix
+    target_sha: planned-after-post-review-fix
     url: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.1
-    published_at: planned-after-main-merge
+    published_at: planned-after-post-review-fix
   vibe_kanban:
     enabled: true
     status: local-task-inreview

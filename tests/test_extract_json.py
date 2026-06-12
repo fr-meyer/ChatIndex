@@ -113,6 +113,16 @@ class ExtractJsonTests(unittest.TestCase):
         self.assertEqual(result["topic_name"], "Planning")
         self.assertEqual(result["children"], [])
 
+    def test_preserves_comma_bracket_sequence_inside_string(self):
+        result = extract_json('{"text": "keep,] inside string", "items": [1,]}')
+        self.assertEqual(result["text"], "keep,] inside string")
+        self.assertEqual(result["items"], [1])
+
+    def test_preserves_comma_brace_sequence_inside_string(self):
+        result = extract_json('{"text": "keep,} inside string", "meta": {"ok": true,}}')
+        self.assertEqual(result["text"], "keep,} inside string")
+        self.assertEqual(result["meta"], {"ok": True})
+
     def test_nested_structures(self):
         content = '{"items": [1, 2, 3], "meta": {"active": True, "label": None}}'
         result = extract_json(content)

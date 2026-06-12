@@ -22,10 +22,10 @@ task:
   status: inreview
   github_issue: https://github.com/fr-meyer/ChatIndex/issues/39
   github_pr: null
-  github_release_pr: planned
+  github_release_pr: https://github.com/fr-meyer/ChatIndex/pull/40
   github_release: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.1
   release_tag: v0.1.1
-  release_target_sha: planned-after-merge
+  release_target_sha: planned-after-post-review-fix
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check

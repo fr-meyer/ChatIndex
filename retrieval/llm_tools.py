@@ -531,7 +531,7 @@ class ChatIndexTools:
                 children = getattr(current_node, "children", None)
                 if (
                     children is None
-                    or not isinstance(idx, int)
+                    or type(idx) is not int
                     or idx < 0
                     or idx >= len(children)
                 ):
