@@ -3,7 +3,7 @@ id: pr-014-extract-json-hardening
 title: Harden JSON extraction utility
 branch: feat/extract-json-hardening
 base_branch: dev
-status: in_review
+status: completed
 pret_a_coder: satisfied
 objective: >
   Harden ctree.utils.extract_json so model JSON and Python-literal outputs
@@ -48,19 +48,21 @@ surface_sync:
   github_project: synced
   github_project_number: 1
   github_project_url: https://github.com/users/fr-meyer/projects/1
-  github_project_item_status: In Progress
+  github_project_item_status: Done
   github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdXpI
-  github_pull_request: open
+  github_pull_request: merged
   github_pull_request_number: 35
   github_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/35
-  github_pull_request_head_sha: 1aa101514f14ebdd661041a5b4cb4f0123e5a5f8
+  github_pull_request_head_sha: 9f2c1d2d77cbc51072d888b50fc77a09e6019819
   github_pull_request_created_at: 2026-06-11T16:57:12Z
-  github_pull_request_project_item_status: In Progress
+  github_pull_request_merged_at: 2026-06-12T06:49:42Z
+  github_pull_request_merge_commit: 001063fab74a7dd322379f6d309ee2ecc0377fd0
+  github_pull_request_project_item_status: Done
   github_pull_request_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdalA
-  vibe_kanban: local-task-inreview
+  vibe_kanban: local-task-done
   vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
   vibe_task_id: ad2dc3d0-985c-5583-8252-4811aa7174a5
-  vibe_task_status: inreview
+  vibe_task_status: done
 review:
   tests: passed
   test_command: .venv/bin/python -m unittest discover -v
@@ -78,24 +80,35 @@ review:
   pullfrog_model: DeepSeek Pro
   pullfrog_workflow_run: 27363466441
   pullfrog_workflow_job: 80856734011
+  pullfrog_workflow_status: success
   pullfrog_bot_commit: d1d95d37f9091e9731671a2c78a4f033a7155885
   pullfrog_bot_merge_commit: 1aa101514f14ebdd661041a5b4cb4f0123e5a5f8
   pullfrog_incremental_reviews: observed
-  pullfrog_duplicate_run: not_observed_as_separate_workflow
+  pullfrog_review_count: 4
+  pullfrog_review_ids:
+    - 4478881480
+    - 4478914428
+    - 4478921953
+    - 4478997775
+  pullfrog_followup_workflow_run: 27364466859
+  pullfrog_followup_workflow_job: 80860218781
+  pullfrog_followup_workflow_status: success
+  pullfrog_duplicate_run: new_commit_auto_run_observed
   pullfrog_minor_finding: addressed_by_test_consolidation
   pullfrog_monthly_runs_before: "3/30"
   pullfrog_monthly_runs_after: needs_console_confirmation
   pullfrog_router_balance_before: "$9.80"
   pullfrog_router_balance_after: needs_console_confirmation
-  coderabbit_auto_review: pending
+  coderabbit_auto_review: skipped_dev_target
   validation_notes: >
     PR014 is the first real low-risk ChatIndex PR after the native Pullfrog
     smoke test. Do not mention @pullfrog manually unless a deliberate rerun is
     wanted. Pullfrog auto-ran without a manual mention, used DeepSeek Pro, and
     pushed an additional test-hardening commit plus merge commit to the branch.
-    It then produced incremental reviews in the same observed workflow run
-    instead of a separate manual duplicate run. Its minor duplicate-test-file
-    observation was addressed by consolidating extract_json coverage into
-    tests/test_extract_json.py. Monthly run count, Router credit delta, and
-    final CodeRabbit behavior still need console/GitHub observation after the
-    final PR update lands.
+    It produced three review comments in the initial workflow run. Its minor
+    duplicate-test-file observation was addressed by consolidating extract_json
+    coverage into tests/test_extract_json.py. A separate automatic
+    workflow_dispatch run then reviewed the cleanup commit and posted a fourth
+    review with no new issues. This shows that new commits can consume
+    additional Pullfrog runs even when @pullfrog is not mentioned manually.
+    Monthly run count and Router credit delta still need console confirmation.
