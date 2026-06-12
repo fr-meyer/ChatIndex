@@ -323,6 +323,33 @@ class RetrievalProviderTests(unittest.TestCase):
         self.assertEqual(messages["message_count"], 2)
         self.assertIn("Kubernetes", messages["messages"][1]["content"])
 
+    def test_view_node_rejects_negative_root_index(self):
+        tools = ChatIndexTools(make_tree())
+
+        result = tools.view_node_and_children([-1])
+
+        self.assertIn("error", result)
+        self.assertEqual(result["valid_indices"], [0])
+        self.assertIn("-1", result["error"])
+
+    def test_view_node_rejects_nested_negative_index(self):
+        tools = ChatIndexTools(make_tree())
+
+        result = tools.view_node_and_children([0, -1])
+
+        self.assertIn("error", result)
+        self.assertEqual(result["valid_indices"], [0])
+        self.assertIn("-1", result["error"])
+
+    def test_view_node_valid_path_still_navigates(self):
+        tools = ChatIndexTools(make_tree())
+
+        result = tools.view_node_and_children([0])
+
+        self.assertNotIn("error", result)
+        self.assertEqual(result["node_type"], "topic")
+        self.assertEqual(result["topic_name"], "Planning")
+
 
 if __name__ == "__main__":
     unittest.main()

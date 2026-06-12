@@ -1,24 +1,25 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: completed
+status: in_progress
 blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: feat/extract-json-hardening
-  dev_sha: 001063fab74a7dd322379f6d309ee2ecc0377fd0
+  head: feat/reject-negative-node-path
+  dev_sha: 75132e2e650a6f4a45f58d2d565b67bebb9080d8
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
   status: synced
-  number: 34
-  url: https://github.com/fr-meyer/ChatIndex/issues/34
-  title: "Harden JSON extraction utility"
-  linked_task: pr-014-extract-json-hardening
-  state: closed
-  state_reason: completed
-  closed_at: 2026-06-12T06:49:55Z
+  number: 36
+  url: https://github.com/fr-meyer/ChatIndex/issues/36
+  title: "Reject negative node path indices"
+  linked_task: pr-015-reject-negative-node-path
+  state: open
+  state_reason: null
+  created_at: 2026-06-12T07:24:37Z
+  closed_at: null
 project:
   enabled: true
   status: synced
@@ -104,6 +105,12 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdXpI
       url: https://github.com/fr-meyer/ChatIndex/issues/34
       linked_task: pr-014-extract-json-hardening
+    - kind: issue
+      number: 36
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvhE2Y
+      url: https://github.com/fr-meyer/ChatIndex/issues/36
+      linked_task: pr-015-reject-negative-node-path
     - kind: pull_request
       number: 1
       status: Done
@@ -210,15 +217,15 @@ project:
       linked_task: pr-014-extract-json-hardening
 pull_request:
   enabled: true
-  status: merged
-  number: 35
-  url: https://github.com/fr-meyer/ChatIndex/pull/35
+  status: pending_publish
+  number: null
+  url: null
   base_branch: dev
-  head_branch: feat/extract-json-hardening
-  head_sha: 9f2c1d2d77cbc51072d888b50fc77a09e6019819
-  created_at: 2026-06-11T16:57:12Z
-  merge_commit: 001063fab74a7dd322379f6d309ee2ecc0377fd0
-  merged_at: 2026-06-12T06:49:42Z
+  head_branch: feat/reject-negative-node-path
+  head_sha: null
+  created_at: null
+  merge_commit: null
+  merged_at: null
 last_merged_pull_request:
   enabled: true
   status: merged
