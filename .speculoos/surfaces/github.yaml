@@ -1,13 +1,13 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: in_progress
+status: completed
 blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
   head: feat/reject-negative-node-path
-  dev_sha: 75132e2e650a6f4a45f58d2d565b67bebb9080d8
+  dev_sha: 01b964c0656d3d7581203c080a46ee547409b138
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
@@ -16,10 +16,10 @@ issue:
   url: https://github.com/fr-meyer/ChatIndex/issues/36
   title: "Reject negative node path indices"
   linked_task: pr-015-reject-negative-node-path
-  state: open
-  state_reason: null
+  state: closed
+  state_reason: completed
   created_at: 2026-06-12T07:24:37Z
-  closed_at: null
+  closed_at: 2026-06-12T07:46:27Z
 project:
   enabled: true
   status: synced
@@ -107,7 +107,7 @@ project:
       linked_task: pr-014-extract-json-hardening
     - kind: issue
       number: 36
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvhE2Y
       url: https://github.com/fr-meyer/ChatIndex/issues/36
       linked_task: pr-015-reject-negative-node-path
@@ -215,26 +215,32 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdalA
       url: https://github.com/fr-meyer/ChatIndex/pull/35
       linked_task: pr-014-extract-json-hardening
+    - kind: pull_request
+      number: 38
+      status: Done
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvhHkE
+      url: https://github.com/fr-meyer/ChatIndex/pull/38
+      linked_task: pr-015-reject-negative-node-path
 pull_request:
   enabled: true
-  status: pending_publish
-  number: null
-  url: null
+  status: merged
+  number: 38
+  url: https://github.com/fr-meyer/ChatIndex/pull/38
   base_branch: dev
   head_branch: feat/reject-negative-node-path
-  head_sha: null
-  created_at: null
-  merge_commit: null
-  merged_at: null
+  head_sha: e2a662b4ac74c97af2300f51c971267254feea8b
+  created_at: 2026-06-12T07:32:15Z
+  merge_commit: 01b964c0656d3d7581203c080a46ee547409b138
+  merged_at: 2026-06-12T07:46:02Z
 last_merged_pull_request:
   enabled: true
   status: merged
-  number: 35
-  url: https://github.com/fr-meyer/ChatIndex/pull/35
+  number: 38
+  url: https://github.com/fr-meyer/ChatIndex/pull/38
   base_branch: dev
-  head_branch: feat/extract-json-hardening
-  merge_commit: 001063fab74a7dd322379f6d309ee2ecc0377fd0
-  merged_at: 2026-06-12T06:49:42Z
+  head_branch: feat/reject-negative-node-path
+  merge_commit: 01b964c0656d3d7581203c080a46ee547409b138
+  merged_at: 2026-06-12T07:46:02Z
 release_promotion_pull_request:
   enabled: true
   status: merged
