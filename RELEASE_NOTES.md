@@ -1,6 +1,40 @@
 # Release Notes
 
-## v0.1.0 - Planned
+## v0.1.1 - 2026-06-12
+
+Maintenance release for the post-v0.1.0 ChatIndex fork work.
+
+This release promotes the current `dev` maintenance batch to `main`, preserving
+the native Pullfrog workflow that is already on `main` while publishing the
+runtime hardening fixes from `dev`.
+
+### Highlights
+
+- Hardened JSON extraction with an `ast.literal_eval` fallback for Python-style
+  literals and expanded extraction tests.
+- Rejected negative `node_path` entries in `view_node_and_children` before
+  Python negative-list indexing can select unintended children.
+- Documented the Speculoos `release-plan` helper for future release-gated work.
+- Documented the CodeRabbit caveat for PRs targeting the non-default `dev`
+  branch.
+- Preserved the native Pullfrog review workflow on `main`.
+
+### Validation
+
+- Unit tests: `.venv/bin/python -m unittest discover -v`
+- Python syntax parse over tracked source and test files.
+- YAML syntax parse over tracked workflow and metadata files.
+- `git diff --check`
+- Speculoos validation and release-plan dry run for the promotion task.
+
+### Known Limitations
+
+- The API remains pre-1.0 and may still change.
+- Branch protection and release immutability rules are not yet enabled.
+- The package metadata is still split between `setup.py` and minimal
+  `pyproject.toml` build-system metadata.
+
+## v0.1.0 - 2026-06-11
 
 Initial beta release of the ChatIndex fork.
 
