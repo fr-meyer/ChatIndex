@@ -528,12 +528,18 @@ class ChatIndexTools:
 
             # Navigate to the target node
             for idx in node_path:
-                if not hasattr(current_node, 'children') or idx >= len(current_node.children):
+                children = getattr(current_node, "children", None)
+                if (
+                    children is None
+                    or not isinstance(idx, int)
+                    or idx < 0
+                    or idx >= len(children)
+                ):
                     return {
                         "error": f"Invalid path: No child at index {idx}",
-                        "valid_indices": list(range(len(current_node.children))) if hasattr(current_node, 'children') else []
+                        "valid_indices": list(range(len(children))) if children is not None else []
                     }
-                current_node = current_node.children[idx]
+                current_node = children[idx]
 
             # Build response
             result = {
