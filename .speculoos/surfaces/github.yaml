@@ -1,24 +1,24 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: synced
+status: in_progress
 blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: dev
-  head: dev
-  dev_sha: 1c20796a0f97bccb40ade03a20380d4a13fe278a
+  head: feat/extract-json-hardening
+  dev_sha: dc9dca26a869ad6813b0eeccd739e5d968c7336e
   main_sha: 86b9861839b73dccab9738e27296b79c81ea3778
 issue:
   enabled: true
   status: synced
-  number: 28
-  url: https://github.com/fr-meyer/ChatIndex/issues/28
-  title: "PR012: Document CodeRabbit dev-target review caveat"
-  linked_task: pr-012-coderabbit-dev-review-caveat
-  state: closed
-  state_reason: completed
-  closed_at: 2026-06-11T09:49:45Z
+  number: 34
+  url: https://github.com/fr-meyer/ChatIndex/issues/34
+  title: "Harden JSON extraction utility"
+  linked_task: pr-014-extract-json-hardening
+  state: open
+  state_reason: null
+  closed_at: null
 project:
   enabled: true
   status: synced
@@ -98,6 +98,12 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvacCM
       url: https://github.com/fr-meyer/ChatIndex/issues/28
       linked_task: pr-012-coderabbit-dev-review-caveat
+    - kind: issue
+      number: 34
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdXpI
+      url: https://github.com/fr-meyer/ChatIndex/issues/34
+      linked_task: pr-014-extract-json-hardening
     - kind: pull_request
       number: 1
       status: Done
@@ -196,17 +202,23 @@ project:
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvafCM
       url: https://github.com/fr-meyer/ChatIndex/pull/29
       linked_task: pr-012-coderabbit-dev-review-caveat
+    - kind: pull_request
+      number: 35
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdalA
+      url: https://github.com/fr-meyer/ChatIndex/pull/35
+      linked_task: pr-014-extract-json-hardening
 pull_request:
   enabled: true
-  status: merged
-  number: 29
-  url: https://github.com/fr-meyer/ChatIndex/pull/29
+  status: open
+  number: 35
+  url: https://github.com/fr-meyer/ChatIndex/pull/35
   base_branch: dev
-  head_branch: speculoos/pr-012-coderabbit-dev-review-caveat
-  head_sha: 94f8bacf566764d5a9e0de28ba0452059ef018f3
-  created_at: 2026-06-11T09:42:33Z
-  merge_commit: 1c20796a0f97bccb40ade03a20380d4a13fe278a
-  merged_at: 2026-06-11T09:49:24Z
+  head_branch: feat/extract-json-hardening
+  head_sha: 1aa101514f14ebdd661041a5b4cb4f0123e5a5f8
+  created_at: 2026-06-11T16:57:12Z
+  merge_commit: null
+  merged_at: null
 last_merged_pull_request:
   enabled: true
   status: merged
