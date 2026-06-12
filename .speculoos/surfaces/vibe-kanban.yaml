@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-inreview
+status: local-task-done
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -19,20 +19,21 @@ service:
   manager: scripts/openclaw-vibe-kanban-service
 task:
   title: "PR016: Promote dev to main for v0.1.1"
-  status: inreview
+  status: done
   github_issue: https://github.com/fr-meyer/ChatIndex/issues/39
   github_pr: null
   github_release_pr: https://github.com/fr-meyer/ChatIndex/pull/40
   github_release: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.1
   release_tag: v0.1.1
-  release_target_sha: planned-after-post-review-fix
+  release_target_sha: 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda
+  release_tag_object_sha: c357efdaab9453534759de6bbff945a2a6b93494
 last_probe:
   status: healthy-with-auth-limited-writes
   service_check: scripts/openclaw-vibe-kanban-service check
   result: Vibe service and TCP forwarder are healthy; MCP write tools return 401 Unauthorized until Vibe OAuth/session auth is configured.
 last_sync:
-  status: inreview
-  synced_at: 2026-06-12T09:30:19Z
+  status: done
+  synced_at: 2026-06-12T11:11:39Z
   method: local-sqlite-helper
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.
