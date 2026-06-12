@@ -1,0 +1,86 @@
+schema_version: 0.1
+id: pr-015-reject-negative-node-path
+title: Reject negative node path indices
+branch: feat/reject-negative-node-path
+base_branch: dev
+status: in_progress
+pret_a_coder: satisfied
+objective: >
+  Make ChatIndex tree navigation reject negative child indices instead of
+  silently applying Python negative-list indexing to LLM tool call paths.
+acceptance_criteria:
+  - view_node_and_children returns an invalid-path error for a negative root child index.
+  - Nested negative node_path entries are rejected before indexing children.
+  - Existing valid path navigation behavior remains unchanged.
+  - The full no-key unit test suite passes.
+write_scope:
+  allowed:
+    - retrieval/llm_tools.py
+    - tests/test_retrieval_llm.py
+    - .speculoos/manifest.yaml
+    - .speculoos/tasks/pr-015-reject-negative-node-path.yaml
+    - .speculoos/surfaces/github.yaml
+    - .speculoos/surfaces/vibe-kanban.yaml
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 36
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/36
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: In Progress
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvhE2Y
+  github_pull_request: pending_publish
+  github_pull_request_number: null
+  github_pull_request_url: null
+  vibe_kanban: local-task-inprogress
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: 8b85501e-0ce0-5a82-9273-7658d8276fc1
+  vibe_task_status: inprogress
+review:
+  tests: passed
+  focused_test_command: .venv/bin/python -m unittest tests.test_retrieval_llm -v
+  focused_test_result: 13 passed, 0 failed
+  test_command: .venv/bin/python -m unittest discover -v
+  test_count: 49
+  test_result: 49 passed, 0 failed
+  compile_check: passed
+  compile_command: .venv/bin/python -m py_compile retrieval/llm_tools.py tests/test_retrieval_llm.py
+  yaml_check: passed
+  yaml_command: ruby -e 'require "yaml"; require "date"; ARGV.each { |path| YAML.safe_load_file(path, permitted_classes: [Time, Date], aliases: true); puts "ok #{path}" }'
+  diff_check: passed
+  diff_check_command: git diff --check
+  speculoos_preflight: passed
+  speculoos_validate: passed
+  private_data_check: passed
+  cursor_worker: not_used
+  executor_lane: codex-only
+  pullfrog_auto_review: pending_after_pr_publish
+  pullfrog_manual_trigger: prohibited_unless_deliberate_rerun
+  pullfrog_monthly_runs_before: "6/30"
+  pullfrog_router_balance_before: "$7.71"
+  coderabbit_auto_review: expected_to_skip_dev_target
+  validation_notes: >
+    PR015 is the second real low-risk ChatIndex PR in the native Pullfrog
+    pilot. The branch is intentionally kept tight before publication so
+    Pullfrog auto-review can be observed on a clean diff. Do not mention
+    @pullfrog manually unless a deliberate rerun is wanted.
