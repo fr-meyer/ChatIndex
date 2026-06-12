@@ -6,9 +6,9 @@ blocked_by:
   - gh-unauthenticated-in-openclaw-container
 branches:
   base: main
-  head: chore/v0-1-1-main-promotion
+  head: fix/v0-1-1-post-review
   dev_sha: 117a13a85e1bc41891d6e2c1b02b2b971d9cfc14
-  main_sha: ad16a74c691dea4b3d8200767b5e82b6b3feab56
+  main_sha: 36578b18aac0e65da7301f0f1398de7321a912f2
 issue:
   enabled: true
   status: synced
@@ -249,22 +249,22 @@ last_merged_pull_request:
   merged_at: 2026-06-12T07:46:02Z
 release_promotion_pull_request:
   enabled: true
-  status: planned
-  number: null
-  url: null
+  status: merged
+  number: 40
+  url: https://github.com/fr-meyer/ChatIndex/pull/40
   base_branch: main
   head_branch: chore/v0-1-1-main-promotion
-  merge_commit: planned-after-merge
-  merged_at: planned-after-merge
+  merge_commit: 36578b18aac0e65da7301f0f1398de7321a912f2
+  merged_at: 2026-06-12T10:01:00Z
 release:
   enabled: true
-  status: planned
+  status: blocked-pending-post-review-fix
   tag: v0.1.1
   previous_tag: v0.1.0
-  tag_object_sha: planned-after-main-merge
-  target_sha: planned-after-merge
+  tag_object_sha: planned-after-post-review-fix
+  target_sha: planned-after-post-review-fix
   url: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.1
-  published_at: planned-after-main-merge
+  published_at: planned-after-post-review-fix
 surface_sync_pull_request:
   enabled: true
   status: merged

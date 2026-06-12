@@ -1,0 +1,93 @@
+schema_version: 0.1
+id: pr-017-v0-1-1-post-review-fixes
+title: Address v0.1.1 post-review findings
+branch: fix/v0-1-1-post-review
+base_branch: main
+status: in_review
+pret_a_coder: satisfied
+objective: >
+  Fix the actionable CodeRabbit findings that arrived after PR016 / PR #40
+  merged, then use the resulting main commit as the v0.1.1 release target.
+acceptance_criteria:
+  - JSON trailing-comma cleanup does not modify comma-brace or comma-bracket text inside quoted strings.
+  - view_node_and_children rejects boolean node_path values instead of treating them as integer indices.
+  - Runtime package version metadata matches setup.py version 0.1.1.
+  - Speculoos metadata records PR016 as merged but v0.1.1 release publication as blocked until this fix-forward PR lands.
+  - Local tests, syntax checks, YAML checks, git diff check, and Speculoos validation pass before PR publication.
+write_scope:
+  allowed:
+    - ctree/__init__.py
+    - ctree/utils.py
+    - retrieval/llm_tools.py
+    - tests/test_extract_json.py
+    - tests/test_retrieval_llm.py
+    - .speculoos/manifest.yaml
+    - .speculoos/tasks/pr-016-dev-main-v0-1-1-promotion.yaml
+    - .speculoos/tasks/pr-017-v0-1-1-post-review-fixes.yaml
+    - .speculoos/surfaces/github.yaml
+    - .speculoos/surfaces/vibe-kanban.yaml
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+surface_sync:
+  github_issue: synced
+  github_issue_number: 39
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/39
+  github_project: synced
+  github_project_number: 1
+  github_project_url: https://github.com/users/fr-meyer/projects/1
+  github_project_item_status: In Progress
+  github_project_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvhx4Q
+  release_promotion_pull_request: merged
+  release_promotion_pull_request_number: 40
+  release_promotion_pull_request_url: https://github.com/fr-meyer/ChatIndex/pull/40
+  release_promotion_pull_request_merge_commit: 36578b18aac0e65da7301f0f1398de7321a912f2
+  release_tag: v0.1.1
+  previous_release_tag: v0.1.0
+  release_target_sha: planned-after-post-review-fix
+  release_tag_object_sha: planned-after-post-review-fix
+  release_url: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.1
+  vibe_kanban: local-task-inreview
+  vibe_project_id: 0099a2a0-2b58-5aca-822d-317754378b82
+  vibe_task_id: 8d4c1577-3248-547d-9948-cbf617b7712d
+  vibe_task_status: inreview
+review:
+  tests: passed
+  test_command: .venv/bin/python -m unittest discover -v
+  test_count: 53
+  test_result: 53 passed, 0 failed
+  compile_check: passed
+  compile_command: >
+    .venv/bin/python -m py_compile ctree/utils.py ctree/__init__.py
+    retrieval/llm_tools.py tests/test_extract_json.py tests/test_retrieval_llm.py
+  yaml_check: passed
+  yaml_command: >
+    ruby -e 'require "yaml"; require "date"; ARGV.each { |path|
+    YAML.safe_load_file(path, permitted_classes: [Time, Date], aliases: true);
+    puts "ok #{path}" }'
+  diff_check: passed
+  diff_check_command: git diff --check
+  speculoos_validate: passed
+  private_data_check: passed
+  cursor_worker: not_used
+  executor_lane: codex-only
+  validation_notes: >
+    PR017 is a fix-forward gate before v0.1.1 tagging. It intentionally avoids
+    manual Pullfrog invocation; any external review should come from normal
+    auto-review only.

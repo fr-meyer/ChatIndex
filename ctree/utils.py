@@ -57,7 +57,46 @@ def _strip_json_fence(content):
 
 
 def _without_trailing_commas(content):
-    return re.sub(r",(\s*[}\]])", r"\1", content)
+    result = []
+    in_string = False
+    quote_char = ""
+    escaped = False
+    index = 0
+
+    while index < len(content):
+        char = content[index]
+
+        if in_string:
+            result.append(char)
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == quote_char:
+                in_string = False
+                quote_char = ""
+            index += 1
+            continue
+
+        if char in ('"', "'"):
+            in_string = True
+            quote_char = char
+            result.append(char)
+            index += 1
+            continue
+
+        if char == ",":
+            lookahead = index + 1
+            while lookahead < len(content) and content[lookahead].isspace():
+                lookahead += 1
+            if lookahead < len(content) and content[lookahead] in ("}", "]"):
+                index += 1
+                continue
+
+        result.append(char)
+        index += 1
+
+    return "".join(result)
 
 
 def extract_json(content):

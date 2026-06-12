@@ -341,6 +341,24 @@ class RetrievalProviderTests(unittest.TestCase):
         self.assertEqual(result["valid_indices"], [0])
         self.assertIn("-1", result["error"])
 
+    def test_view_node_rejects_boolean_root_index(self):
+        tools = ChatIndexTools(make_tree())
+
+        result = tools.view_node_and_children([True])
+
+        self.assertIn("error", result)
+        self.assertEqual(result["valid_indices"], [0])
+        self.assertIn("True", result["error"])
+
+    def test_view_node_rejects_nested_boolean_index(self):
+        tools = ChatIndexTools(make_tree())
+
+        result = tools.view_node_and_children([0, False])
+
+        self.assertIn("error", result)
+        self.assertEqual(result["valid_indices"], [0])
+        self.assertIn("False", result["error"])
+
     def test_view_node_valid_path_still_navigates(self):
         tools = ChatIndexTools(make_tree())
 
