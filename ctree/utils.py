@@ -40,7 +40,8 @@ def ChatGPT_API(
     if timeout is not None:
         client_kwargs["timeout"] = timeout
     client = openai.OpenAI(**client_kwargs)
-    for i in range(max_retries):
+    attempt_count = max(1, int(max_retries))
+    for i in range(attempt_count):
         try:
             if chat_history:
                 messages = chat_history
@@ -63,7 +64,7 @@ def ChatGPT_API(
         except Exception as e:
             print('************* Retrying *************')
             logging.error(f"Error: {e}")
-            if i < max_retries - 1:
+            if i < attempt_count - 1:
                 time.sleep(retry_sleep_seconds)  # Wait before retrying
             else:
                 logging.error("Max retries reached for prompt length: %s", len(prompt))

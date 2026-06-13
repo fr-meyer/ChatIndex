@@ -146,8 +146,30 @@ class CTreeProviderConfigTests(unittest.TestCase):
 
         self.assertEqual(response, "ok")
         self.assertEqual(captured["timeout"], 45)
-        self.assertEqual(captured["max_retries"], 3)
+        self.assertEqual(captured["max_retries"], 4)
         self.assertEqual(captured["api_key"], "test-openai-compatible-key")
+
+    def test_ctree_normalizes_request_timeout_and_zero_retries(self):
+        captured = {}
+
+        def fake_chatgpt_api(model, prompt, **kwargs):
+            captured.update(kwargs)
+            return "ok"
+
+        tree = CTree(
+            request_timeout_seconds=-5,
+            request_max_retries=0,
+            **{"api_key": "test-openai-compatible-key"},
+        )
+
+        with patch("ctree.ctree.ChatGPT_API", fake_chatgpt_api):
+            response = tree._chatgpt_api("Say ok")
+
+        self.assertEqual(response, "ok")
+        self.assertEqual(tree.request_timeout_seconds, 0.0)
+        self.assertEqual(tree.request_max_retries, 0)
+        self.assertEqual(captured["timeout"], 0.0)
+        self.assertEqual(captured["max_retries"], 1)
 
     def test_ctree_build_timeout_has_slice_guidance(self):
         tree = CTree(

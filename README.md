@@ -325,6 +325,10 @@ If a provider or thread slice exceeds `build_timeout_seconds`, ChatIndex raises
 supervised longer timeout. Passing `build_timeout_seconds=None` disables the
 overall build guard.
 
+For tree building, `request_max_retries` is a retry count: `0` means one
+provider attempt with no retries, `2` means up to three total attempts. Negative
+`request_timeout_seconds` values are normalized to `0`.
+
 For checkpoint saves during provider dogfood, use:
 
 ```python

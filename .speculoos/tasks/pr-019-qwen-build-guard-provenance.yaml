@@ -79,7 +79,7 @@ review:
   private_data_check: passed
   executor_lane: codex-only
   validation_notes: >
-    Full unittest discovery passed with 68 tests. Python compile check,
+    Full unittest discovery passed with 69 tests. Python compile check,
     YAML parse check, git diff --check, Speculoos validation, and changed-file
     private-data scan all passed before publication.
 dogfood:

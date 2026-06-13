@@ -188,6 +188,7 @@ class CTree:
                            Defaults to 15 minutes. Pass None to disable.
             request_timeout_seconds: Per-LLM-call timeout. Defaults to 120 seconds.
             request_max_retries: Per-LLM-call retry count used by CTree. Defaults to 2.
+                                  Use 0 for one attempt with no retries.
             progress_callback: Optional callback receiving safe progress event dicts.
             progress_interval_seconds: Minimum seconds between non-forced progress events.
         """
@@ -211,8 +212,12 @@ class CTree:
         self.conversation: List[Dict] = []
         self.auto_save_path = auto_save_path
         self.build_timeout_seconds = build_timeout_seconds
-        self.request_timeout_seconds = request_timeout_seconds
-        self.request_max_retries = max(1, int(request_max_retries))
+        self.request_timeout_seconds = (
+            None
+            if request_timeout_seconds is None
+            else max(0.0, float(request_timeout_seconds))
+        )
+        self.request_max_retries = max(0, int(request_max_retries))
         self.progress_callback = progress_callback
         self.progress_interval_seconds = max(0.0, float(progress_interval_seconds or 0.0))
         self._build_started_at: Optional[float] = None
@@ -299,7 +304,8 @@ class CTree:
             request_timeout = remaining_timeout if request_timeout is None else min(float(request_timeout), remaining_timeout)
 
         options["timeout"] = request_timeout
-        options["max_retries"] = self.request_max_retries
+        request_attempts = self.request_max_retries + 1
+        options["max_retries"] = request_attempts
         options["api_" + "key"] = self.api_key
         options["base_url"] = self.base_url
         self._emit_progress(
@@ -307,6 +313,7 @@ class CTree:
             force=True,
             request_timeout_seconds=request_timeout,
             request_max_retries=self.request_max_retries,
+            request_attempts=request_attempts,
         )
         response = ChatGPT_API(self.model, prompt, **options)
         self._emit_progress("llm_call_completed", force=True)

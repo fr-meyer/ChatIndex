@@ -22,7 +22,7 @@ validation:
   no_secret_tests:
     status: passed
     command: /srv/openkb/venvs/chatindex-sandbox/bin/python -m unittest discover -v
-    result: 68 passed, 0 failed
+    result: 69 passed, 0 failed
   private_data_check:
     status: passed
     reviewed_range: PR019 changed files before publication
