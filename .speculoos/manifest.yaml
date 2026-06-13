@@ -1,19 +1,20 @@
 schema_version: 0.1
 project: ChatIndex
 workflow: speculoos-v1
-canonical_task: pr-016-dev-main-v0-1-1-promotion
+canonical_task: pr-018-openai-compatible-provider-routing
 repository:
   upstream: VectifyAI/ChatIndex
   fork: fr-meyer/ChatIndex
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: main
-  working_branch: main
+  working_branch: feat/openai-compatible-provider-routing
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: done
+  phase: in_review
   pret_a_coder: satisfied
   blocker_summary:
+    - PR018 is a local retroactive Speculoos process repair for the provider-routing gap discovered during dogfood planning; GitHub issue/Project/PR/Vibe surfaces are not created or synced yet.
     - PR016 release-gated promotion issue #39 is closed completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvhx4Q is recorded as Done.
     - PR016 promotion PR #40 merged into main at 36578b18aac0e65da7301f0f1398de7321a912f2; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgviBD8 is recorded as Done.
     - PR017 fix-forward PR #41 merged into main at 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgviObs is recorded as Done.
