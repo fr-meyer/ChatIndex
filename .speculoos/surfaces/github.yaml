@@ -1,56 +1,56 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: done
+status: in_progress
 blocked_by: []
 branches:
   base: dev
-  head: feat/openai-compatible-provider-routing
-  dev_sha: 93a8e5225147ffd3a3047b24442ea3fa4356117c
+  head: feat/qwen-build-guard-provenance
+  dev_sha: 65da316ea917fdab642ef70761885d01d8fd49d0
   main_sha: 93a8e5225147ffd3a3047b24442ea3fa4356117c
 issue:
   enabled: true
-  status: closed
-  number: 43
-  url: https://github.com/fr-meyer/ChatIndex/issues/43
-  title: "PR018: OpenAI-compatible provider routing"
-  linked_task: pr-018-openai-compatible-provider-routing
-  state: closed
-  state_reason: completed
-  created_at: 2026-06-13T06:39:15Z
-  closed_at: 2026-06-13T06:46:39Z
+  status: open
+  number: 45
+  url: https://github.com/fr-meyer/ChatIndex/issues/45
+  title: "PR019: Qwen build guard and retrieval provenance"
+  linked_task: pr-019-qwen-build-guard-provenance
+  state: open
+  state_reason: null
+  created_at: 2026-06-13T10:33:10Z
+  closed_at: null
 project:
   enabled: true
-  status: done
+  status: pending
   number: 1
   title: "Speculoos / ChatIndex"
   project_id: PVT_kwHOAZY4Cs4BaDA4
   url: https://github.com/users/fr-meyer/projects/1
   items:
     - kind: issue
-      number: 43
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnJqs
-      url: https://github.com/fr-meyer/ChatIndex/issues/43
-      linked_task: pr-018-openai-compatible-provider-routing
+      number: 45
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnusI
+      url: https://github.com/fr-meyer/ChatIndex/issues/45
+      linked_task: pr-019-qwen-build-guard-provenance
     - kind: pull_request
-      number: 42
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnJSk
-      url: https://github.com/fr-meyer/ChatIndex/pull/42
-      linked_task: pr-018-openai-compatible-provider-routing
+      number: null
+      status: pending
+      item_id: null
+      url: null
+      linked_task: pr-019-qwen-build-guard-provenance
 pull_request:
   enabled: true
-  status: merged
-  number: 42
-  url: https://github.com/fr-meyer/ChatIndex/pull/42
+  status: pending
+  number: null
+  url: null
   base_branch: dev
-  head_branch: feat/openai-compatible-provider-routing
-  head_sha: 19bf70693e5416dc5bb58e7058cf7b794c5f4afa
-  implementation_commit: a520facbaa36a6122431781d18c97c61c19360d7
+  head_branch: feat/qwen-build-guard-provenance
+  head_sha: null
+  implementation_commit: null
   created_at: null
-  merge_commit: 21ec834f5b782945f15c77f398fd65e5c8ea0dbc
-  merged_at: 2026-06-13T06:45:46Z
+  merge_commit: null
+  merged_at: null
 last_merged_pull_request:
   enabled: true
   status: merged

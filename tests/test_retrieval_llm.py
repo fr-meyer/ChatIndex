@@ -2,6 +2,7 @@ import json
 import os
 import unittest
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from ctree.ctree import CTree, MessageNode, TopicNode
 from retrieval.llm_tools import (
@@ -204,7 +205,7 @@ class RetrievalProviderTests(unittest.TestCase):
         ])
 
         result = query_ctree(
-            api_key=None,
+            None,
             ctree=make_tree(),
             user_query="What was the plan?",
             max_turns=2,
@@ -214,11 +215,62 @@ class RetrievalProviderTests(unittest.TestCase):
         self.assertTrue(result["success"])
         self.assertEqual(result["turns_used"], 2)
         self.assertIn("baseline", result["final_response"])
+        self.assertEqual(result["source_context"]["start_index"], 0)
+        self.assertEqual(result["source_context"]["end_index"], 2)
+        self.assertIsNone(result["freshness_warning"])
         self.assertEqual(len(fake_client.calls), 2)
         self.assertEqual(
             fake_client.calls[1]["messages"][-1]["content"][0]["type"],
             "tool_result",
         )
+
+    def test_tool_results_include_source_context(self):
+        tree = make_tree()
+        tree.conversation[0]["id"] = "msg-user-1"
+        tree.conversation[0]["created_at"] = "2026-06-13T09:00:00Z"
+        tree.conversation[1]["id"] = "msg-assistant-1"
+        tree.conversation[1]["created_at"] = "2026-06-13T09:01:00Z"
+        tools = ChatIndexTools(tree)
+
+        root = tools.view_node_and_children([])
+        messages = tools.get_node_messages(0, 2)
+        vector_results = tools.vector_search("baseline", top_k=1)
+
+        self.assertEqual(root["source_context"]["node_ref"], "root")
+        self.assertEqual(messages["source_context"]["first_message"]["id"], "msg-user-1")
+        self.assertEqual(messages["source_context"]["last_message"]["id"], "msg-assistant-1")
+        self.assertEqual(
+            messages["source_context"]["time_window"],
+            {
+                "start": "2026-06-13T09:00:00Z",
+                "end": "2026-06-13T09:01:00Z",
+            },
+        )
+        self.assertEqual(
+            vector_results["results"][0]["source_context"]["start_index"],
+            0,
+        )
+
+    def test_query_ctree_warns_for_recency_sensitive_questions(self):
+        fake_client = FakeRetrievalClient([
+            RetrievalResponse(
+                stop_reason="end_turn",
+                content=[TextBlock("I can answer only from the indexed slice.")],
+            ),
+        ])
+
+        result = query_ctree(
+            None,
+            ctree=make_tree(),
+            user_query="What is the current status?",
+            max_turns=1,
+            llm_client=fake_client,
+        )
+
+        self.assertTrue(result["success"])
+        self.assertIsNotNone(result["freshness_warning"])
+        self.assertIn("indexed slice", result["freshness_warning"])
+        self.assertIn("Indexed source context", fake_client.calls[0]["system"])
 
     def test_streaming_fake_client_uses_shared_provider_interface(self):
         chunks = []
@@ -230,7 +282,7 @@ class RetrievalProviderTests(unittest.TestCase):
         ])
 
         result = query_ctree_streaming(
-            api_key=None,
+            None,
             ctree=make_tree(),
             user_query="Summarize",
             max_turns=1,
@@ -278,6 +330,28 @@ class RetrievalProviderTests(unittest.TestCase):
             client.config.base_url,
             "https://example.invalid/compatible-mode/v1",
         )
+
+    def test_openai_provider_passes_retrieval_timeout_to_client(self):
+        captured = {}
+
+        class FakeOpenAI:
+            def __init__(self, **kwargs):
+                captured.update(kwargs)
+
+        with patch("retrieval.llm_tools.OpenAI", FakeOpenAI):
+            client = build_retrieval_client(
+                provider="openai",
+                model="qwen-test",
+                request_timeout_seconds=33,
+                request_max_retries=0,
+                **{"api_key": "test-openai-compatible-key"},
+            )
+
+        self.assertIsInstance(client, OpenAIRetrievalClient)
+        self.assertEqual(client.config.request_timeout_seconds, 33)
+        self.assertEqual(client.config.request_max_retries, 0)
+        self.assertEqual(captured["timeout"], 33)
+        self.assertEqual(captured["max_retries"], 0)
 
     def test_openai_provider_reads_base_url_from_environment(self):
         previous_base_url = os.environ.get("OPENAI_BASE_URL")
@@ -338,7 +412,7 @@ class RetrievalProviderTests(unittest.TestCase):
         ])
 
         result = query_ctree(
-            api_key=None,
+            None,
             ctree=make_multi_exchange_tree(),
             user_query="How do we deploy?",
             max_turns=2,

@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: null
-issue_id: pr-018-vibe-unavailable
+issue_id: pr-019-vibe-unavailable
 workspace_id: null
 session_id: null
 service:
@@ -18,10 +18,10 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR018: OpenAI-compatible provider routing"
+  title: "PR019: Qwen build guard and retrieval provenance"
   status: unavailable-not-created
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/43
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/42
+  github_issue: null
+  github_pr: null
   github_release_pr: null
   github_release: null
   release_tag: null
