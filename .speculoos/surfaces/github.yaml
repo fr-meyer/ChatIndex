@@ -1,7 +1,7 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: in_progress
+status: in_review
 blocked_by: []
 branches:
   base: dev
@@ -21,7 +21,7 @@ issue:
   closed_at: null
 project:
   enabled: true
-  status: pending
+  status: synced
   number: 1
   title: "Speculoos / ChatIndex"
   project_id: PVT_kwHOAZY4Cs4BaDA4
@@ -34,21 +34,21 @@ project:
       url: https://github.com/fr-meyer/ChatIndex/issues/45
       linked_task: pr-019-qwen-build-guard-provenance
     - kind: pull_request
-      number: null
-      status: pending
-      item_id: null
-      url: null
+      number: 46
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnvOU
+      url: https://github.com/fr-meyer/ChatIndex/pull/46
       linked_task: pr-019-qwen-build-guard-provenance
 pull_request:
   enabled: true
-  status: pending
-  number: null
-  url: null
+  status: open
+  number: 46
+  url: https://github.com/fr-meyer/ChatIndex/pull/46
   base_branch: dev
   head_branch: feat/qwen-build-guard-provenance
   head_sha: null
-  implementation_commit: null
-  created_at: null
+  implementation_commit: 8ac6d4a5cf7d1ab8f294fea768ead7228e495450
+  created_at: 2026-06-13T10:35:40Z
   merge_commit: null
   merged_at: null
 last_merged_pull_request:

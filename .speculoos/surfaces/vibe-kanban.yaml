@@ -20,8 +20,8 @@ service:
 task:
   title: "PR019: Qwen build guard and retrieval provenance"
   status: unavailable-not-created
-  github_issue: null
-  github_pr: null
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/45
+  github_pr: https://github.com/fr-meyer/ChatIndex/pull/46
   github_release_pr: null
   github_release: null
   release_tag: null
@@ -30,10 +30,10 @@ task:
 last_probe:
   status: unavailable
   service_check: scripts/speculoos-loop status --repo /home/node/.openclaw/repos/ChatIndex
-  result: Vibe HTTP endpoint and TCP forwarder were not healthy from the container during PR018 publication.
+  result: Vibe HTTP endpoint and TCP forwarder were not healthy from the container during PR019 publication.
 last_sync:
   status: unavailable-not-created
-  synced_at: 2026-06-13T06:46:39Z
+  synced_at: 2026-06-13T10:36:40Z
   method: GitHub-only fallback while Vibe is unavailable
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.

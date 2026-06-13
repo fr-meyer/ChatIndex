@@ -67,7 +67,7 @@ surface_sync:
   manifest: local-updated
   github_issue: open
   github_project: in_progress
-  github_pr: pending
+  github_pr: open
   vibe_kanban: unavailable-not-created
   vibe_task_id: pr-019-vibe-unavailable
 review:
