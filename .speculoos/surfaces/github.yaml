@@ -1,56 +1,50 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: merged
+status: in_progress
 blocked_by: []
 branches:
   base: dev
-  head: feat/qwen-build-guard-provenance
-  dev_sha: 0e9baf9636e895037cd9bdd8aea46f4c67ea7823
+  head: feat/status-freshness-warning
+  dev_sha: 2a544b60445151f69f1031001293846e895fcfbf
   main_sha: 93a8e5225147ffd3a3047b24442ea3fa4356117c
 issue:
   enabled: true
-  status: closed
-  number: 45
-  url: https://github.com/fr-meyer/ChatIndex/issues/45
-  title: "PR019: Qwen build guard and retrieval provenance"
-  linked_task: pr-019-qwen-build-guard-provenance
-  state: closed
-  state_reason: completed
-  created_at: 2026-06-13T10:33:10Z
-  closed_at: 2026-06-13T11:13:21Z
+  status: open
+  number: 48
+  url: https://github.com/fr-meyer/ChatIndex/issues/48
+  title: "PR020: Status freshness warning hardening"
+  linked_task: pr-020-status-freshness-warning
+  state: open
+  state_reason: null
+  created_at: 2026-06-13T12:07:23Z
+  closed_at: null
 project:
   enabled: true
-  status: done
+  status: pending
   number: 1
   title: "Speculoos / ChatIndex"
   project_id: PVT_kwHOAZY4Cs4BaDA4
   url: https://github.com/users/fr-meyer/projects/1
   items:
     - kind: issue
-      number: 45
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnusI
-      url: https://github.com/fr-meyer/ChatIndex/issues/45
-      linked_task: pr-019-qwen-build-guard-provenance
-    - kind: pull_request
-      number: 46
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnvOU
-      url: https://github.com/fr-meyer/ChatIndex/pull/46
-      linked_task: pr-019-qwen-build-guard-provenance
+      number: 48
+      status: pending
+      item_id: null
+      url: https://github.com/fr-meyer/ChatIndex/issues/48
+      linked_task: pr-020-status-freshness-warning
 pull_request:
   enabled: true
-  status: merged
-  number: 46
-  url: https://github.com/fr-meyer/ChatIndex/pull/46
+  status: pending
+  number: null
+  url: null
   base_branch: dev
-  head_branch: feat/qwen-build-guard-provenance
+  head_branch: feat/status-freshness-warning
   head_sha: null
-  implementation_commit: 8ac6d4a5cf7d1ab8f294fea768ead7228e495450
-  created_at: 2026-06-13T10:35:40Z
-  merge_commit: 0e9baf9636e895037cd9bdd8aea46f4c67ea7823
-  merged_at: 2026-06-13T11:12:47Z
+  implementation_commit: null
+  created_at: null
+  merge_commit: null
+  merged_at: null
 last_merged_pull_request:
   enabled: true
   status: merged
