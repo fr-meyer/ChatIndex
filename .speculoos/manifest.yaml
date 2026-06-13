@@ -7,78 +7,37 @@ repository:
   fork: fr-meyer/ChatIndex
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
-  base_branch: main
+  base_branch: dev
   working_branch: feat/openai-compatible-provider-routing
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
   phase: in_review
   pret_a_coder: satisfied
   blocker_summary:
-    - PR018 is a local retroactive Speculoos process repair for the provider-routing gap discovered during dogfood planning; GitHub issue/Project/PR/Vibe surfaces are not created or synced yet.
-    - PR016 release-gated promotion issue #39 is closed completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvhx4Q is recorded as Done.
-    - PR016 promotion PR #40 merged into main at 36578b18aac0e65da7301f0f1398de7321a912f2; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgviBD8 is recorded as Done.
-    - PR017 fix-forward PR #41 merged into main at 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgviObs is recorded as Done.
-    - Annotated tag v0.1.1 and GitHub Release are published, targeting 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda with tag object c357efdaab9453534759de6bbff945a2a6b93494.
-    - Baseline PR #1, state PR #2, PR001 setup PR #3, PR001 implementation PR #4, surface-sync PR #6, PR002 implementation PR #8, PR003 implementation PR #10, PR004 implementation PR #12, and PR005 implementation PR #14 are merged into fork dev.
-    - Current fork dev is 117a13a85e1bc41891d6e2c1b02b2b971d9cfc14 after PR015 closeout metadata.
-    - PR015 issue #36 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvhE2Y is recorded as Done.
-    - PR015 pull request #38 is merged into fork dev at 01b964c0656d3d7581203c080a46ee547409b138; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvhHkE is recorded as Done.
-    - PR015 is mirrored as local Vibe task 8b85501e-0ce0-5a82-9273-7658d8276fc1 with Status done.
-    - PR014 issue #34 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvdXpI is recorded as Done.
-    - PR014 pull request #35 is merged into fork dev at 001063fab74a7dd322379f6d309ee2ecc0377fd0; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvdalA is recorded as Done.
-    - PR014 is mirrored as local Vibe task ad2dc3d0-985c-5583-8252-4811aa7174a5 with Status done.
-    - PR004 issue #11 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIsEY is recorded as Done.
-    - PR004 implementation PR #12 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ is recorded as Done.
-    - PR004 is mirrored as local Vibe task ed4d8459-f2d6-5dd5-9505-d314fa96eaa3 with Status done.
-    - PR005 issue #13 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvI42Q is recorded as Done.
-    - PR005 implementation PR #14 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ is recorded as Done.
-    - PR005 is mirrored as local Vibe task e7826ad8-9761-5e76-8b79-51d914871344 with Status done.
-    - PR006 issue #15 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvP5kc is recorded as Done.
-    - PR006 implementation PR #16 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvP8OA is recorded as Done.
-    - PR006 is mirrored as local Vibe task 7071d762-d285-5d13-b03f-4e945d7db4f6 with Status done.
-    - PR007 issue #17 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQeOc is recorded as Done.
-    - PR007 implementation PR #18 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQhJ0 is recorded as Done.
-    - PR007 is mirrored as local Vibe task 98b07bd2-066d-5cb4-98d6-beb96a0cb378 with Status done.
-    - PR008 issue #19 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQ3fg is recorded as Done.
-    - PR008 implementation PR #20 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQ5QE is recorded as Done.
-    - PR008 is mirrored as local Vibe task efbe3790-1c03-56ce-b05c-5e2e2e65fe31 with Status done.
-    - PR009 issue #21 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvQ_1g is recorded as Done.
-    - PR009 implementation PR #22 is merged; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvRB5c is recorded as Done.
-    - PR009 is mirrored as local Vibe task 0a5fd950-64b0-53f6-a139-257c8dbffbd2 with Status done.
-    - PR010 release-prep PR #24 is merged into fork dev at 2a4a5762a3f515ad1f903e87d3a1dd6ccd64b184.
-    - Release promotion PR #25 is merged into main at 86b9861839b73dccab9738e27296b79c81ea3778; fork dev is fast-forwarded to the same commit; annotated tag v0.1.0 and the GitHub Release are published.
-    - PR011 issue #26 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvaAQY is recorded as Done.
-    - PR011 pull request #27 is merged into fork dev at 835d2ad4e6e1cc1b6a85712546853f8ebb892606; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvaDro is recorded as Done.
-    - PR011 is mirrored as local Vibe task 0fddb790-c4a5-55f5-bfc7-5e658f0de64d with Status done.
-    - PR012 issue #28 is closed as completed; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvacCM is recorded as Done.
-    - PR012 pull request #29 is merged into fork dev at 1c20796a0f97bccb40ade03a20380d4a13fe278a; GitHub Project #1 item PVTI_lAHOAZY4Cs4BaDA4zgvafCM is recorded as Done.
-    - PR012 is mirrored as local Vibe task 79dc858a-3638-5dcd-8054-e4aa36b189e0 with Status done.
-    - Vibe Kanban is running locally at 127.0.0.1:40141 with a container TCP forwarder on 0.0.0.0:40142.
-    - gh is unauthenticated in the OpenClaw container; use the GitHub connector, GitHub API, or host bridge for GitHub writes.
-    - Docker is unavailable inside the OpenClaw container; the Cursor worker lane runs through the host bridge.
-    - tmux is not installed in the OpenClaw container.
+    - PR018 is open as fork PR #42 against dev.
+    - Tracking issue #43 and PR #42 are in GitHub Project #1 as In Progress.
+    - Vibe service is currently unavailable from the container, so no live Vibe task was created; the Vibe surface records this honestly as unavailable.
 validation:
   no_secret_tests:
     status: passed
-    command: .venv/bin/python -m unittest discover -v
-    result: 53 passed, 0 failed
+    command: /srv/openkb/venvs/chatindex-sandbox/bin/python -m unittest discover -v
+    result: 61 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: PR016 release branch before publication
-    notes: PR016 touches release notes, setup.py, and .speculoos metadata only; speculoos-loop validate scanned changed files and found no committed secret, private-log, session, tmp, vector-index dump, key/pem, .index, or .faiss artifacts.
-  powershell_parser:
-    status: not_applicable
-    command: null
-    environment: no PowerShell files expected in PR016 or PR017
+    reviewed_range: PR018 changed files before publication
+    notes: Speculoos validation private_data_scan passed on changed files; no secrets, logs, sessions, tmp files, key/pem material, or generated indexes are in scope.
+  dogfood:
+    status: passed_with_caveat
+    notes: Bounded real OpenClaw session slice built and queried through LiteLLM with mistral-large; full 29-exchange Qwen build hung before output/spend and was stopped, so long-build timeout/progress handling remains a follow-up.
 surfaces:
   manifest:
     enabled: true
     authority: canonical-v0
   github_issue:
     enabled: true
-    status: synced
-    number: 39
-    url: https://github.com/fr-meyer/ChatIndex/issues/39
+    status: open
+    number: 43
+    url: https://github.com/fr-meyer/ChatIndex/issues/43
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
@@ -87,47 +46,29 @@ surfaces:
     url: https://github.com/users/fr-meyer/projects/1
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
-    enabled: false
-    status: not_applicable
-    number: null
-    url: null
-    base_branch: null
-    head_branch: null
-    created_at: null
+    enabled: true
+    status: open
+    number: 42
+    url: https://github.com/fr-meyer/ChatIndex/pull/42
+    base_branch: dev
+    head_branch: feat/openai-compatible-provider-routing
+    head_sha: a520facbaa36a6122431781d18c97c61c19360d7
     merge_commit: null
     merged_at: null
-  release_promotion_pull_request:
-    enabled: true
-    status: merged
-    number: 40
-    url: https://github.com/fr-meyer/ChatIndex/pull/40
-    base_branch: main
-    head_branch: chore/v0-1-1-main-promotion
-    merge_commit: 36578b18aac0e65da7301f0f1398de7321a912f2
-    merged_at: 2026-06-12T10:01:00Z
-  github_release:
-    enabled: true
-    status: published
-    tag: v0.1.1
-    previous_tag: v0.1.0
-    tag_object_sha: c357efdaab9453534759de6bbff945a2a6b93494
-    target_sha: 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda
-    url: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.1
-    published_at: 2026-06-12T11:09:12Z
   vibe_kanban:
     enabled: true
-    status: local-task-done
-    project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-    issue_id: 8d4c1577-3248-547d-9948-cbf617b7712d
+    status: unavailable-not-created
+    project_id: null
+    issue_id: pr-018-vibe-unavailable
     file: .speculoos/surfaces/vibe-kanban.yaml
 lanes:
   codex_review:
     enabled: true
-    role: baseline-review
+    role: implementation-and-review
     contract: .speculoos/lane-contracts/codex-review.md
   cursor_worker:
-    enabled: true
-    role: bounded-implementation
+    enabled: false
+    role: not-used
     contract: .speculoos/lane-contracts/cursor-worker.md
   opencode:
     enabled: false
