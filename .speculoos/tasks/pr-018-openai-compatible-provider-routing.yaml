@@ -80,7 +80,8 @@ surface_sync:
   github_pr: open
   github_pr_number: 42
   github_pr_url: https://github.com/fr-meyer/ChatIndex/pull/42
-  github_pr_head_sha: a520facbaa36a6122431781d18c97c61c19360d7
+  github_pr_head_sha: null
+  implementation_commit: a520facbaa36a6122431781d18c97c61c19360d7
   vibe_kanban: unavailable-not-created
   vibe_task_id: pr-018-vibe-unavailable
 review:

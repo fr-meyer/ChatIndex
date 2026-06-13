@@ -52,7 +52,8 @@ surfaces:
     url: https://github.com/fr-meyer/ChatIndex/pull/42
     base_branch: dev
     head_branch: feat/openai-compatible-provider-routing
-    head_sha: a520facbaa36a6122431781d18c97c61c19360d7
+    head_sha: null
+    implementation_commit: a520facbaa36a6122431781d18c97c61c19360d7
     merge_commit: null
     merged_at: null
   vibe_kanban:
