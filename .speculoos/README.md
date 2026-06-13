@@ -32,6 +32,11 @@ scripts/speculoos-loop release-plan --repo /path/to/ChatIndex \
 
 Normal docs, metadata, and maintenance PRs do not need `release-plan`.
 
+Metadata-only closeout PRs still need an explicit reviewer/CI note before
+merge. Prefer waiting for normal Pullfrog feedback when it is available; if the
+review run is absent or cancelled and the diff is metadata-only, record the
+decision as "CI green, no Pullfrog review present" before merging.
+
 Review caveat:
 
 CodeRabbit can skip automatic review for PRs that target a non-default branch

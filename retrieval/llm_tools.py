@@ -27,8 +27,24 @@ PROVIDER_ENV_VARS = {
 }
 RECENCY_QUERY_RE = re.compile(
     r"\b("
-    r"after|current|currently|latest|newest|now|post-merge|postmerge|"
-    r"recent|remaining|status|today|tomorrow|yesterday"
+    r"currently|latest|newest|now|post[- ]?(?:index|merge)|"
+    r"recent(?:ly)?|today|tomorrow|yesterday"
+    r")\b",
+    flags=re.IGNORECASE,
+)
+STATUS_FRESHNESS_QUERY_RE = re.compile(
+    r"\b("
+    r"(?:current|latest|newest)\s+status|"
+    r"status\s+(?:after|now|since|today)|"
+    r"what\s+(?:is|are|'s)\s+(?:the\s+)?(?:current\s+)?status|"
+    r"what\s+(?:remains|is\s+left|is\s+remaining)|"
+    r"what\s+(?:are|'re)\s+(?:the\s+)?(?:remaining|next)\s+"
+    r"(?:items|steps|tasks|work)|"
+    r"next\s+steps?|"
+    r"remaining\s+(?:items|steps|tasks|work|follow[- ]?ups?)|"
+    r"open\s+(?:items|questions|tasks)|"
+    r"pending\s+(?:items|questions|tasks|work)|"
+    r"where\s+(?:are|do)\s+we\s+(?:go|stand)"
     r")\b",
     flags=re.IGNORECASE,
 )
@@ -171,7 +187,8 @@ def _conversation_source_context(ctree: CTree) -> Dict[str, Any]:
 
 
 def _freshness_warning(user_query: str, source_context: Dict[str, Any]) -> Optional[str]:
-    if not RECENCY_QUERY_RE.search(user_query or ""):
+    query = user_query or ""
+    if not RECENCY_QUERY_RE.search(query) and not STATUS_FRESHNESS_QUERY_RE.search(query):
         return None
 
     window_label = source_context.get("window_label", "the indexed conversation range")

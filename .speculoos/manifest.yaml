@@ -1,67 +1,70 @@
 schema_version: 0.1
 project: ChatIndex
 workflow: speculoos-v1
-canonical_task: pr-019-qwen-build-guard-provenance
+canonical_task: pr-020-status-freshness-warning
 repository:
   upstream: VectifyAI/ChatIndex
   fork: fr-meyer/ChatIndex
   local_path: "${OPENCLAW_REPO_PATH}"
   local_path_resolution: Runners resolve OPENCLAW_REPO_PATH at runtime; use the repository root when unset.
   base_branch: dev
-  working_branch: feat/qwen-build-guard-provenance
+  working_branch: feat/status-freshness-warning
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: closed
+  phase: in_progress
   pret_a_coder: satisfied
   blocker_summary:
     - PR018 merged as fork PR #42 into dev at 21ec834f5b782945f15c77f398fd65e5c8ea0dbc.
     - PR019 merged as fork PR #46 into dev at 0e9baf9636e895037cd9bdd8aea46f4c67ea7823.
     - Tracking issue #45 is closed completed; issue and PR Project #1 items are Done.
     - Vibe service is currently unavailable from the container, so no live Vibe task was created; the Vibe surface records this honestly as unavailable.
+    - PR020 is a focused follow-up to harden stale-slice freshness warnings and
+      record metadata-only closeout review guidance; release-plan is not needed.
 validation:
   no_secret_tests:
     status: passed
-    command: /srv/openkb/venvs/chatindex-sandbox/bin/python -m unittest discover -v
-    result: 69 passed, 0 failed
+    command: python -m unittest discover -v
+    result: 71 passed, 0 failed
   private_data_check:
     status: passed
-    reviewed_range: PR019 changed files before publication
+    reviewed_range: PR020 changed files before publication
     notes: Speculoos validation private_data_scan passed on changed files; no secrets, logs, sessions, tmp files, key/pem material, or generated indexes are in scope.
   dogfood:
-    status: passed_with_caveat
-    notes: Bounded 22-exchange Qwen-vs-Mistral comparison completed outside the repository; Qwen was much slower but answered correctly with source context, while Mistral was faster but failed answer quality on this slice/tool loop.
+    status: passed
+    notes: Bounded 10-exchange Qwen dogfood asked "What remains now?" and returned freshness_warning in 3 retrieval turns after a 119.086s build.
 surfaces:
   manifest:
     enabled: true
     authority: canonical-v0
   github_issue:
     enabled: true
-    status: closed
-    number: 45
-    url: https://github.com/fr-meyer/ChatIndex/issues/45
+    status: open
+    number: 48
+    url: https://github.com/fr-meyer/ChatIndex/issues/48
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
-    status: done
+    status: in_progress
     number: 1
     url: https://github.com/users/fr-meyer/projects/1
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: merged
-    number: 46
-    url: https://github.com/fr-meyer/ChatIndex/pull/46
+    status: open
+    number: 49
+    url: https://github.com/fr-meyer/ChatIndex/pull/49
     base_branch: dev
-    head_branch: feat/qwen-build-guard-provenance
-    head_sha: null
-    implementation_commit: 8ac6d4a5cf7d1ab8f294fea768ead7228e495450
-    merge_commit: 0e9baf9636e895037cd9bdd8aea46f4c67ea7823
-    merged_at: 2026-06-13T11:12:47Z
+    head_branch: feat/status-freshness-warning
+    head_sha: 444deafbc9412b45f942e86fb439014a974f9244
+    implementation_commit: 444deafbc9412b45f942e86fb439014a974f9244
+    created_at: 2026-06-13T12:15:19Z
+    merge_commit: null
+    merged_at: null
   vibe_kanban:
     enabled: true
     status: unavailable-not-created
     project_id: null
-    issue_id: pr-019-vibe-unavailable
+    issue_id: pr-020-vibe-unavailable
     file: .speculoos/surfaces/vibe-kanban.yaml
 lanes:
   codex_review:

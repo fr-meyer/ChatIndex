@@ -344,9 +344,10 @@ Retrieval calls also accept `request_timeout_seconds` and
 `request_max_retries`, applying both to provider requests. Retrieval results
 include `source_context` metadata with the indexed message range, node
 references when available, and any message IDs or timestamps present in the
-original conversation. Recency-sensitive questions, such as asking for the
-current or latest status, also return `freshness_warning` so callers can avoid
-treating an old indexed slice as live truth.
+original conversation. Recency- or status-sensitive questions, such as asking
+for the current/latest status, what remains, what is left, or the next steps,
+also return `freshness_warning` so callers can avoid treating an old indexed
+slice as live truth.
 
 **Key benefits:**
 - **Cost reduction** - Only retrieves relevant conversation segments

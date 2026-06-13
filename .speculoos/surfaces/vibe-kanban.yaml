@@ -9,7 +9,7 @@ mcp:
   version: 0.1.44
 organization_id: null
 project_id: null
-issue_id: pr-019-vibe-unavailable
+issue_id: pr-020-vibe-unavailable
 workspace_id: null
 session_id: null
 service:
@@ -18,10 +18,10 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR019: Qwen build guard and retrieval provenance"
-  status: done-unavailable-not-created
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/45
-  github_pr: https://github.com/fr-meyer/ChatIndex/pull/46
+  title: "PR020: Status freshness warning hardening"
+  status: unavailable-not-created
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/48
+  github_pr: https://github.com/fr-meyer/ChatIndex/pull/49
   github_release_pr: null
   github_release: null
   release_tag: null
@@ -32,9 +32,9 @@ last_probe:
   service_check: scripts/speculoos-loop status --repo /home/node/.openclaw/repos/ChatIndex
   result: Vibe HTTP endpoint and TCP forwarder were not healthy from the container during PR019 publication.
 last_sync:
-  status: done-unavailable-not-created
-  synced_at: 2026-06-13T11:13:30Z
-  method: GitHub-only closeout fallback while Vibe is unavailable
+  status: pending-unavailable-not-created
+  synced_at: 2026-06-13T12:20:00Z
+  method: GitHub-only fallback while Vibe is unavailable
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.
   - Create or mirror a Vibe task later only when Vibe service/write path is healthy.

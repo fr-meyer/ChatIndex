@@ -272,6 +272,56 @@ class RetrievalProviderTests(unittest.TestCase):
         self.assertIn("indexed slice", result["freshness_warning"])
         self.assertIn("Indexed source context", fake_client.calls[0]["system"])
 
+    def test_query_ctree_warns_for_status_freshness_questions(self):
+        warning_queries = [
+            "What remains now?",
+            "What is left?",
+            "What are the next steps?",
+            "What is the current status?",
+        ]
+
+        for query in warning_queries:
+            with self.subTest(query=query):
+                fake_client = FakeRetrievalClient([
+                    RetrievalResponse(
+                        stop_reason="end_turn",
+                        content=[TextBlock("I can answer only from the indexed slice.")],
+                    ),
+                ])
+
+                result = query_ctree(
+                    None,
+                    ctree=make_tree(),
+                    user_query=query,
+                    max_turns=1,
+                    llm_client=fake_client,
+                )
+
+                self.assertTrue(result["success"])
+                self.assertIsNotNone(result["freshness_warning"])
+                self.assertIn("indexed slice", result["freshness_warning"])
+                self.assertIn("Freshness warning", fake_client.calls[0]["system"])
+
+    def test_query_ctree_does_not_warn_for_non_status_remaining_budget(self):
+        fake_client = FakeRetrievalClient([
+            RetrievalResponse(
+                stop_reason="end_turn",
+                content=[TextBlock("The remaining budget was five dollars.")],
+            ),
+        ])
+
+        result = query_ctree(
+            None,
+            ctree=make_tree(),
+            user_query="How much is the remaining budget?",
+            max_turns=1,
+            llm_client=fake_client,
+        )
+
+        self.assertTrue(result["success"])
+        self.assertIsNone(result["freshness_warning"])
+        self.assertNotIn("Freshness warning", fake_client.calls[0]["system"])
+
     def test_streaming_fake_client_uses_shared_provider_interface(self):
         chunks = []
         fake_client = FakeRetrievalClient([
