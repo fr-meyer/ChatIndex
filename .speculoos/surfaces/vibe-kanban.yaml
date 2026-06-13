@@ -32,8 +32,8 @@ last_probe:
   service_check: scripts/speculoos-loop status --repo /home/node/.openclaw/repos/ChatIndex
   result: Vibe HTTP endpoint and TCP forwarder were not healthy from the container during PR018 publication.
 last_sync:
-  status: not-created
-  synced_at: 2026-06-13T06:39:18Z
+  status: unavailable-not-created
+  synced_at: 2026-06-13T06:46:39Z
   method: GitHub-only fallback while Vibe is unavailable
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.

@@ -11,11 +11,11 @@ repository:
   working_branch: feat/openai-compatible-provider-routing
   upstream_commit: 7df2c9208db6f113f85a6c09295bec7f0f2114e7
 status:
-  phase: in_review
+  phase: done
   pret_a_coder: satisfied
   blocker_summary:
-    - PR018 is open as fork PR #42 against dev.
-    - Tracking issue #43 and PR #42 are in GitHub Project #1 as In Progress.
+    - PR018 merged as fork PR #42 into dev at 21ec834f5b782945f15c77f398fd65e5c8ea0dbc.
+    - Tracking issue #43 is closed completed, and issue #43 plus PR #42 are in GitHub Project #1 as Done.
     - Vibe service is currently unavailable from the container, so no live Vibe task was created; the Vibe surface records this honestly as unavailable.
 validation:
   no_secret_tests:
@@ -35,27 +35,27 @@ surfaces:
     authority: canonical-v0
   github_issue:
     enabled: true
-    status: open
+    status: closed
     number: 43
     url: https://github.com/fr-meyer/ChatIndex/issues/43
     file: .speculoos/surfaces/github.yaml
   github_project:
     enabled: true
-    status: synced
+    status: done
     number: 1
     url: https://github.com/users/fr-meyer/projects/1
     file: .speculoos/surfaces/github.yaml
   github_pull_request:
     enabled: true
-    status: open
+    status: merged
     number: 42
     url: https://github.com/fr-meyer/ChatIndex/pull/42
     base_branch: dev
     head_branch: feat/openai-compatible-provider-routing
-    head_sha: null
+    head_sha: 19bf70693e5416dc5bb58e7058cf7b794c5f4afa
     implementation_commit: a520facbaa36a6122431781d18c97c61c19360d7
-    merge_commit: null
-    merged_at: null
+    merge_commit: 21ec834f5b782945f15c77f398fd65e5c8ea0dbc
+    merged_at: 2026-06-13T06:45:46Z
   vibe_kanban:
     enabled: true
     status: unavailable-not-created

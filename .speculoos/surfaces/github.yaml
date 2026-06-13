@@ -1,7 +1,7 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: in_review
+status: done
 blocked_by: []
 branches:
   base: dev
@@ -10,18 +10,18 @@ branches:
   main_sha: 93a8e5225147ffd3a3047b24442ea3fa4356117c
 issue:
   enabled: true
-  status: open
+  status: closed
   number: 43
   url: https://github.com/fr-meyer/ChatIndex/issues/43
   title: "PR018: OpenAI-compatible provider routing"
   linked_task: pr-018-openai-compatible-provider-routing
-  state: open
-  state_reason: null
+  state: closed
+  state_reason: completed
   created_at: 2026-06-13T06:39:15Z
-  closed_at: null
+  closed_at: 2026-06-13T06:46:39Z
 project:
   enabled: true
-  status: synced
+  status: done
   number: 1
   title: "Speculoos / ChatIndex"
   project_id: PVT_kwHOAZY4Cs4BaDA4
@@ -29,28 +29,28 @@ project:
   items:
     - kind: issue
       number: 43
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnJqs
       url: https://github.com/fr-meyer/ChatIndex/issues/43
       linked_task: pr-018-openai-compatible-provider-routing
     - kind: pull_request
       number: 42
-      status: In Progress
+      status: Done
       item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnJSk
       url: https://github.com/fr-meyer/ChatIndex/pull/42
       linked_task: pr-018-openai-compatible-provider-routing
 pull_request:
   enabled: true
-  status: open
+  status: merged
   number: 42
   url: https://github.com/fr-meyer/ChatIndex/pull/42
   base_branch: dev
   head_branch: feat/openai-compatible-provider-routing
-  head_sha: null
+  head_sha: 19bf70693e5416dc5bb58e7058cf7b794c5f4afa
   implementation_commit: a520facbaa36a6122431781d18c97c61c19360d7
   created_at: null
-  merge_commit: null
-  merged_at: null
+  merge_commit: 21ec834f5b782945f15c77f398fd65e5c8ea0dbc
+  merged_at: 2026-06-13T06:45:46Z
 last_merged_pull_request:
   enabled: true
   status: merged

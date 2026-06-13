@@ -3,7 +3,7 @@ id: pr-018-openai-compatible-provider-routing
 title: OpenAI-compatible provider routing for tree build and retrieval
 branch: feat/openai-compatible-provider-routing
 base_branch: dev
-status: in_review
+status: done
 pret_a_coder: retroactive_process_repair
 objective: >
   Fix the provider-flexibility gap left after PR001 by allowing both CTree
@@ -67,21 +67,23 @@ executor_lanes:
     reason: Local fix was made directly in Codex after discovering the PR001 provider-routing gap.
 surface_sync:
   manifest: local-updated
-  github_issue: open
+  github_issue: closed
   github_issue_number: 43
   github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/43
-  github_project: synced
+  github_project: done
   github_project_number: 1
   github_project_url: https://github.com/users/fr-meyer/projects/1
-  github_project_issue_item_status: In Progress
+  github_project_issue_item_status: Done
   github_project_issue_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnJqs
-  github_project_pr_item_status: In Progress
+  github_project_pr_item_status: Done
   github_project_pr_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnJSk
-  github_pr: open
+  github_pr: merged
   github_pr_number: 42
   github_pr_url: https://github.com/fr-meyer/ChatIndex/pull/42
-  github_pr_head_sha: null
+  github_pr_head_sha: 19bf70693e5416dc5bb58e7058cf7b794c5f4afa
   implementation_commit: a520facbaa36a6122431781d18c97c61c19360d7
+  github_pr_merge_commit: 21ec834f5b782945f15c77f398fd65e5c8ea0dbc
+  github_pr_merged_at: 2026-06-13T06:45:46Z
   vibe_kanban: unavailable-not-created
   vibe_task_id: pr-018-vibe-unavailable
 review:
@@ -107,3 +109,8 @@ review:
     mistral-large. A full 29-exchange Qwen build hung before output or spend
     and was stopped cleanly; treat long-build timeout/progress handling as a
     follow-up, not a PR018 blocker.
+  post_merge_notes: >
+    PR #42 merged into dev at 21ec834f5b782945f15c77f398fd65e5c8ea0dbc.
+    Post-merge bounded retrieval from merged dev rebuilt the 12-exchange real
+    OpenClaw slice and successfully answered the LiteLLM budget/rate-limit and
+    chatindex-sandbox key question in 4 turns.
