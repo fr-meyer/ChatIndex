@@ -3,7 +3,7 @@ id: pr-020-status-freshness-warning
 title: Status freshness warning hardening
 branch: feat/status-freshness-warning
 base_branch: dev
-status: in_progress
+status: closed
 pret_a_coder: satisfied
 objective: >
   Broaden retrieval freshness warnings so stale indexed slices are flagged when
@@ -57,15 +57,17 @@ executor_lanes:
     reason: Tiny focused hardening after bounded dogfood.
 surface_sync:
   manifest: local-updated
-  github_issue: open
+  github_issue: closed
   github_issue_number: 48
   github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/48
-  github_project: in_progress
+  github_project: done
   github_project_issue_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvoAzc
   github_project_pr_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvoAzg
-  github_pr: open
+  github_pr: merged
   github_pr_number: 49
   github_pr_url: https://github.com/fr-meyer/ChatIndex/pull/49
+  merge_commit: 1e7ae1aba103a5e081eebceecf745faf4f2df9a9
+  merged_at: 2026-06-13T12:48:55Z
   vibe_kanban: unavailable-not-created
   vibe_task_id: pr-020-vibe-unavailable
 review:
