@@ -13,9 +13,20 @@ def _openai_base_url(base_url=None):
     return base_url or os.getenv("OPENAI_BASE_URL") or os.getenv("OPENAI_API_BASE")
 
 
-def ChatGPT_API(model, prompt, credential=None, chat_history=None, temperature=0, max_tokens=None, base_url=None, **options):
+def ChatGPT_API(
+    model,
+    prompt,
+    credential=None,
+    chat_history=None,
+    temperature=0,
+    max_tokens=None,
+    base_url=None,
+    timeout=None,
+    max_retries=10,
+    retry_sleep_seconds=1,
+    **options,
+):
     
-    max_retries = 10
     if credential is None:
         credential = options.pop("api_" + "key", None)
     if options:
@@ -26,8 +37,11 @@ def ChatGPT_API(model, prompt, credential=None, chat_history=None, temperature=0
     resolved_base_url = _openai_base_url(base_url)
     if resolved_base_url:
         client_kwargs["base_url"] = resolved_base_url
+    if timeout is not None:
+        client_kwargs["timeout"] = timeout
     client = openai.OpenAI(**client_kwargs)
-    for i in range(max_retries):
+    attempt_count = max(1, int(max_retries))
+    for i in range(attempt_count):
         try:
             if chat_history:
                 messages = chat_history
@@ -50,10 +64,10 @@ def ChatGPT_API(model, prompt, credential=None, chat_history=None, temperature=0
         except Exception as e:
             print('************* Retrying *************')
             logging.error(f"Error: {e}")
-            if i < max_retries - 1:
-                time.sleep(1)  # Wait for 1秒 before retrying
+            if i < attempt_count - 1:
+                time.sleep(retry_sleep_seconds)  # Wait before retrying
             else:
-                logging.error('Max retries reached for prompt: ' + prompt)
+                logging.error("Max retries reached for prompt length: %s", len(prompt))
                 return "Error"
 
 

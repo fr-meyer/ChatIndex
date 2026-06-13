@@ -1,0 +1,94 @@
+schema_version: 0.1
+id: pr-019-qwen-build-guard-provenance
+title: Qwen build guard and retrieval provenance
+branch: feat/qwen-build-guard-provenance
+base_branch: dev
+status: in_review
+pret_a_coder: satisfied
+objective: >
+  Prevent OpenAI-compatible provider dogfood builds, especially Qwen-backed
+  builds, from hanging silently on larger conversation slices and make retrieval
+  answers expose enough source context to avoid stale-slice confusion.
+acceptance_criteria:
+  - CTree has an overall build timeout guard with clear smaller-slice guidance.
+  - CTree passes per-request timeouts and bounded retry policy into
+    OpenAI-compatible tree-building calls.
+  - CTree can emit safe progress events without prompt or message content.
+  - README documents slice-based dogfood and the timeout/progress knobs.
+  - CTree checkpoint saves can skip summary generation to avoid hidden
+    provider calls during bounded dogfood.
+  - Retrieval provider calls also use a bounded request timeout and retry count.
+  - Retrieval tools expose source_context with message ranges, node refs, and
+    message IDs/timestamps when present.
+  - query_ctree and query_ctree_streaming return source_context and
+    freshness_warning for recency-sensitive questions.
+  - Focused and full tests pass before publication.
+  - One bounded non-production Qwen-vs-Mistral dogfood comparison is recorded
+    outside the repository without committing private session data.
+write_scope:
+  allowed:
+    - README.md
+    - ctree/__init__.py
+    - ctree/ctree.py
+    - ctree/utils.py
+    - retrieval/llm_tools.py
+    - tests/test_retrieval_llm.py
+    - tests/test_ctree_provider_config.py
+    - .speculoos/tasks/pr-019-qwen-build-guard-provenance.yaml
+    - .speculoos/manifest.yaml
+    - .speculoos/surfaces/github.yaml
+    - .speculoos/surfaces/vibe-kanban.yaml
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+executor_lanes:
+  codex_review:
+    status: required
+  cursor_worker:
+    status: not_used
+    reason: Tight follow-up to PR018 with direct local implementation.
+surface_sync:
+  manifest: local-updated
+  github_issue: open
+  github_project: in_progress
+  github_pr: open
+  vibe_kanban: unavailable-not-created
+  vibe_task_id: pr-019-vibe-unavailable
+review:
+  tests: passed
+  compile_check: passed
+  yaml_check: passed
+  diff_check: passed
+  speculoos_validate: passed
+  private_data_check: passed
+  executor_lane: codex-only
+  validation_notes: >
+    Full unittest discovery passed with 69 tests. Python compile check,
+    YAML parse check, git diff --check, Speculoos validation, and changed-file
+    private-data scan all passed before publication.
+dogfood:
+  status: completed
+  artifact_root: tmp/chatindex-pr019-dogfood-20260613/medium22-final2
+  notes: >
+    Bounded 22-exchange non-production comparison was kept outside the repo.
+    Qwen/openkb-qwen built successfully in about 468 seconds and answered the
+    limits question correctly with source range/node context. Mistral built in
+    about 64 seconds but returned malformed/incorrect retrieval answers in the
+    first run and retry. LiteLLM spend deltas should be treated as approximate
+    because Qwen reported zero spend delta during the sampled interval.

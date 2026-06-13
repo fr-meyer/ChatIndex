@@ -7,6 +7,7 @@ for intelligent conversation retrieval.
 
 import json
 import os
+import re
 from dataclasses import dataclass
 from typing import Callable, List, Dict, Any, Optional
 from anthropic import Anthropic
@@ -24,6 +25,13 @@ PROVIDER_ENV_VARS = {
     "anthropic": "ANTHROPIC_API_KEY",
     "openai": "OPENAI_API_KEY",
 }
+RECENCY_QUERY_RE = re.compile(
+    r"\b("
+    r"after|current|currently|latest|newest|now|post-merge|postmerge|"
+    r"recent|remaining|status|today|tomorrow|yesterday"
+    r")\b",
+    flags=re.IGNORECASE,
+)
 
 
 @dataclass
@@ -35,6 +43,8 @@ class LLMProviderConfig:
     api_key: Optional[str] = None
     base_url: Optional[str] = None
     max_tokens: int = 8192
+    request_timeout_seconds: Optional[float] = 120
+    request_max_retries: int = 0
 
 
 @dataclass
@@ -62,6 +72,114 @@ class RetrievalResponse:
     stop_reason: str
     content: List[Any]
     raw_response: Any = None
+
+
+def _message_timestamp(message: Dict[str, Any]) -> Optional[str]:
+    for key in ("created_at", "timestamp", "datetime", "date", "time"):
+        value = message.get(key)
+        if value:
+            return str(value)
+    return None
+
+
+def _message_identifier(message: Dict[str, Any]) -> Optional[str]:
+    for key in ("id", "message_id", "uuid"):
+        value = message.get(key)
+        if value:
+            return str(value)
+    return None
+
+
+def _message_reference(conversation: List[Dict[str, Any]], index: int) -> Optional[Dict[str, Any]]:
+    if index < 0 or index >= len(conversation):
+        return None
+
+    message = conversation[index]
+    reference: Dict[str, Any] = {
+        "index": index,
+        "role": message.get("role", "unknown"),
+    }
+    identifier = _message_identifier(message)
+    timestamp = _message_timestamp(message)
+    if identifier is not None:
+        reference["id"] = identifier
+    if timestamp is not None:
+        reference["timestamp"] = timestamp
+    return reference
+
+
+def _time_window(conversation: List[Dict[str, Any]]) -> Optional[Dict[str, str]]:
+    first_timestamp = None
+    last_timestamp = None
+    for message in conversation:
+        timestamp = _message_timestamp(message)
+        if timestamp is None:
+            continue
+        if first_timestamp is None:
+            first_timestamp = timestamp
+        last_timestamp = timestamp
+
+    if first_timestamp is None:
+        return None
+    return {
+        "start": first_timestamp,
+        "end": last_timestamp or first_timestamp,
+    }
+
+
+def _range_source_context(
+    ctree: CTree,
+    start_index: int,
+    end_index: int,
+    node_path: Optional[List[int]] = None,
+) -> Dict[str, Any]:
+    conversation = getattr(ctree, "conversation", []) or []
+    total_messages = len(conversation)
+    bounded_start = min(max(0, start_index), total_messages)
+    bounded_end = min(max(bounded_start, end_index), total_messages)
+    source_context: Dict[str, Any] = {
+        "start_index": bounded_start,
+        "end_index": bounded_end,
+        "message_count": bounded_end - bounded_start,
+        "total_indexed_messages": total_messages,
+    }
+    if node_path is not None:
+        source_context["node_path"] = node_path
+        source_context["node_ref"] = "root" if not node_path else "root/" + "/".join(str(index) for index in node_path)
+
+    if bounded_start < bounded_end:
+        source_context["first_message"] = _message_reference(conversation, bounded_start)
+        source_context["last_message"] = _message_reference(conversation, bounded_end - 1)
+
+    window = _time_window(conversation[bounded_start:bounded_end])
+    if window is not None:
+        source_context["time_window"] = window
+
+    return source_context
+
+
+def _conversation_source_context(ctree: CTree) -> Dict[str, Any]:
+    conversation = getattr(ctree, "conversation", []) or []
+    source_context = _range_source_context(ctree, 0, len(conversation), node_path=[])
+    source_context["scope"] = "indexed_conversation"
+    source_context["window_label"] = (
+        f"{source_context['time_window']['start']} to {source_context['time_window']['end']}"
+        if "time_window" in source_context
+        else f"message indices 0-{max(0, len(conversation) - 1)}"
+    )
+    return source_context
+
+
+def _freshness_warning(user_query: str, source_context: Dict[str, Any]) -> Optional[str]:
+    if not RECENCY_QUERY_RE.search(user_query or ""):
+        return None
+
+    window_label = source_context.get("window_label", "the indexed conversation range")
+    return (
+        "The query appears to ask about current, latest, or post-index status. "
+        f"ChatIndex can only answer from {window_label}; verify anything outside "
+        "that indexed slice with a fresher source."
+    )
 
 
 def _block_type(block: Any) -> Optional[str]:
@@ -96,6 +214,8 @@ def _resolve_provider_config(
     model: Optional[str] = None,
     base_url: Optional[str] = None,
     max_tokens: Optional[int] = None,
+    request_timeout_seconds: Optional[float] = None,
+    request_max_retries: Optional[int] = None,
     config: Optional[LLMProviderConfig] = None,
 ) -> LLMProviderConfig:
     if config is None:
@@ -105,6 +225,16 @@ def _resolve_provider_config(
             api_key=api_key,
             base_url=base_url,
             max_tokens=max_tokens or LLMProviderConfig.max_tokens,
+            request_timeout_seconds=(
+                request_timeout_seconds
+                if request_timeout_seconds is not None
+                else LLMProviderConfig.request_timeout_seconds
+            ),
+            request_max_retries=(
+                request_max_retries
+                if request_max_retries is not None
+                else LLMProviderConfig.request_max_retries
+            ),
         )
     else:
         resolved = LLMProviderConfig(
@@ -113,9 +243,20 @@ def _resolve_provider_config(
             api_key=api_key or config.api_key,
             base_url=base_url or config.base_url,
             max_tokens=max_tokens or config.max_tokens,
+            request_timeout_seconds=(
+                request_timeout_seconds
+                if request_timeout_seconds is not None
+                else config.request_timeout_seconds
+            ),
+            request_max_retries=(
+                request_max_retries
+                if request_max_retries is not None
+                else config.request_max_retries
+            ),
         )
 
     resolved.provider = _normalize_provider(resolved.provider)
+    resolved.request_max_retries = max(0, int(resolved.request_max_retries))
     if not resolved.model:
         resolved.model = DEFAULT_RETRIEVAL_MODELS[resolved.provider]
 
@@ -281,7 +422,11 @@ class AnthropicRetrievalClient:
 
     def __init__(self, config: LLMProviderConfig):
         self.config = config
-        self.client = Anthropic(api_key=config.api_key)
+        client_kwargs = {"api_key": config.api_key}
+        if config.request_timeout_seconds is not None:
+            client_kwargs["timeout"] = config.request_timeout_seconds
+        client_kwargs["max_retries"] = config.request_max_retries
+        self.client = Anthropic(**client_kwargs)
 
     def create_message(
         self,
@@ -328,6 +473,9 @@ class OpenAIRetrievalClient:
         client_kwargs = {"api_key": config.api_key}
         if config.base_url:
             client_kwargs["base_url"] = config.base_url
+        if config.request_timeout_seconds is not None:
+            client_kwargs["timeout"] = config.request_timeout_seconds
+        client_kwargs["max_retries"] = config.request_max_retries
         self.client = OpenAI(**client_kwargs)
 
     def create_message(
@@ -417,6 +565,8 @@ def build_retrieval_client(
     model: Optional[str] = None,
     base_url: Optional[str] = None,
     max_tokens: Optional[int] = None,
+    request_timeout_seconds: Optional[float] = None,
+    request_max_retries: Optional[int] = None,
     config: Optional[LLMProviderConfig] = None,
 ):
     """Build a retrieval LLM client from provider configuration."""
@@ -427,6 +577,8 @@ def build_retrieval_client(
         model=model,
         base_url=base_url,
         max_tokens=max_tokens,
+        request_timeout_seconds=request_timeout_seconds,
+        request_max_retries=request_max_retries,
         config=config,
     )
 
@@ -517,6 +669,7 @@ class ChatIndexTools:
             ctree: A CTree instance with conversation data
         """
         self.ctree = ctree
+        self.source_context = _conversation_source_context(ctree)
         self._vector_index: Optional[VectorIndex] = None
 
     def _get_vector_index(self) -> VectorIndex:
@@ -567,6 +720,12 @@ class ChatIndexTools:
                     "end_index": current_node.end_index,
                     "message_count": current_node.get_message_count(),
                     "child_count": current_node.sub_node_count,
+                    "source_context": _range_source_context(
+                        self.ctree,
+                        current_node.start_index,
+                        current_node.end_index,
+                        node_path=node_path,
+                    ),
                     "children": []
                 })
 
@@ -581,13 +740,26 @@ class ChatIndexTools:
                             "start_index": child.start_index,
                             "end_index": child.end_index,
                             "message_count": child.get_message_count(),
-                            "child_count": child.sub_node_count
+                            "child_count": child.sub_node_count,
+                            "source_context": _range_source_context(
+                                self.ctree,
+                                child.start_index,
+                                child.end_index,
+                                node_path=[*node_path, i],
+                            ),
                         })
                     elif isinstance(child, MessageNode):
+                        message_end = child.message_index + (3 if child.system_message else 2)
                         result["children"].append({
                             "index": i,
                             "type": "message",
                             "message_index": child.message_index,
+                            "source_context": _range_source_context(
+                                self.ctree,
+                                child.message_index,
+                                message_end,
+                                node_path=[*node_path, i],
+                            ),
                             "user_preview": child.user_message["content"][:100] + "..."
                                           if len(child.user_message["content"]) > 100
                                           else child.user_message["content"],
@@ -596,8 +768,15 @@ class ChatIndexTools:
                                                else child.assistant_message["content"]
                         })
             else:  # MessageNode
+                message_end = current_node.message_index + (3 if current_node.system_message else 2)
                 result.update({
                     "message_index": current_node.message_index,
+                    "source_context": _range_source_context(
+                        self.ctree,
+                        current_node.message_index,
+                        message_end,
+                        node_path=node_path,
+                    ),
                     "user_message": current_node.user_message,
                     "assistant_message": current_node.assistant_message,
                     "system_message": current_node.system_message
@@ -643,6 +822,11 @@ class ChatIndexTools:
                 "end_index": actual_end,
                 "requested_end_index": end_index,
                 "message_count": len(messages),
+                "source_context": _range_source_context(
+                    self.ctree,
+                    start_index,
+                    actual_end,
+                ),
                 "messages": messages
             }
 
@@ -665,6 +849,12 @@ class ChatIndexTools:
                 return {"error": "query must be a non-empty string"}
 
             results = self._get_vector_index().search(query.strip(), top_k=top_k)
+            for result in results:
+                result["source_context"] = _range_source_context(
+                    self.ctree,
+                    result["start_index"],
+                    result["end_index"],
+                )
             return {
                 "query": query.strip(),
                 "top_k": len(results),
@@ -699,6 +889,41 @@ class ChatIndexTools:
             return {"error": f"Unknown tool: {tool_name}"}
 
 
+def _build_retrieval_system_message(
+    source_context: Dict[str, Any],
+    freshness_warning: Optional[str],
+) -> str:
+    freshness_instruction = (
+        f"\nFreshness warning: {freshness_warning}\n"
+        if freshness_warning
+        else ""
+    )
+    source_context_json = json.dumps(source_context, sort_keys=True)
+    return f"""You are an AI assistant with access to a ChatIndex tree structure containing a conversation history.
+
+The conversation is organized hierarchically into topics and subtopics. You have three tools available:
+
+1. view_node_and_children: Navigate the tree structure to understand topics and subtopics
+2. get_node_messages: Retrieve actual message content from specific ranges
+3. vector_search: Find candidate exchanges by similarity to a natural-language query
+
+Start by viewing the root node to understand the conversation structure, then drill down into relevant topics or use vector_search to find candidate exchanges. Use get_node_messages with the returned start_index and end_index to read the raw conversation range.
+
+Each tool result includes source_context with message ranges, node references when available, and any available message IDs or timestamps. Each vector_search result includes message_index, score, previews, and a message range suitable for get_node_messages.
+
+Indexed source context: {source_context_json}
+{freshness_instruction}
+The tree uses a path-based navigation system where each node is accessed by a list of child indices from root:
+- [] = root node
+- [0] = first child of root
+- [0, 1] = second child of the first child of root
+- etc.
+
+Each TopicNode has start_index and end_index fields that define the range of messages it covers.
+
+When answering, cite the indexed message range or node reference when it is useful. If the question asks about current/latest/post-index status, explicitly state that you can only answer from the indexed source context and cannot verify events outside that slice."""
+
+
 def query_ctree(
     api_key: Optional[str],
     ctree: CTree,
@@ -708,6 +933,8 @@ def query_ctree(
     model: Optional[str] = None,
     base_url: Optional[str] = None,
     max_tokens: Optional[int] = None,
+    request_timeout_seconds: Optional[float] = None,
+    request_max_retries: Optional[int] = None,
     config: Optional[LLMProviderConfig] = None,
     llm_client: Any = None,
 ) -> Dict[str, Any]:
@@ -723,6 +950,8 @@ def query_ctree(
         model: Provider model name. Uses provider defaults when omitted.
         base_url: OpenAI-compatible base URL when provider="openai".
         max_tokens: Maximum tokens for each provider call.
+        request_timeout_seconds: Per-provider-call timeout for retrieval.
+        request_max_retries: Provider SDK retry count for retrieval requests.
         config: Optional LLMProviderConfig. Explicit arguments override matching fields.
         llm_client: Optional test/client injection implementing create_message().
 
@@ -735,30 +964,14 @@ def query_ctree(
         model=model,
         base_url=base_url,
         max_tokens=max_tokens,
+        request_timeout_seconds=request_timeout_seconds,
+        request_max_retries=request_max_retries,
         config=config,
     )
     tools_handler = ChatIndexTools(ctree)
-
-    # Initial system message explaining the context
-    system_message = """You are an AI assistant with access to a ChatIndex tree structure containing a conversation history.
-
-The conversation is organized hierarchically into topics and subtopics. You have three tools available:
-
-1. view_node_and_children: Navigate the tree structure to understand topics and subtopics
-2. get_node_messages: Retrieve actual message content from specific ranges
-3. vector_search: Find candidate exchanges by similarity to a natural-language query
-
-Start by viewing the root node to understand the conversation structure, then drill down into relevant topics or use vector_search to find candidate exchanges. Use get_node_messages with the returned start_index and end_index to read the raw conversation range.
-
-Each vector_search result includes message_index, score, previews, and a message range suitable for get_node_messages.
-
-The tree uses a path-based navigation system where each node is accessed by a list of child indices from root:
-- [] = root node
-- [0] = first child of root
-- [0, 1] = second child of the first child of root
-- etc.
-
-Each TopicNode has start_index and end_index fields that define the range of messages it covers."""
+    source_context = tools_handler.source_context
+    freshness_warning = _freshness_warning(user_query, source_context)
+    system_message = _build_retrieval_system_message(source_context, freshness_warning)
 
     messages = [
         {"role": "user", "content": user_query}
@@ -791,6 +1004,8 @@ Each TopicNode has start_index and end_index fields that define the range of mes
                 "success": True,
                 "final_response": final_response,
                 "turns_used": turn + 1,
+                "source_context": source_context,
+                "freshness_warning": freshness_warning,
                 "conversation_history": conversation_history
             }
 
@@ -827,12 +1042,16 @@ Each TopicNode has start_index and end_index fields that define the range of mes
                 "success": False,
                 "error": f"Unexpected stop reason: {response.stop_reason}",
                 "turns_used": turn + 1,
+                "source_context": source_context,
+                "freshness_warning": freshness_warning,
                 "conversation_history": conversation_history
             }
 
     return {
         "success": False,
         "error": f"Reached maximum turns ({max_turns})",
+        "source_context": source_context,
+        "freshness_warning": freshness_warning,
         "conversation_history": conversation_history
     }
 
@@ -849,6 +1068,8 @@ def query_ctree_streaming(
     model: Optional[str] = None,
     base_url: Optional[str] = None,
     max_tokens: Optional[int] = None,
+    request_timeout_seconds: Optional[float] = None,
+    request_max_retries: Optional[int] = None,
     config: Optional[LLMProviderConfig] = None,
     llm_client: Any = None,
 ) -> Dict[str, Any]:
@@ -867,6 +1088,8 @@ def query_ctree_streaming(
         model: Provider model name. Uses provider defaults when omitted.
         base_url: OpenAI-compatible base URL when provider="openai".
         max_tokens: Maximum tokens for each provider call.
+        request_timeout_seconds: Per-provider-call timeout for retrieval.
+        request_max_retries: Provider SDK retry count for retrieval requests.
         config: Optional LLMProviderConfig. Explicit arguments override matching fields.
         llm_client: Optional test/client injection implementing stream_message().
 
@@ -879,30 +1102,14 @@ def query_ctree_streaming(
         model=model,
         base_url=base_url,
         max_tokens=max_tokens,
+        request_timeout_seconds=request_timeout_seconds,
+        request_max_retries=request_max_retries,
         config=config,
     )
     tools_handler = ChatIndexTools(ctree)
-
-    # Initial system message explaining the context
-    system_message = """You are an AI assistant with access to a ChatIndex tree structure containing a conversation history.
-
-The conversation is organized hierarchically into topics and subtopics. You have three tools available:
-
-1. view_node_and_children: Navigate the tree structure to understand topics and subtopics
-2. get_node_messages: Retrieve actual message content from specific ranges
-3. vector_search: Find candidate exchanges by similarity to a natural-language query
-
-Start by viewing the root node to understand the conversation structure, then drill down into relevant topics or use vector_search to find candidate exchanges. Use get_node_messages with the returned start_index and end_index to read the raw conversation range.
-
-Each vector_search result includes message_index, score, previews, and a message range suitable for get_node_messages.
-
-The tree uses a path-based navigation system where each node is accessed by a list of child indices from root:
-- [] = root node
-- [0] = first child of root
-- [0, 1] = second child of the first child of root
-- etc.
-
-Each TopicNode has start_index and end_index fields that define the range of messages it covers."""
+    source_context = tools_handler.source_context
+    freshness_warning = _freshness_warning(user_query, source_context)
+    system_message = _build_retrieval_system_message(source_context, freshness_warning)
 
     messages = [
         {"role": "user", "content": user_query}
@@ -948,6 +1155,8 @@ Each TopicNode has start_index and end_index fields that define the range of mes
                 "success": True,
                 "final_response": final_response,
                 "turns_used": turn + 1,
+                "source_context": source_context,
+                "freshness_warning": freshness_warning,
                 "conversation_history": conversation_history
             }
 
@@ -986,11 +1195,15 @@ Each TopicNode has start_index and end_index fields that define the range of mes
                 "success": False,
                 "error": f"Unexpected stop reason: {final_message.stop_reason}",
                 "turns_used": turn + 1,
+                "source_context": source_context,
+                "freshness_warning": freshness_warning,
                 "conversation_history": conversation_history
             }
 
     return {
         "success": False,
         "error": f"Reached maximum turns ({max_turns})",
+        "source_context": source_context,
+        "freshness_warning": freshness_warning,
         "conversation_history": conversation_history
     }

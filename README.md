@@ -181,7 +181,9 @@ result = query_ctree(
     ctree=tree,
     user_query="What programming concepts were discussed?",
     provider="anthropic",  # default; uses claude-sonnet-4-5 unless model is set
-    max_turns=50
+    max_turns=50,
+    request_timeout_seconds=120,
+    request_max_retries=0,
 )
 
 print(result["final_response"])
@@ -202,6 +204,8 @@ tree = CTree(
     max_children=10,
     model="gpt-4o-mini",
     base_url=os.getenv("OPENAI_BASE_URL"),
+    build_timeout_seconds=15 * 60,
+    request_timeout_seconds=120,
 )
 
 # Add conversation exchanges
@@ -245,7 +249,9 @@ result = query_ctree(
     ctree=tree,
     user_query="What topics were discussed about network protocols?",
     provider="anthropic",
-    max_turns=50  # default is 50
+    max_turns=50,  # default is 50
+    request_timeout_seconds=120,
+    request_max_retries=0,
 )
 
 print(result["final_response"])
@@ -279,14 +285,68 @@ result = query_ctree(
     provider="openai",
     model="qwen-plus",
     base_url=os.getenv("OPENAI_BASE_URL"),
+    request_timeout_seconds=120,
+    request_max_retries=0,
     **{"api_key": os.getenv("DASHSCOPE_API_KEY")},
 )
 ```
 
 Some OpenAI-compatible endpoints or larger histories can make tree building
 slower than the default OpenAI path. For first runs against a new provider,
-build a representative conversation slice first and run full-history builds
-behind your job runner's timeout or progress reporting.
+build a representative conversation slice first and keep timeout/progress
+guards enabled.
+
+For real dogfood over OpenClaw-scale conversations, start with a bounded slice
+of about 10-15 exchanges before trying a full thread:
+
+```python
+def log_progress(event):
+    print(
+        f"[chatindex] {event['event']} "
+        f"exchange={event.get('exchange_number', event['exchange_count'])} "
+        f"elapsed={event['elapsed_seconds']}s",
+        flush=True,
+    )
+
+tree = CTree(
+    max_children=3,
+    model="openkb-qwen",
+    base_url=os.getenv("OPENAI_BASE_URL"),
+    build_timeout_seconds=15 * 60,
+    request_timeout_seconds=120,
+    request_max_retries=2,
+    progress_callback=log_progress,
+    **{"api_key": os.getenv("OPENAI_API_KEY")},
+)
+```
+
+If a provider or thread slice exceeds `build_timeout_seconds`, ChatIndex raises
+`CTreeBuildTimeoutError` with guidance to use a smaller slice or rerun under a
+supervised longer timeout. Passing `build_timeout_seconds=None` disables the
+overall build guard.
+
+For tree building, `request_max_retries` is a retry count: `0` means one
+provider attempt with no retries, `2` means up to three total attempts. Negative
+`request_timeout_seconds` values are normalized to `0`.
+
+For checkpoint saves during provider dogfood, use:
+
+```python
+tree.save("conversation_tree.json", save_conversation=True, generate_summaries=False)
+```
+
+The default `generate_summaries=True` preserves the original behavior, but it
+can make extra provider calls while saving. Disabling it is better for bounded
+latency/cost experiments where the raw conversation and tree structure are the
+important artifacts.
+
+Retrieval calls also accept `request_timeout_seconds` and
+`request_max_retries`, applying both to provider requests. Retrieval results
+include `source_context` metadata with the indexed message range, node
+references when available, and any message IDs or timestamps present in the
+original conversation. Recency-sensitive questions, such as asking for the
+current or latest status, also return `freshness_warning` so callers can avoid
+treating an old indexed slice as live truth.
 
 **Key benefits:**
 - **Cost reduction** - Only retrieves relevant conversation segments

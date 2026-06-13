@@ -5,7 +5,8 @@ where nodes represent topics and are organized in a temporally-ordered tree stru
 """
 
 import json
-from typing import List, Dict, Optional, Tuple, Any
+import time
+from typing import Callable, List, Dict, Optional, Tuple, Any
 from dataclasses import dataclass, field
 import os
 from dotenv import load_dotenv
@@ -13,6 +14,15 @@ from .utils import ChatGPT_API, extract_json
 
 # Load environment variables from .env file
 load_dotenv()
+
+
+DEFAULT_BUILD_TIMEOUT_SECONDS = 15 * 60
+DEFAULT_REQUEST_TIMEOUT_SECONDS = 120
+DEFAULT_REQUEST_MAX_RETRIES = 2
+
+
+class CTreeBuildTimeoutError(TimeoutError):
+    """Raised when CTree building exceeds the configured timeout guard."""
 
 
 @dataclass(eq=False)
@@ -152,6 +162,11 @@ class CTree:
         model: str = "gpt-4o-mini",
         auto_save_path: Optional[str] = None,
         base_url: Optional[str] = None,
+        build_timeout_seconds: Optional[float] = DEFAULT_BUILD_TIMEOUT_SECONDS,
+        request_timeout_seconds: Optional[float] = DEFAULT_REQUEST_TIMEOUT_SECONDS,
+        request_max_retries: int = DEFAULT_REQUEST_MAX_RETRIES,
+        progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
+        progress_interval_seconds: float = 30.0,
         **options,
     ):
         """
@@ -169,6 +184,13 @@ class CTree:
             base_url: Optional OpenAI-compatible API base URL, such as a LiteLLM
                       proxy or provider-compatible endpoint. If omitted, uses
                       OPENAI_BASE_URL / OPENAI_API_BASE when set.
+            build_timeout_seconds: Maximum elapsed time for one tree-building run.
+                           Defaults to 15 minutes. Pass None to disable.
+            request_timeout_seconds: Per-LLM-call timeout. Defaults to 120 seconds.
+            request_max_retries: Per-LLM-call retry count used by CTree. Defaults to 2.
+                                  Use 0 for one attempt with no retries.
+            progress_callback: Optional callback receiving safe progress event dicts.
+            progress_interval_seconds: Minimum seconds between non-forced progress events.
         """
         provider_credential = options.pop("api_" + "key", None)
         if options:
@@ -189,6 +211,18 @@ class CTree:
         self.base_url = base_url or os.getenv("OPENAI_BASE_URL") or os.getenv("OPENAI_API_BASE")
         self.conversation: List[Dict] = []
         self.auto_save_path = auto_save_path
+        self.build_timeout_seconds = build_timeout_seconds
+        self.request_timeout_seconds = (
+            None
+            if request_timeout_seconds is None
+            else max(0.0, float(request_timeout_seconds))
+        )
+        self.request_max_retries = max(0, int(request_max_retries))
+        self.progress_callback = progress_callback
+        self.progress_interval_seconds = max(0.0, float(progress_interval_seconds or 0.0))
+        self._build_started_at: Optional[float] = None
+        self._last_progress_at = 0.0
+        self._build_exchange_count = 0
         
         provider_credential = (
             provider_credential
@@ -208,10 +242,84 @@ class CTree:
         )
         self.current_node = self.root
 
+    def _ensure_build_started(self) -> None:
+        if self._build_started_at is None:
+            self._build_started_at = time.monotonic()
+
+    def _elapsed_build_seconds(self) -> float:
+        if self._build_started_at is None:
+            return 0.0
+        return time.monotonic() - self._build_started_at
+
+    def _remaining_build_timeout(self) -> Optional[float]:
+        if self.build_timeout_seconds is None:
+            return None
+        return max(0.0, float(self.build_timeout_seconds) - self._elapsed_build_seconds())
+
+    def _check_build_timeout(self, stage: str) -> None:
+        remaining = self._remaining_build_timeout()
+        if remaining is None or remaining > 0:
+            return
+
+        timeout = float(self.build_timeout_seconds or 0.0)
+        elapsed = self._elapsed_build_seconds()
+        self._emit_progress("build_timeout", force=True, stage=stage)
+        raise CTreeBuildTimeoutError(
+            f"CTree build exceeded the configured timeout of {timeout:.1f}s "
+            f"after {elapsed:.1f}s during {stage}. Build a smaller conversation "
+            "slice first or increase build_timeout_seconds for a supervised run."
+        )
+
+    def _emit_progress(self, event: str, force: bool = False, **payload: Any) -> None:
+        if self.progress_callback is None:
+            return
+
+        now = time.monotonic()
+        if (
+            not force
+            and self.progress_interval_seconds > 0
+            and now - self._last_progress_at < self.progress_interval_seconds
+        ):
+            return
+
+        self._last_progress_at = now
+        progress_event = {
+            "event": event,
+            "elapsed_seconds": round(self._elapsed_build_seconds(), 3),
+            "timeout_seconds": self.build_timeout_seconds,
+            "exchange_count": self._build_exchange_count,
+            "conversation_messages": len(self.conversation),
+            "model": self.model,
+        }
+        progress_event.update(payload)
+        self.progress_callback(progress_event)
+
     def _chatgpt_api(self, prompt: str, **options):
+        self._ensure_build_started()
+        self._check_build_timeout("before LLM call")
+
+        remaining_timeout = self._remaining_build_timeout()
+        request_timeout = self.request_timeout_seconds
+        if remaining_timeout is not None:
+            request_timeout = remaining_timeout if request_timeout is None else min(float(request_timeout), remaining_timeout)
+
+        options["timeout"] = request_timeout
+        request_attempts = self.request_max_retries + 1
+        options["max_retries"] = request_attempts
         options["api_" + "key"] = self.api_key
         options["base_url"] = self.base_url
-        return ChatGPT_API(self.model, prompt, **options)
+        self._emit_progress(
+            "llm_call_started",
+            force=True,
+            request_timeout_seconds=request_timeout,
+            request_max_retries=self.request_max_retries,
+            request_attempts=request_attempts,
+        )
+        response = ChatGPT_API(self.model, prompt, **options)
+        self._emit_progress("llm_call_completed", force=True)
+        self._check_build_timeout("after LLM call")
+        return response
+
 
     @staticmethod
     def _coerce_parent_index(value: Any, candidate_nodes: List[TopicNode]) -> int:
@@ -303,6 +411,16 @@ class CTree:
     
     def add(self, messages: List[Dict]) -> None:
         """Add a message to the conversation."""
+        self._ensure_build_started()
+        self._check_build_timeout("before adding exchange")
+        exchange_number = self._build_exchange_count + 1
+        self._emit_progress(
+            "exchange_started",
+            force=True,
+            exchange_number=exchange_number,
+            incoming_message_count=len(messages),
+        )
+
         # Parse messages by role into a clean dict structure
         msg_dict = {
             "system": next((m for m in messages if m.get("role") == "system"), None),
@@ -328,6 +446,13 @@ class CTree:
         # Auto-save if path is configured (always save conversation for auto-save)
         if self.auto_save_path:
             self.save(self.auto_save_path, save_conversation=True)
+
+        self._build_exchange_count += 1
+        self._emit_progress(
+            "exchange_completed",
+            force=True,
+            exchange_number=exchange_number,
+        )
     
     
     def _initialize_first_topic_with_message(self, msg_dict: Dict) -> None:
@@ -1488,7 +1613,12 @@ Respond ONLY with valid JSON, no other text."""
         
         return result
     
-    def save(self, filepath: str, save_conversation: bool = False) -> None:
+    def save(
+        self,
+        filepath: str,
+        save_conversation: bool = False,
+        generate_summaries: bool = True,
+    ) -> None:
         """
         Save the tree to a JSON file.
         
@@ -1501,9 +1631,14 @@ Respond ONLY with valid JSON, no other text."""
             filepath: Path to save the tree JSON file
             save_conversation: If True, includes full conversation history in saved file.
                              If False (default), only saves tree structure.
+            generate_summaries: If True (default), generates missing frozen-node
+                             summaries before writing. Disable for bounded
+                             dogfood/checkpoint saves that should not make extra
+                             provider calls.
         """
         # Generate summaries for frozen nodes before saving
-        self._generate_summaries_for_frozen_nodes()
+        if generate_summaries:
+            self._generate_summaries_for_frozen_nodes()
         
         data = self.to_dict()
         # Optionally save the full conversation history
