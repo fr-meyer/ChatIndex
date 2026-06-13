@@ -1,24 +1,24 @@
 schema_version: 0.1
 surface: github
 repository: fr-meyer/ChatIndex
-status: done
+status: in_review
 blocked_by: []
 branches:
-  base: main
-  head: fix/v0-1-1-post-review
-  dev_sha: 117a13a85e1bc41891d6e2c1b02b2b971d9cfc14
-  main_sha: 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda
+  base: dev
+  head: feat/openai-compatible-provider-routing
+  dev_sha: 93a8e5225147ffd3a3047b24442ea3fa4356117c
+  main_sha: 93a8e5225147ffd3a3047b24442ea3fa4356117c
 issue:
   enabled: true
-  status: synced
-  number: 39
-  url: https://github.com/fr-meyer/ChatIndex/issues/39
-  title: "Promote dev to main for v0.1.1"
-  linked_task: pr-016-dev-main-v0-1-1-promotion
-  state: closed
-  state_reason: completed
-  created_at: 2026-06-12T09:23:25Z
-  closed_at: 2026-06-12T11:11:14Z
+  status: open
+  number: 43
+  url: https://github.com/fr-meyer/ChatIndex/issues/43
+  title: "PR018: OpenAI-compatible provider routing"
+  linked_task: pr-018-openai-compatible-provider-routing
+  state: open
+  state_reason: null
+  created_at: 2026-06-13T06:39:15Z
+  closed_at: null
 project:
   enabled: true
   status: synced
@@ -28,224 +28,26 @@ project:
   url: https://github.com/users/fr-meyer/projects/1
   items:
     - kind: issue
-      number: 5
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvE
-      url: https://github.com/fr-meyer/ChatIndex/issues/5
-    - kind: issue
-      number: 7
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDRWc
-      url: https://github.com/fr-meyer/ChatIndex/issues/7
-      linked_task: pr-002-offline-tree-optimization
-    - kind: issue
-      number: 9
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIRYA
-      url: https://github.com/fr-meyer/ChatIndex/issues/9
-      linked_task: pr-003-incremental-updates
-    - kind: issue
-      number: 11
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIsEY
-      url: https://github.com/fr-meyer/ChatIndex/issues/11
-      linked_task: pr-004-vector-search-integration
-    - kind: issue
-      number: 13
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI42Q
-      url: https://github.com/fr-meyer/ChatIndex/issues/13
-      linked_task: pr-005-e2e-smoke-speculoos-closure
-    - kind: issue
-      number: 15
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvP5kc
-      url: https://github.com/fr-meyer/ChatIndex/issues/15
-      linked_task: pr-006-readme-install-url-cleanup
-    - kind: issue
-      number: 17
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQeOc
-      url: https://github.com/fr-meyer/ChatIndex/issues/17
-      linked_task: pr-007-setup-metadata-url-cleanup
-    - kind: issue
-      number: 19
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ3fg
-      url: https://github.com/fr-meyer/ChatIndex/issues/19
-      linked_task: pr-008-setup-author-metadata-cleanup
-    - kind: issue
-      number: 21
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ_1g
-      url: https://github.com/fr-meyer/ChatIndex/issues/21
-      linked_task: pr-009-pyproject-build-system-metadata
-    - kind: issue
-      number: 23
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvTMgk
-      url: https://github.com/fr-meyer/ChatIndex/issues/23
-      linked_task: pr-010-release-prep
-    - kind: issue
-      number: 26
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaAQY
-      url: https://github.com/fr-meyer/ChatIndex/issues/26
-      linked_task: pr-011-speculoos-readme-release-plan
-    - kind: issue
-      number: 28
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvacCM
-      url: https://github.com/fr-meyer/ChatIndex/issues/28
-      linked_task: pr-012-coderabbit-dev-review-caveat
-    - kind: issue
-      number: 34
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdXpI
-      url: https://github.com/fr-meyer/ChatIndex/issues/34
-      linked_task: pr-014-extract-json-hardening
-    - kind: issue
-      number: 36
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvhE2Y
-      url: https://github.com/fr-meyer/ChatIndex/issues/36
-      linked_task: pr-015-reject-negative-node-path
-    - kind: issue
-      number: 39
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvhx4Q
-      url: https://github.com/fr-meyer/ChatIndex/issues/39
-      linked_task: pr-016-dev-main-v0-1-1-promotion
+      number: 43
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnJqs
+      url: https://github.com/fr-meyer/ChatIndex/issues/43
+      linked_task: pr-018-openai-compatible-provider-routing
     - kind: pull_request
-      number: 1
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvk
-      url: https://github.com/fr-meyer/ChatIndex/pull/1
-    - kind: pull_request
-      number: 2
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvY
-      url: https://github.com/fr-meyer/ChatIndex/pull/2
-    - kind: pull_request
-      number: 3
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCnvc
-      url: https://github.com/fr-meyer/ChatIndex/pull/3
-    - kind: pull_request
-      number: 4
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCn-Q
-      url: https://github.com/fr-meyer/ChatIndex/pull/4
-    - kind: pull_request
-      number: 6
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvCusc
-      url: https://github.com/fr-meyer/ChatIndex/pull/6
-      purpose: surface-metadata-sync
-    - kind: pull_request
-      number: 8
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvDkYA
-      url: https://github.com/fr-meyer/ChatIndex/pull/8
-      linked_task: pr-002-offline-tree-optimization
-    - kind: pull_request
-      number: 10
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIXhA
-      url: https://github.com/fr-meyer/ChatIndex/pull/10
-      linked_task: pr-003-incremental-updates
-    - kind: pull_request
-      number: 12
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvIxoQ
-      url: https://github.com/fr-meyer/ChatIndex/pull/12
-      linked_task: pr-004-vector-search-integration
-    - kind: pull_request
-      number: 14
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvI-UQ
-      url: https://github.com/fr-meyer/ChatIndex/pull/14
-      linked_task: pr-005-e2e-smoke-speculoos-closure
-    - kind: pull_request
-      number: 16
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvP8OA
-      url: https://github.com/fr-meyer/ChatIndex/pull/16
-      linked_task: pr-006-readme-install-url-cleanup
-    - kind: pull_request
-      number: 18
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQhJ0
-      url: https://github.com/fr-meyer/ChatIndex/pull/18
-      linked_task: pr-007-setup-metadata-url-cleanup
-    - kind: pull_request
-      number: 20
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvQ5QE
-      url: https://github.com/fr-meyer/ChatIndex/pull/20
-      linked_task: pr-008-setup-author-metadata-cleanup
-    - kind: pull_request
-      number: 22
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvRB5c
-      url: https://github.com/fr-meyer/ChatIndex/pull/22
-      linked_task: pr-009-pyproject-build-system-metadata
-    - kind: pull_request
-      number: 24
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvTMg0
-      url: https://github.com/fr-meyer/ChatIndex/pull/24
-      linked_task: pr-010-release-prep
-    - kind: pull_request
-      number: 25
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvZJls
-      url: https://github.com/fr-meyer/ChatIndex/pull/25
-      linked_task: pr-010-release-promotion
-    - kind: pull_request
-      number: 27
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvaDro
-      url: https://github.com/fr-meyer/ChatIndex/pull/27
-      linked_task: pr-011-speculoos-readme-release-plan
-    - kind: pull_request
-      number: 29
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvafCM
-      url: https://github.com/fr-meyer/ChatIndex/pull/29
-      linked_task: pr-012-coderabbit-dev-review-caveat
-    - kind: pull_request
-      number: 35
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvdalA
-      url: https://github.com/fr-meyer/ChatIndex/pull/35
-      linked_task: pr-014-extract-json-hardening
-    - kind: pull_request
-      number: 38
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvhHkE
-      url: https://github.com/fr-meyer/ChatIndex/pull/38
-      linked_task: pr-015-reject-negative-node-path
-    - kind: pull_request
-      number: 40
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgviBD8
-      url: https://github.com/fr-meyer/ChatIndex/pull/40
-      linked_task: pr-016-dev-main-v0-1-1-promotion
-    - kind: pull_request
-      number: 41
-      status: Done
-      item_id: PVTI_lAHOAZY4Cs4BaDA4zgviObs
-      url: https://github.com/fr-meyer/ChatIndex/pull/41
-      linked_task: pr-017-v0-1-1-post-review-fixes
+      number: 42
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvnJSk
+      url: https://github.com/fr-meyer/ChatIndex/pull/42
+      linked_task: pr-018-openai-compatible-provider-routing
 pull_request:
-  enabled: false
-  status: not_applicable
-  number: null
-  url: null
-  base_branch: null
-  head_branch: null
+  enabled: true
+  status: open
+  number: 42
+  url: https://github.com/fr-meyer/ChatIndex/pull/42
+  base_branch: dev
+  head_branch: feat/openai-compatible-provider-routing
   head_sha: null
+  implementation_commit: a520facbaa36a6122431781d18c97c61c19360d7
   created_at: null
   merge_commit: null
   merged_at: null
@@ -258,50 +60,6 @@ last_merged_pull_request:
   head_branch: fix/v0-1-1-post-review
   merge_commit: 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda
   merged_at: 2026-06-12T10:37:52Z
-release_promotion_pull_request:
-  enabled: true
-  status: merged
-  number: 40
-  url: https://github.com/fr-meyer/ChatIndex/pull/40
-  base_branch: main
-  head_branch: chore/v0-1-1-main-promotion
-  merge_commit: 36578b18aac0e65da7301f0f1398de7321a912f2
-  merged_at: 2026-06-12T10:01:00Z
-release_post_review_pull_request:
-  enabled: true
-  status: merged
-  number: 41
-  url: https://github.com/fr-meyer/ChatIndex/pull/41
-  base_branch: main
-  head_branch: fix/v0-1-1-post-review
-  merge_commit: 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda
-  merged_at: 2026-06-12T10:37:52Z
-release:
-  enabled: true
-  status: published
-  tag: v0.1.1
-  previous_tag: v0.1.0
-  tag_object_sha: c357efdaab9453534759de6bbff945a2a6b93494
-  target_sha: 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda
-  url: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.1
-  published_at: 2026-06-12T11:09:12Z
-surface_sync_pull_request:
-  enabled: true
-  status: merged
-  number: 6
-  url: https://github.com/fr-meyer/ChatIndex/pull/6
-  base_branch: dev
-  head_branch: chore/speculoos-project-surface-sync
-  merge_commit: e7a02ecdc39642d27e0fd405a18b8354009e8f8f
-  merged_at: 2026-06-08T12:05:08Z
-setup_pull_request:
-  enabled: true
-  status: merged
-  number: 3
-  url: https://github.com/fr-meyer/ChatIndex/pull/3
-  base_branch: dev
-  head_branch: chore/speculoos-pr001-setup
-  merge_commit: 4c11bbe1b37b57bca021dfa4cc15d45271a54c70
 required_before_sync:
   - Keep normal GitHub PRs targeting fork dev; promote dev to main only with a separate release-gated PR.
   - Use the host-side GitHub broker for Project operations; the OpenClaw container remains unauthenticated to gh.

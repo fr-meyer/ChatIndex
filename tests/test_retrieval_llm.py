@@ -1,4 +1,5 @@
 import json
+import os
 import unittest
 from types import SimpleNamespace
 
@@ -262,6 +263,45 @@ class RetrievalProviderTests(unittest.TestCase):
         self.assertIsInstance(openai_client, OpenAIRetrievalClient)
         self.assertEqual(openai_client.config.model, "gpt-test")
         self.assertEqual(openai_client.config.max_tokens, 456)
+
+    def test_openai_provider_accepts_openai_compatible_base_url(self):
+        client = build_retrieval_client(
+            provider="openai",
+            model="qwen-test",
+            base_url="https://example.invalid/compatible-mode/v1",
+            **{"api_key": "test-openai-compatible-key"},
+        )
+
+        self.assertIsInstance(client, OpenAIRetrievalClient)
+        self.assertEqual(client.config.model, "qwen-test")
+        self.assertEqual(
+            client.config.base_url,
+            "https://example.invalid/compatible-mode/v1",
+        )
+
+    def test_openai_provider_reads_base_url_from_environment(self):
+        previous_base_url = os.environ.get("OPENAI_BASE_URL")
+        previous_api_base = os.environ.get("OPENAI_API_BASE")
+        try:
+            os.environ["OPENAI_BASE_URL"] = "https://example.invalid/v1"
+            os.environ.pop("OPENAI_API_BASE", None)
+
+            client = build_retrieval_client(
+                provider="openai",
+                model="qwen-test",
+                **{"api_key": "test-openai-compatible-key"},
+            )
+
+            self.assertEqual(client.config.base_url, "https://example.invalid/v1")
+        finally:
+            if previous_base_url is None:
+                os.environ.pop("OPENAI_BASE_URL", None)
+            else:
+                os.environ["OPENAI_BASE_URL"] = previous_base_url
+            if previous_api_base is None:
+                os.environ.pop("OPENAI_API_BASE", None)
+            else:
+                os.environ["OPENAI_API_BASE"] = previous_api_base
 
     def test_unsupported_provider_fails_before_retrieval_loop(self):
         with self.assertRaisesRegex(ValueError, "Unsupported retrieval provider"):

@@ -1,6 +1,6 @@
 schema_version: 0.1
 surface: vibe-kanban
-status: local-task-done
+status: unavailable-not-created
 mcp:
   command: scripts/openclaw-vibe-mcp
   args:
@@ -8,8 +8,8 @@ mcp:
   package: vibe-kanban
   version: 0.1.44
 organization_id: null
-project_id: 0099a2a0-2b58-5aca-822d-317754378b82
-issue_id: 8d4c1577-3248-547d-9948-cbf617b7712d
+project_id: null
+issue_id: pr-018-vibe-unavailable
 workspace_id: null
 session_id: null
 service:
@@ -18,24 +18,23 @@ service:
   port_file: /tmp/vibe-kanban/vibe-kanban.port
   manager: scripts/openclaw-vibe-kanban-service
 task:
-  title: "PR016: Promote dev to main for v0.1.1"
-  status: done
-  github_issue: https://github.com/fr-meyer/ChatIndex/issues/39
-  github_pr: null
-  github_release_pr: https://github.com/fr-meyer/ChatIndex/pull/40
-  github_release: https://github.com/fr-meyer/ChatIndex/releases/tag/v0.1.1
-  release_tag: v0.1.1
-  release_target_sha: 78b0f1f05fb38fa9836cd7115a0efc077cc5aeda
-  release_tag_object_sha: c357efdaab9453534759de6bbff945a2a6b93494
+  title: "PR018: OpenAI-compatible provider routing"
+  status: unavailable-not-created
+  github_issue: https://github.com/fr-meyer/ChatIndex/issues/43
+  github_pr: https://github.com/fr-meyer/ChatIndex/pull/42
+  github_release_pr: null
+  github_release: null
+  release_tag: null
+  release_target_sha: null
+  release_tag_object_sha: null
 last_probe:
-  status: healthy-with-auth-limited-writes
-  service_check: scripts/openclaw-vibe-kanban-service check
-  result: Vibe service and TCP forwarder are healthy; MCP write tools return 401 Unauthorized until Vibe OAuth/session auth is configured.
+  status: unavailable
+  service_check: scripts/speculoos-loop status --repo /home/node/.openclaw/repos/ChatIndex
+  result: Vibe HTTP endpoint and TCP forwarder were not healthy from the container during PR018 publication.
 last_sync:
-  status: done
-  synced_at: 2026-06-12T11:11:39Z
-  method: local-sqlite-helper
+  status: not-created
+  synced_at: 2026-06-13T06:39:18Z
+  method: GitHub-only fallback while Vibe is unavailable
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.
-  - Mirror status changes into the local Vibe task while MCP write auth is unavailable.
-  - Start Mac/Windows SSH local tunnels to 172.18.0.2:40142 when those nodes reconnect.
+  - Create or mirror a Vibe task later only when Vibe service/write path is healthy.

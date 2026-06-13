@@ -33,6 +33,7 @@ class LLMProviderConfig:
     provider: str = DEFAULT_RETRIEVAL_PROVIDER
     model: Optional[str] = None
     api_key: Optional[str] = None
+    base_url: Optional[str] = None
     max_tokens: int = 8192
 
 
@@ -93,6 +94,7 @@ def _resolve_provider_config(
     api_key: Optional[str] = None,
     provider: Optional[str] = None,
     model: Optional[str] = None,
+    base_url: Optional[str] = None,
     max_tokens: Optional[int] = None,
     config: Optional[LLMProviderConfig] = None,
 ) -> LLMProviderConfig:
@@ -101,6 +103,7 @@ def _resolve_provider_config(
             provider=provider or DEFAULT_RETRIEVAL_PROVIDER,
             model=model,
             api_key=api_key,
+            base_url=base_url,
             max_tokens=max_tokens or LLMProviderConfig.max_tokens,
         )
     else:
@@ -108,6 +111,7 @@ def _resolve_provider_config(
             provider=provider or config.provider,
             model=model or config.model,
             api_key=api_key or config.api_key,
+            base_url=base_url or config.base_url,
             max_tokens=max_tokens or config.max_tokens,
         )
 
@@ -117,6 +121,9 @@ def _resolve_provider_config(
 
     if not resolved.api_key:
         resolved.api_key = os.getenv(PROVIDER_ENV_VARS[resolved.provider])
+
+    if resolved.provider == "openai" and not resolved.base_url:
+        resolved.base_url = os.getenv("OPENAI_BASE_URL") or os.getenv("OPENAI_API_BASE")
 
     if not resolved.api_key:
         env_var = PROVIDER_ENV_VARS[resolved.provider]
@@ -318,7 +325,10 @@ class OpenAIRetrievalClient:
 
     def __init__(self, config: LLMProviderConfig):
         self.config = config
-        self.client = OpenAI(api_key=config.api_key)
+        client_kwargs = {"api_key": config.api_key}
+        if config.base_url:
+            client_kwargs["base_url"] = config.base_url
+        self.client = OpenAI(**client_kwargs)
 
     def create_message(
         self,
@@ -405,6 +415,7 @@ def build_retrieval_client(
     api_key: Optional[str] = None,
     provider: Optional[str] = None,
     model: Optional[str] = None,
+    base_url: Optional[str] = None,
     max_tokens: Optional[int] = None,
     config: Optional[LLMProviderConfig] = None,
 ):
@@ -414,6 +425,7 @@ def build_retrieval_client(
         api_key=api_key,
         provider=provider,
         model=model,
+        base_url=base_url,
         max_tokens=max_tokens,
         config=config,
     )
@@ -694,6 +706,7 @@ def query_ctree(
     max_turns: int = 50,
     provider: str = DEFAULT_RETRIEVAL_PROVIDER,
     model: Optional[str] = None,
+    base_url: Optional[str] = None,
     max_tokens: Optional[int] = None,
     config: Optional[LLMProviderConfig] = None,
     llm_client: Any = None,
@@ -708,6 +721,7 @@ def query_ctree(
         max_turns: Maximum number of conversation turns
         provider: Retrieval provider name ("anthropic" or "openai")
         model: Provider model name. Uses provider defaults when omitted.
+        base_url: OpenAI-compatible base URL when provider="openai".
         max_tokens: Maximum tokens for each provider call.
         config: Optional LLMProviderConfig. Explicit arguments override matching fields.
         llm_client: Optional test/client injection implementing create_message().
@@ -719,6 +733,7 @@ def query_ctree(
         api_key=api_key,
         provider=provider,
         model=model,
+        base_url=base_url,
         max_tokens=max_tokens,
         config=config,
     )
@@ -832,6 +847,7 @@ def query_ctree_streaming(
     on_turn_complete: Optional[Callable[[int], None]] = None,
     provider: str = DEFAULT_RETRIEVAL_PROVIDER,
     model: Optional[str] = None,
+    base_url: Optional[str] = None,
     max_tokens: Optional[int] = None,
     config: Optional[LLMProviderConfig] = None,
     llm_client: Any = None,
@@ -849,6 +865,7 @@ def query_ctree_streaming(
         on_turn_complete: Callback when turn completes (turn_number: int)
         provider: Retrieval provider name ("anthropic" or "openai")
         model: Provider model name. Uses provider defaults when omitted.
+        base_url: OpenAI-compatible base URL when provider="openai".
         max_tokens: Maximum tokens for each provider call.
         config: Optional LLMProviderConfig. Explicit arguments override matching fields.
         llm_client: Optional test/client injection implementing stream_message().
@@ -860,6 +877,7 @@ def query_ctree_streaming(
         api_key=api_key,
         provider=provider,
         model=model,
+        base_url=base_url,
         max_tokens=max_tokens,
         config=config,
     )

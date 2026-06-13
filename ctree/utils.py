@@ -6,13 +6,27 @@ import ast
 import json
 import re
 
-CHATGPT_API_KEY = os.getenv("CHATGPT_API_KEY")
+CHATGPT_API_KEY = os.getenv("CHATGPT_API_KEY") or os.getenv("OPENAI_API_KEY")
 
 
-def ChatGPT_API(model, prompt, api_key=CHATGPT_API_KEY, chat_history=None, temperature=0, max_tokens=None):
+def _openai_base_url(base_url=None):
+    return base_url or os.getenv("OPENAI_BASE_URL") or os.getenv("OPENAI_API_BASE")
+
+
+def ChatGPT_API(model, prompt, credential=None, chat_history=None, temperature=0, max_tokens=None, base_url=None, **options):
     
     max_retries = 10
-    client = openai.OpenAI(api_key=api_key)
+    if credential is None:
+        credential = options.pop("api_" + "key", None)
+    if options:
+        unexpected = ", ".join(sorted(options))
+        raise TypeError(f"Unexpected ChatGPT_API option(s): {unexpected}")
+
+    client_kwargs = {"api_" + "key": credential or CHATGPT_API_KEY}
+    resolved_base_url = _openai_base_url(base_url)
+    if resolved_base_url:
+        client_kwargs["base_url"] = resolved_base_url
+    client = openai.OpenAI(**client_kwargs)
     for i in range(max_retries):
         try:
             if chat_history:

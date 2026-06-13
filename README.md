@@ -132,9 +132,14 @@ export ANTHROPIC_API_KEY="your-anthropic-key"
 # Optional: use OpenAI for retrieval instead
 export OPENAI_API_KEY="your-openai-key"
 
+# Optional: point OpenAI-compatible calls at another provider or gateway
+# such as LiteLLM, DashScope/Qwen compatible mode, vLLM, etc.
+export OPENAI_BASE_URL="https://your-openai-compatible-endpoint/v1"
+
 # Or use a .env file:
 echo "OPENAI_API_KEY=your-openai-key" > .env
 echo "ANTHROPIC_API_KEY=your-anthropic-key" >> .env
+echo "OPENAI_BASE_URL=https://your-openai-compatible-endpoint/v1" >> .env
 ```
 
 ### Complete Workflow
@@ -189,9 +194,15 @@ Build a hierarchical index of your conversation:
 
 ```python
 from ctree import CTree
+import os
 
-# Initialize tree
-tree = CTree(max_children=10)
+# Initialize tree. Use base_url to route tree-building through an
+# OpenAI-compatible provider or gateway such as LiteLLM or DashScope/Qwen.
+tree = CTree(
+    max_children=10,
+    model="gpt-4o-mini",
+    base_url=os.getenv("OPENAI_BASE_URL"),
+)
 
 # Add conversation exchanges
 messages = [
@@ -251,6 +262,31 @@ result = query_ctree(
     model="gpt-4o-mini",
 )
 ```
+
+Any OpenAI-compatible endpoint can be used through the same path:
+
+```python
+tree = CTree(
+    max_children=10,
+    model="qwen-plus",
+    base_url=os.getenv("OPENAI_BASE_URL"),
+    **{"api_key": os.getenv("DASHSCOPE_API_KEY")},
+)
+
+result = query_ctree(
+    ctree=tree,
+    user_query="What topics were discussed about project blockers?",
+    provider="openai",
+    model="qwen-plus",
+    base_url=os.getenv("OPENAI_BASE_URL"),
+    **{"api_key": os.getenv("DASHSCOPE_API_KEY")},
+)
+```
+
+Some OpenAI-compatible endpoints or larger histories can make tree building
+slower than the default OpenAI path. For first runs against a new provider,
+build a representative conversation slice first and run full-history builds
+behind your job runner's timeout or progress reporting.
 
 **Key benefits:**
 - **Cost reduction** - Only retrieves relevant conversation segments
