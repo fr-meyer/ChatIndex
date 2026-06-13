@@ -21,7 +21,7 @@ issue:
   closed_at: null
 project:
   enabled: true
-  status: pending
+  status: in_progress
   number: 1
   title: "Speculoos / ChatIndex"
   project_id: PVT_kwHOAZY4Cs4BaDA4
@@ -29,20 +29,26 @@ project:
   items:
     - kind: issue
       number: 48
-      status: pending
-      item_id: null
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvoAzc
       url: https://github.com/fr-meyer/ChatIndex/issues/48
+      linked_task: pr-020-status-freshness-warning
+    - kind: pull_request
+      number: 49
+      status: In Progress
+      item_id: PVTI_lAHOAZY4Cs4BaDA4zgvoAzg
+      url: https://github.com/fr-meyer/ChatIndex/pull/49
       linked_task: pr-020-status-freshness-warning
 pull_request:
   enabled: true
-  status: pending
-  number: null
-  url: null
+  status: open
+  number: 49
+  url: https://github.com/fr-meyer/ChatIndex/pull/49
   base_branch: dev
   head_branch: feat/status-freshness-warning
-  head_sha: null
-  implementation_commit: null
-  created_at: null
+  head_sha: 444deafbc9412b45f942e86fb439014a974f9244
+  implementation_commit: 444deafbc9412b45f942e86fb439014a974f9244
+  created_at: 2026-06-13T12:15:19Z
   merge_commit: null
   merged_at: null
 last_merged_pull_request:
