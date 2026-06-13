@@ -19,7 +19,7 @@ service:
   manager: scripts/openclaw-vibe-kanban-service
 task:
   title: "PR019: Qwen build guard and retrieval provenance"
-  status: unavailable-not-created
+  status: done-unavailable-not-created
   github_issue: https://github.com/fr-meyer/ChatIndex/issues/45
   github_pr: https://github.com/fr-meyer/ChatIndex/pull/46
   github_release_pr: null
@@ -32,9 +32,9 @@ last_probe:
   service_check: scripts/speculoos-loop status --repo /home/node/.openclaw/repos/ChatIndex
   result: Vibe HTTP endpoint and TCP forwarder were not healthy from the container during PR019 publication.
 last_sync:
-  status: unavailable-not-created
-  synced_at: 2026-06-13T10:36:40Z
-  method: GitHub-only fallback while Vibe is unavailable
+  status: done-unavailable-not-created
+  synced_at: 2026-06-13T11:13:30Z
+  method: GitHub-only closeout fallback while Vibe is unavailable
 required_before_sync:
   - Keep GitHub Project #1 as the canonical task status.
   - Create or mirror a Vibe task later only when Vibe service/write path is healthy.

@@ -3,7 +3,7 @@ id: pr-019-qwen-build-guard-provenance
 title: Qwen build guard and retrieval provenance
 branch: feat/qwen-build-guard-provenance
 base_branch: dev
-status: in_review
+status: closed
 pret_a_coder: satisfied
 objective: >
   Prevent OpenAI-compatible provider dogfood builds, especially Qwen-backed
@@ -65,9 +65,9 @@ executor_lanes:
     reason: Tight follow-up to PR018 with direct local implementation.
 surface_sync:
   manifest: local-updated
-  github_issue: open
-  github_project: in_progress
-  github_pr: open
+  github_issue: closed
+  github_project: done
+  github_pr: merged
   vibe_kanban: unavailable-not-created
   vibe_task_id: pr-019-vibe-unavailable
 review:
