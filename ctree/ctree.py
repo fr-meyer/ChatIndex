@@ -38,7 +38,7 @@ class Node:
     children: List['Node'] = field(default_factory=list)
     parent: Optional['Node'] = None
     sub_node_count: int = 0
-    
+
     def update_sub_node_count(self) -> None:
         """
         Update the sub_node_count for this node and all ancestors.
@@ -47,7 +47,7 @@ class Node:
         """
         # Count only direct children
         self.sub_node_count = len(self.children)
-        
+
         # Propagate update to parent
         if self.parent is not None:
             self.parent.update_sub_node_count()
@@ -223,7 +223,7 @@ class CTree:
         self._build_started_at: Optional[float] = None
         self._last_progress_at = 0.0
         self._build_exchange_count = 0
-        
+
         provider_credential = (
             provider_credential
             or os.getenv("OPENAI_API_KEY")
