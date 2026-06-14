@@ -39,7 +39,7 @@ write_scope:
     - .speculoos/surfaces/github.yaml
     - .speculoos/surfaces/vibe-kanban.yaml
   companion_workspace_changes:
-    - /home/node/.openclaw/workspace-franck/scripts/chatindex_session_sandbox.py
+    - external workspace wrapper: scripts/chatindex_session_sandbox.py
   forbidden:
     - .env
     - .env.*
@@ -97,7 +97,7 @@ review:
     retrieval/llm_tools.py tests/test_retrieval_llm.py
     tests/test_ctree_provider_config.py
   yaml_check: passed
-  yaml_command: scripts/speculoos-loop validate --repo /home/node/.openclaw/repos/ChatIndex --task pr-018-openai-compatible-provider-routing --base dev
+  yaml_command: scripts/speculoos-loop validate --repo <repo> --task pr-018-openai-compatible-provider-routing --base dev
   diff_check: passed
   diff_check_command: git diff --check
   speculoos_validate: passed

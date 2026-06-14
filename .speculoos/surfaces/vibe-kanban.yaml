@@ -29,7 +29,7 @@ task:
   release_tag_object_sha: null
 last_probe:
   status: unavailable
-  service_check: scripts/speculoos-loop status --repo /home/node/.openclaw/repos/ChatIndex
+  service_check: scripts/speculoos-loop status --repo <repo>
   result: Vibe HTTP endpoint and TCP forwarder were not healthy from the container during PR019 publication.
 last_sync:
   status: done-unavailable-not-created

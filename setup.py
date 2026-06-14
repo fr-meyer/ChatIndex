@@ -20,7 +20,7 @@ def read_requirements(filename):
 
 setup(
     name="ictree",
-    version="0.1.1",
+    version="0.1.2",
     description="Incremental Context Tree for hierarchical conversation management",
     long_description=read_file("README.md"),
     long_description_content_type="text/markdown",

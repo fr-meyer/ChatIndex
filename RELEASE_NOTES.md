@@ -1,5 +1,46 @@
 # Release Notes
 
+## v0.1.2 - 2026-06-14
+
+Sandbox-provider and bounded-retrieval maintenance release.
+
+This release promotes the PR018-PR020 batch from `dev` to `main`. It keeps
+ChatIndex pre-1.0 while making OpenAI-compatible gateways easier to dogfood,
+adding guardrails for longer tree builds, and making status-style retrieval
+answers clearer when they come from a bounded or stale slice.
+
+### Highlights
+
+- Added OpenAI-compatible provider routing for CTree build and retrieval, with
+  configurable base URLs, provider credentials, model IDs, request timeouts, and
+  retry limits.
+- Hardened compatible-provider JSON parsing for `null` parent indices returned
+  by non-OpenAI models.
+- Added build timeout/progress guardrails, bounded checkpoint save behavior, and
+  source/provenance metadata for dogfood retrieval runs.
+- Added freshness warnings for status-sensitive questions such as "what
+  remains", "what is left", "next steps", and "current status".
+- Documented bounded dogfood guidance for OpenAI-compatible gateways such as
+  LiteLLM, Qwen-compatible endpoints, and Mistral-compatible routes.
+- Cleaned trailing whitespace so release diff checks pass cleanly.
+
+### Validation
+
+- Unit tests: `.venv/bin/python -m unittest discover -v`
+- Python syntax parse over tracked source and test files.
+- YAML syntax parse over tracked workflow and metadata files.
+- `git diff --check`
+- Speculoos validation and release-plan dry run for the promotion task.
+
+### Known Limitations
+
+- The API remains pre-1.0 and may still change.
+- Full-thread hosted-model builds can still be slow or expensive; bounded
+  slices remain the recommended dogfood path.
+- Branch protection and release immutability rules are not yet enabled.
+- The package metadata is still split between `setup.py` and minimal
+  `pyproject.toml` build-system metadata.
+
 ## v0.1.1 - 2026-06-12
 
 Maintenance release for the post-v0.1.0 ChatIndex fork work.
