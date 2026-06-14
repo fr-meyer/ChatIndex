@@ -1,0 +1,99 @@
+schema_version: 0.1
+id: pr-020-status-freshness-warning
+title: Status freshness warning hardening
+branch: feat/status-freshness-warning
+base_branch: dev
+status: closed
+pret_a_coder: satisfied
+objective: >
+  Broaden retrieval freshness warnings so stale indexed slices are flagged when
+  users ask workflow-status questions such as what remains, what is left, next
+  steps, or current status.
+acceptance_criteria:
+  - Freshness warnings trigger for status wording including `what remains`,
+    `what is left`, `next steps`, and `current status`.
+  - Non-status uses of words such as `remaining budget` do not warn just because
+    they contain a temporal-looking word.
+  - README documents status-sensitive freshness warnings.
+  - Speculoos closeout guidance records the metadata-only PR reviewer/CI note
+    rule.
+  - Focused and full tests pass before publication.
+  - One bounded non-production Qwen dogfood query confirms `what remains now`
+    returns a freshness warning.
+write_scope:
+  allowed:
+    - README.md
+    - retrieval/llm_tools.py
+    - tests/test_retrieval_llm.py
+    - .speculoos/README.md
+    - .speculoos/tasks/pr-020-status-freshness-warning.yaml
+    - .speculoos/manifest.yaml
+    - .speculoos/surfaces/github.yaml
+    - .speculoos/surfaces/vibe-kanban.yaml
+  forbidden:
+    - .env
+    - .env.*
+    - .venv/**
+    - .agents/**
+    - .speculoos/runs/**
+    - .openclaw/**
+    - openclaw-logs/**
+    - openclaw-sessions/**
+    - logs/**
+    - sessions/**
+    - tmp/**
+    - tmp/speculoos/**
+    - secrets/**
+    - .secrets/**
+    - "*.key"
+    - "*.pem"
+    - "*.index"
+    - "*.faiss"
+executor_lanes:
+  codex_review:
+    status: required
+  cursor_worker:
+    status: not_used
+    reason: Tiny focused hardening after bounded dogfood.
+surface_sync:
+  manifest: local-updated
+  github_issue: closed
+  github_issue_number: 48
+  github_issue_url: https://github.com/fr-meyer/ChatIndex/issues/48
+  github_project: done
+  github_project_issue_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvoAzc
+  github_project_pr_item_id: PVTI_lAHOAZY4Cs4BaDA4zgvoAzg
+  github_pr: merged
+  github_pr_number: 49
+  github_pr_url: https://github.com/fr-meyer/ChatIndex/pull/49
+  merge_commit: 1e7ae1aba103a5e081eebceecf745faf4f2df9a9
+  merged_at: 2026-06-13T12:48:55Z
+  vibe_kanban: unavailable-not-created
+  vibe_task_id: pr-020-vibe-unavailable
+review:
+  tests: passed
+  compile_check: passed
+  yaml_check: passed
+  diff_check: passed
+  speculoos_validate: passed
+  private_data_check: passed
+  executor_lane: codex-only
+  validation_notes: >
+    Focused retrieval tests passed with 22 tests. Full unittest discovery
+    passed with 71 tests. Python compile check, Ruby YAML parse check, git
+    diff --check, Speculoos validation, and changed-file private-data scan all
+    passed before dogfood.
+dogfood:
+  status: completed
+  artifact_root: kept-outside-repository
+  notes: >
+    Fresh bounded Qwen dogfood used a 10-exchange workflow slice. Build
+    completed in 119.086 seconds with progress events. Retrieval for "What
+    remains now?" completed in 27.756 seconds / 3 turns and returned
+    freshness_warning, confirming status questions over old slices are flagged.
+    Do not build full-thread Qwen indexes as a recurring default.
+release:
+  required: false
+  notes: >
+    PR020 targets fork dev only. Bundle with a future dev-to-main maintenance
+    promotion if a release such as v0.1.2 is later approved.
