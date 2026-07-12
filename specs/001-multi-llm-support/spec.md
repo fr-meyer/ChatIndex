@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: ChatIndex roadmap item "Multi-LLM support" and Speculoos PR001 dogfood.
+**Input**: ChatIndex roadmap item "Multi-LLM support".
 
 ## User Scenarios & Testing
 
@@ -107,5 +107,5 @@ in PR001 or a follow-up PR, with explicit non-goals.
 - Anthropic remains the default retrieval provider for backward compatibility.
 - OpenAI tree-building provider work can be staged separately if PR001 would
   otherwise grow too large.
-- Speculoos PR001 should prioritize a small, reviewable implementation over a
-  full provider framework.
+- PR001 should prioritize a small, reviewable implementation over a full
+  provider framework.

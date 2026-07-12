@@ -6,10 +6,10 @@
 
 ## Summary
 
-Create the first ChatIndex fork baseline through Speculoos v0. The branch adds
-Spec Kit project structure, a repo-local Speculoos workflow contract, explicit
-surface states, executor authority boundaries, and a no-secret baseline
-validation path for later roadmap PRs.
+Create the first ChatIndex fork baseline. The branch adds Spec Kit project
+structure, repo-local planning notes, explicit surface expectations, executor
+authority boundaries, and a no-secret baseline validation path for later roadmap
+PRs.
 
 ## Technical Context
 
@@ -26,7 +26,7 @@ test runner if needed.
 
 **Target Platform**: Linux/GCP OpenClaw runtime, with GitHub fork/PR workflow.
 
-**Project Type**: Python library/research prototype with repo-local workflow
+**Project Type**: Python library/research prototype with repo-local planning
 metadata.
 
 **Performance Goals**: Not applicable for PR 0; correctness and reproducibility
@@ -60,24 +60,6 @@ specs/000-fork-dev-baseline/
 └── tasks.md
 ```
 
-### Workflow State
-
-```text
-.speculoos/
-├── README.md
-├── goal.md
-├── manifest.yaml
-├── tasks/
-│   └── pr-000-fork-dev-baseline.yaml
-├── surfaces/
-│   ├── github.yaml
-│   └── vibe-kanban.yaml
-└── lane-contracts/
-    ├── authority-boundaries.md
-    ├── codex-review.md
-    └── cursor-worker.md
-```
-
 ### Source Code
 
 ```text
@@ -86,7 +68,7 @@ retrieval/
 tests/
 ```
 
-**Structure Decision**: Keep Spec Kit and Speculoos state repo-local. Add tests
+**Structure Decision**: Keep Spec Kit and planning state repo-local. Add tests
 under `tests/` once the baseline validation fixture is implemented.
 
 ## Complexity Tracking

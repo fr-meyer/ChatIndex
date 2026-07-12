@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: Establish the first ChatIndex fork baseline PR through Speculoos v0.
+**Input**: Establish the first ChatIndex fork baseline PR.
 
 ## User Scenarios & Testing
 
@@ -29,24 +29,24 @@ and passes with fake/no-key test paths.
 
 ---
 
-### User Story 2 - Reviewable Workflow State (Priority: P1)
+### User Story 2 - Reviewable Planning State (Priority: P1)
 
-As an operator, I can inspect the PR 0 goal, task status, surface mappings, and
-executor authority boundaries from committed repo-local files.
+As an operator, I can inspect the PR 0 goal, task status, external surface
+expectations, and executor authority boundaries from committed repo-local files.
 
 **Why this priority**: The dogfood workflow needs durable state that does not
 depend on a single chat transcript.
 
-**Independent Test**: Inspect `.speculoos/manifest.yaml`, the PR 0 task file,
-surface files, and lane contracts.
+**Independent Test**: Inspect the fork baseline spec, plan, tasks, and project
+documentation.
 
 **Acceptance Scenarios**:
 
-1. **Given** the PR 0 branch, **When** I open `.speculoos/manifest.yaml`,
+1. **Given** the PR 0 branch, **When** I open the repo-local planning files,
    **Then** I can see branch, base, task, lane, and gate status.
 2. **Given** external surfaces are unavailable, **When** I inspect
-   `.speculoos/surfaces/`, **Then** blocked/pending states and required next
-   actions are explicit.
+   the project notes, **Then** blocked/pending states and required next actions
+   are explicit.
 
 ---
 
@@ -71,7 +71,7 @@ preconditions before code changes are allowed.
 
 - Fork repository is not visible or does not exist yet.
 - GitHub CLI is installed but unauthenticated.
-- Vibe Kanban is unavailable or not connected through MCP yet.
+- An external planning workspace is unavailable or not connected yet.
 - Docker is unavailable from the current OpenClaw container.
 - A dependency install succeeds but live provider keys are absent.
 
@@ -81,10 +81,9 @@ preconditions before code changes are allowed.
 
 - **FR-001**: The branch MUST contain Spec Kit project artifacts under
   `.specify/`.
-- **FR-002**: The branch MUST contain a repo-local `.speculoos/` workflow
-  contract for PR 0.
-- **FR-003**: The workflow contract MUST identify canonical, GitHub, and Vibe
-  Kanban surface states separately.
+- **FR-002**: The branch MUST contain repo-local planning notes for PR 0.
+- **FR-003**: The planning notes MUST identify canonical, GitHub, and external
+  planning expectations separately when those surfaces are used.
 - **FR-004**: The PR 0 task MUST remain blocked from publish/PR actions until
   fork visibility, GitHub auth, and human approval gates are satisfied.
 - **FR-005**: Runtime logs and private run payloads MUST NOT be committed.
@@ -92,12 +91,12 @@ preconditions before code changes are allowed.
 
 ### Key Entities
 
-- **SpeculoosManifest**: Repo-local workflow state for project, branch, surfaces,
+- **ProjectPlan**: Repo-local workflow state for project, branch, surfaces,
   lanes, gates, and current task.
-- **SpeculoosTask**: Task-level readiness, acceptance criteria, executor
-  assignment, and gate state.
-- **SurfaceMapping**: External IDs/URLs/status for GitHub Issues, GitHub
-  Projects, and Vibe Kanban.
+- **TaskPlan**: Task-level readiness, acceptance criteria, executor assignment,
+  and gate state.
+- **SurfaceMapping**: External IDs/URLs/status for GitHub Issues, project
+  boards, and optional planning workspaces.
 - **LaneContract**: Bounded executor permissions, required outputs, and review
   expectations.
 

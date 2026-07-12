@@ -5,8 +5,8 @@
 ## Phase 1: PRet-a-Coder Gate
 
 - [x] T001 Confirm PR002 GitHub issue #7 and Project #1 item exist.
-- [x] T002 Confirm Vibe local task exists for PR002.
-- [x] T003 Confirm write scope: `ctree/`, `tests/`, `specs/002-offline-tree-optimization/`, and `.speculoos/` metadata.
+- [x] T002 Confirm local planning task exists for PR002.
+- [x] T003 Confirm write scope: `ctree/`, `tests/`, and `specs/002-offline-tree-optimization/`.
 - [x] T004 Confirm tests must not use live provider keys.
 
 ## Phase 2: Implementation
@@ -27,6 +27,6 @@
 - [x] T012 Run unit tests.
 - [x] T013 Run Python compile check.
 - [x] T014 Run `git diff --check`.
-- [x] T015 Run Speculoos preflight.
+- [x] T015 Run local preflight.
 - [x] T016 Open PR against fork `dev`.
-- [x] T017 Address CodeRabbit mixed-child split finding.
+- [x] T017 Address mixed-child split review finding.

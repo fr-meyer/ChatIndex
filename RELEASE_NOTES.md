@@ -30,7 +30,7 @@ answers clearer when they come from a bounded or stale slice.
 - Python syntax parse over tracked source and test files.
 - YAML syntax parse over tracked workflow and metadata files.
 - `git diff --check`
-- Speculoos validation and release-plan dry run for the promotion task.
+- Local validation and release-plan dry run for the promotion task.
 
 ### Known Limitations
 
@@ -55,7 +55,7 @@ runtime hardening fixes from `dev`.
   literals and expanded extraction tests.
 - Rejected negative `node_path` entries in `view_node_and_children` before
   Python negative-list indexing can select unintended children.
-- Documented the Speculoos `release-plan` helper for future release-gated work.
+- Documented the release-plan helper for future release-gated work.
 - Documented the CodeRabbit caveat for PRs targeting the non-default `dev`
   branch.
 - Preserved the native Pullfrog review workflow on `main`.
@@ -66,7 +66,7 @@ runtime hardening fixes from `dev`.
 - Python syntax parse over tracked source and test files.
 - YAML syntax parse over tracked workflow and metadata files.
 - `git diff --check`
-- Speculoos validation and release-plan dry run for the promotion task.
+- Local validation and release-plan dry run for the promotion task.
 
 ### Known Limitations
 
@@ -94,7 +94,7 @@ while future compatibility guarantees still need to be defined before `v1.0.0`.
 - Added end-to-end smoke coverage and expanded unit tests.
 - Cleaned README install instructions and package metadata.
 - Added minimal PEP 517 build-system metadata.
-- Added Speculoos workflow artifacts used to coordinate the implementation loop.
+- Added repo-local planning artifacts used to coordinate the implementation loop.
 
 ### Validation
 
@@ -102,7 +102,7 @@ while future compatibility guarantees still need to be defined before `v1.0.0`.
 - Python syntax parse over tracked source and test files.
 - YAML syntax parse over tracked workflow and metadata files.
 - `git diff --check`
-- Speculoos validation for the release-prep task.
+- Local validation for the release-prep task.
 
 ### Known Limitations
 
