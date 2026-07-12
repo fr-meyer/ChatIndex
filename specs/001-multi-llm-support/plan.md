@@ -53,7 +53,7 @@ Before implementation starts:
 - Spec and plan are reviewed.
 - Write scope is accepted.
 - Test command is known.
-- Cursor worker prompt and stop conditions are explicit.
+- Implementation prompt and stop conditions are explicit.
 - GitHub PR targets fork `dev`.
 - Private-data review is required before merge.
 
@@ -63,7 +63,6 @@ Before implementation starts:
 retrieval/llm_tools.py
 tests/test_multi_llm_support.py
 README.md
-.speculoos/tasks/pr-001-multi-llm-support.yaml
 ```
 
 Tree-building files (`ctree/utils.py`, `ctree/ctree.py`) are allowed only if the

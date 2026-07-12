@@ -2,8 +2,8 @@
 
 ## Decision: Repo-local workflow state
 
-Speculoos v0 stores committed workflow state in `.speculoos/` so the branch can
-be reviewed without private OpenClaw logs.
+Committed project notes store workflow state so the branch can be reviewed
+without private OpenClaw logs.
 
 **Rationale**: The fork should carry enough state to reconstruct task readiness,
 surface mappings, and authority boundaries from Git alone.
@@ -17,8 +17,8 @@ surface mappings, and authority boundaries from Git alone.
 
 ## Decision: Additive task surfaces
 
-The canonical v0 state is the manifest, while GitHub Issues, GitHub Projects,
-and Vibe Kanban can mirror task state when available.
+The canonical v0 state is the local project note, while GitHub Issues, project
+boards, and optional planning workspaces can mirror task state when available.
 
 **Rationale**: Different surfaces are useful for different roles. The manifest
 remains available even when external auth or services are blocked.

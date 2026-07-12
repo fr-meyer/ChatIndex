@@ -20,12 +20,12 @@ Expected PR 0 behavior:
 - No `.env` file is required.
 - Private run logs are not committed.
 
-## Speculoos State
+## Planning State
 
 Inspect these files before executor work:
 
 ```bash
-sed -n '1,220p' .speculoos/goal.md
-sed -n '1,220p' .speculoos/manifest.yaml
-sed -n '1,220p' .speculoos/tasks/pr-000-fork-dev-baseline.yaml
+sed -n '1,220p' specs/000-fork-dev-baseline/spec.md
+sed -n '1,220p' specs/000-fork-dev-baseline/plan.md
+sed -n '1,220p' specs/000-fork-dev-baseline/tasks.md
 ```

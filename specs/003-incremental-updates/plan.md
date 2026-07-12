@@ -32,18 +32,18 @@ artifacts.
 - Add no-key tests using stubbed LLM helpers rather than provider calls.
 - Mark README roadmap item complete only after implementation and validation.
 
-## Cursor Worker Lane
+## Implementation Lane
 
-Cursor worker should attempt the first implementation pass within the allowed
-write scope. OpenClaw/Codex remains responsible for reviewing the diff, running
-tests, fixing issues, publishing, PR creation, Project/Vibe status, merge
-recommendation, and memory/todo updates.
+The implementation lane should attempt the first pass within the allowed write
+scope. Maintainer review remains responsible for reviewing the diff, running
+tests, fixing issues, publishing, PR creation, project status, merge
+recommendation, and follow-up notes.
 
 ## Validation
 
 - `.venv/bin/python -m unittest discover -v`
 - `.venv/bin/python -m py_compile ctree/ctree.py tests/test_incremental_updates.py`
-- YAML parse check for `.speculoos/**/*.yaml`
+- YAML parse check for tracked workflow files when present
 - `git diff --check`
-- `scripts/speculoos-chatindex-preflight <repo>`
+- Local preflight checklist
 - Secret/path scans over the diff before publication

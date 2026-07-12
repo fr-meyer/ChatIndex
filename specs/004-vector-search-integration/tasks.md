@@ -5,17 +5,17 @@
 ## Phase 1: PRet-a-Coder Gate
 
 - [x] T001 Confirm PR004 GitHub issue #11 exists.
-- [x] T002 Add PR004 issue #11 to GitHub Project #1.
-- [x] T003 Create Vibe local task for PR004.
-- [x] T004 Confirm write scope: `retrieval/`, `tests/`, `README.md`, `specs/004-vector-search-integration/`, and `.speculoos/` metadata.
+- [x] T002 Add PR004 issue #11 to the project board.
+- [x] T003 Create local planning task for PR004.
+- [x] T004 Confirm write scope: `retrieval/`, `tests/`, `README.md`, and `specs/004-vector-search-integration/`.
 - [x] T005 Confirm tests must not use live provider keys.
-- [x] T006 Confirm Cursor worker is the first implementation executor lane.
+- [x] T006 Confirm the first implementation executor lane.
 
 ## Phase 2: Cursor Worker Implementation
 
-- [x] T007 Prepare one-shot Cursor worker job with bounded prompt and acceptance criteria.
-- [x] T008 Run Cursor worker against `feat/vector-search-integration`.
-- [x] T009 Inspect Cursor worker logs, result metadata, and changed files.
+- [x] T007 Prepare one-shot implementation job with bounded prompt and acceptance criteria.
+- [x] T008 Run implementation lane against `feat/vector-search-integration`.
+- [x] T009 Inspect implementation logs, result metadata, and changed files.
 
 ## Phase 3: Implementation Review
 
@@ -31,12 +31,12 @@
 - [x] T016 Run Python compile check.
 - [x] T017 Run YAML parse check.
 - [x] T018 Run `git diff --check`.
-- [x] T019 Run Speculoos preflight.
+- [x] T019 Run local preflight.
 - [x] T020 Run private-data/path scans.
 
 ## Phase 5: PR
 
 - [x] T021 Push branch to fork.
 - [x] T022 Open PR against fork `dev`.
-- [x] T023 Add PR to GitHub Project #1.
-- [x] T024 Move GitHub Project and Vibe task to review state.
+- [x] T023 Add PR to the project board.
+- [x] T024 Move project task to review state.

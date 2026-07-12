@@ -22,11 +22,11 @@ implementation should be deterministic, in-memory, and easy to test.
 
 - `.venv/bin/python -m unittest discover -v`
 - `.venv/bin/python -m py_compile retrieval/llm_tools.py`
-- `ruby -e "require 'yaml'; Dir['.speculoos/**/*.yaml'].each { |p| YAML.parse_file(p) }"`
+- YAML parse check for tracked workflow files when present
 - `git diff --check`
-- `scripts/speculoos-chatindex-preflight <repo-root>`
+- Local preflight checklist
 
 ## Executor
 
-Cursor is the first implementation executor lane. Codex reviews, patches if
-needed, validates, updates surfaces, and opens the PR.
+The implementation executor lane makes the first pass. Maintainer review patches
+if needed, validates, updates surfaces, and opens the PR.

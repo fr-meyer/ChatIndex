@@ -6,14 +6,14 @@
 
 - [x] T001 [P] Create PR001 spec, plan, research, quickstart, and task list.
 - [x] T002 [P] Record GitHub Issue blocker because Issues are disabled on the fork.
-- [x] T003 [P] Verify Vibe Kanban MCP command availability through `npx`; MCP binary is present but requires the main Vibe Kanban app/service to be running.
+- [x] T003 [P] Verify external planning task availability.
 - [x] T004 Review and accept PR001 scope before implementation.
 
 ## Phase 2: PRet-a-Coder Gate
 
-- [x] T005 Confirm write scope for retrieval, tests, docs, and Speculoos task state.
+- [x] T005 Confirm write scope for retrieval, tests, docs, and planning docs.
 - [x] T006 Confirm credential policy: fake-client tests only; no committed provider keys or `.env`.
-- [x] T007 Confirm executor lane: Codex implements directly for this v0 pass after maintainer approval.
+- [x] T007 Confirm executor lane: maintainer implements directly for this v0 pass after approval.
 - [x] T008 Confirm stop conditions and validation commands.
 
 ## Phase 3: Implementation
@@ -28,7 +28,7 @@
 - [x] T013 Run `.venv/bin/python -m unittest discover -v`.
 - [x] T014 Run `git diff --check`.
 - [x] T015 Run private-data scan before PR publication and before merge.
-- [x] T016 Codex review signoff.
+- [x] T016 Maintainer review signoff.
 - [ ] T017 Merge only after gates are recorded.
 
 ## Dependencies

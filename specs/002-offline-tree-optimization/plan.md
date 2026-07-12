@@ -35,4 +35,4 @@ only the changed topic path can have new overflow.
 - `.venv/bin/python -m unittest discover -v`
 - `.venv/bin/python -m py_compile ctree/ctree.py tests/test_offline_tree_optimization.py`
 - `git diff --check`
-- `scripts/speculoos-chatindex-preflight <repo>`
+- Local preflight checklist
