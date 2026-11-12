@@ -35,8 +35,12 @@ private inputs, raw executor logs, or generated run payloads.
 ## Development Workflow
 
 - Use Spec Kit artifacts under `specs/` for roadmap work.
-- Use `.speculoos/` to record task readiness, surface mappings, lane contracts,
-  and review gates.
+- Use repository-local Spec Kit artifacts under `.specify/` and `specs/`, plus
+  normal project documentation, to record task scope, readiness, acceptance
+  criteria, executor authority boundaries, and review gates.
+- Keep applicable external issue/PR mappings, validation results, review notes,
+  blockers, and acceptance decisions explicit in those artifacts or linked PR
+  evidence. Removing a workflow-state directory does not waive these obligations.
 - Keep implementation branches based on the fork `dev` branch when the fork is
   available.
 - Run local tests before proposing a PR.
@@ -49,4 +53,4 @@ This constitution guides ChatIndex fork work until superseded by a reviewed
 change. Amendments require a focused PR that explains the reason, migration
 impact, and affected specs/tasks.
 
-**Version**: 0.1.0 | **Ratified**: 2026-06-05 | **Last Amended**: 2026-06-05
+**Version**: 0.1.1 | **Ratified**: 2026-06-05 | **Last Amended**: 2026-11-12
