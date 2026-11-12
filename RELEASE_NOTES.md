@@ -1,5 +1,11 @@
 # Release Notes
 
+These dated release notes record validation and limitations at the time of each
+release. References to branch protection, release immutability, and release-plan
+tooling are historical, not statements of current settings or available commands.
+Before a new release, verify current repository controls and the supported release
+procedure; these entries do not authorize publication.
+
 ## v0.1.2 - 2026-06-14
 
 Sandbox-provider and bounded-retrieval maintenance release.

@@ -45,7 +45,8 @@ future PRs.
 - Provider portability: satisfied by requiring fake/no-key validation.
 - Testable before external calls: required before PR 0 acceptance.
 - Small PRs with reviewable artifacts: satisfied by one branch for baseline.
-- Private data stays out: enforced through `.gitignore` and lane contracts.
+- Private data stays out: required by repository policy; `.gitignore` supports
+  accidental-file exclusion, while task scope and review must check tracked content.
 
 ## Project Structure
 

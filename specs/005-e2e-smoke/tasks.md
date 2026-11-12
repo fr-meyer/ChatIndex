@@ -11,7 +11,7 @@
 - [x] T005 Confirm tests must not use live provider keys.
 - [x] T006 Confirm the first implementation executor lane.
 
-## Phase 2: Cursor Worker Implementation
+## Phase 2: Executor Implementation
 
 - [x] T007 Prepare one-shot implementation job with bounded prompt and acceptance criteria.
 - [x] T008 Run implementation lane against `feat/e2e-smoke`.

@@ -57,8 +57,11 @@ the PRet-a-Coder gate passes.
 
 **Why this priority**: Executor work must be isolated, logged, and reviewable.
 
-**Independent Test**: The PR 0 task file and lane contracts list the required
-preconditions before code changes are allowed.
+**Independent Test**: The baseline task list ([tasks.md](tasks.md)), this
+specification, and repository guidance document the readiness and review
+requirements. A new executor handoff must record its bounded write scope,
+authority, required outputs, and acceptance criteria in repo-local task notes
+before code changes.
 
 **Acceptance Scenarios**:
 
@@ -98,7 +101,8 @@ preconditions before code changes are allowed.
 - **SurfaceMapping**: External IDs/URLs/status for GitHub Issues, project
   boards, and optional planning workspaces.
 - **LaneContract**: Bounded executor permissions, required outputs, and review
-  expectations.
+  expectations; a conceptual handoff record, not a required standalone file or
+  enforcement service.
 
 ## Success Criteria
 
