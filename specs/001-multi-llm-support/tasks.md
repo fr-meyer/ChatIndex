@@ -33,5 +33,5 @@
 
 ## Dependencies
 
-- T004-T008 must pass before Cursor implementation starts.
+- T004-T008 must pass before implementation starts.
 - T013-T016 must pass before merge.

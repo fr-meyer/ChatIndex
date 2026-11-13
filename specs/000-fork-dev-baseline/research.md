@@ -20,8 +20,8 @@ surface mappings, and authority boundaries from Git alone.
 The canonical v0 state is the local project note, while GitHub Issues, project
 boards, and optional planning workspaces can mirror task state when available.
 
-**Rationale**: Different surfaces are useful for different roles. The manifest
-remains available even when external auth or services are blocked.
+**Rationale**: Different surfaces are useful for different roles. The repo-local project notes
+remain available even when external auth or services are blocked.
 
 ## Decision: No-secret validation
 
